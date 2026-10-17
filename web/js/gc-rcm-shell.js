@@ -85,7 +85,7 @@
     const logout = onDashboard ? 'agentLogout()' : 'gcShellLogout()';
     return `
       <div class="sidebar-logo">
-        <img src="../assets/img/gc-logo.svg" alt="GC Tech">
+        <img src="../assets/img/gc-logo.png" alt="GC Tech">
         <span>GC Tech Dashboard</span>
       </div>
       <div class="sidebar-menu">${sections}</div>

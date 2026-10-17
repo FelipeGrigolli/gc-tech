@@ -19,3 +19,6 @@ desktop.ini
 # Editor
 .vscode/*
 !.vscode/extensions.json
+
+# Imagens privadas (só locais, nunca publicadas)
+/private/

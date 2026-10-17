@@ -29,7 +29,7 @@ body.has-rcm-shell { flex-direction: row; height: calc(100vh / var(--fit-zoom, 1
 }
 .rcm-shell-sidebar { width: 260px; flex-shrink: 0; height: calc(100vh / var(--fit-zoom, 1)); background: #0b1120; border-right: 1px solid #1e293b; display: flex; flex-direction: column; color: #f8fafc; }
 .rcm-shell-sidebar .sidebar-logo { padding: 20px; display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 16px; border-bottom: 1px solid #1e293b; }
-.rcm-shell-sidebar .sidebar-logo img { height: 32px; background: #fff; padding: 2px; border-radius: 4px; }
+.rcm-shell-sidebar .sidebar-logo img { height: 32px; border-radius: 4px; }
 .rcm-shell-sidebar .sidebar-menu { flex: 1; padding: 20px 15px; overflow-y: auto; }
 .rcm-shell-sidebar .menu-label { font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: 700; margin: 15px 0 8px 10px; letter-spacing: .5px; }
 .rcm-shell-sidebar .menu-item { display: block; padding: 10px 12px; color: #cbd5e1; text-decoration: none; font-size: 14px; border-radius: 6px; margin-bottom: 4px; transition: background .2s, color .2s; }

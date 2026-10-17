@@ -144,7 +144,7 @@
 
 /* My RCM */
 .ov-myrcm { display: flex; align-items: center; gap: 12px; }
-.ov-myrcm img { height: 38px; background: #fff; padding: 4px 6px; border-radius: 4px; }
+.ov-myrcm img { height: 38px; border-radius: 4px; }
 .ov-myrcm-name { font-size: 15px; font-weight: 600; color: #60a5fa; }
 .ov-myrcm-date { margin-top: 12px; padding-top: 10px; border-top: 1px solid #334155; font-size: 12px; color: #94a3b8; }
 
