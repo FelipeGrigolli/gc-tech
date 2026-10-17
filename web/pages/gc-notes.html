@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes :: GC Tech Car &amp; Truck Rental</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/gc-logo.svg">
+  <link rel="stylesheet" href="../vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../css/gc-notes.css">
+</head>
+<body>
+
+  <header class="nt-head">
+    <div>
+      <h1 id="nt-title">Notes</h1>
+      <p id="nt-sub"></p>
+    </div>
+  </header>
+
+  <main class="nt-main" id="nt-main">
+    <div class="nt-toolbar">
+      <button type="button" class="nt-add" onclick="ntToggleForm(true)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add Notes</button>
+      <div class="nt-tools">
+        <label>Filter: <input type="text" id="nt-filter" oninput="ntRender()"></label>
+        <button type="button" class="nt-icon" title="Copy to clipboard" onclick="ntCopy()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
+        <button type="button" class="nt-icon xls" title="Export to Excel (CSV)" onclick="ntExport()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg></button>
+      </div>
+    </div>
+
+    <!-- NOVA NOTA -->
+    <form class="nt-form" id="nt-form" hidden onsubmit="ntSave(event)">
+      <div class="nt-form-grid">
+        <label>Priority
+          <select id="nt-priority"><option>Low</option><option selected>Medium</option><option>High</option></select>
+        </label>
+        <label>Status
+          <select id="nt-status"><option selected>Active</option><option>Completed</option></select>
+        </label>
+        <label>Subject<input type="text" id="nt-subject" maxlength="60" placeholder="-"></label>
+        <label>Follow Up<input type="date" id="nt-follow"></label>
+        <label class="full">Notes<textarea id="nt-text" rows="3" maxlength="1000" placeholder="e.g. Aussie Auto Glass booked in"></textarea></label>
+      </div>
+      <div class="nt-form-actions">
+        <button type="button" class="nt-btn ghost" onclick="ntToggleForm(false)">Cancel</button>
+        <button type="submit" class="nt-btn primary">Save note</button>
+      </div>
+    </form>
+
+    <table class="nt-table">
+      <thead>
+        <tr>
+          <th data-sort="priority" onclick="ntSort('priority')">Priority</th>
+          <th data-sort="status" onclick="ntSort('status')">Status</th>
+          <th data-sort="subject" onclick="ntSort('subject')">Subject</th>
+          <th data-sort="text" onclick="ntSort('text')" class="wide">Notes</th>
+          <th data-sort="followUp" onclick="ntSort('followUp')">Follow Up</th>
+          <th data-sort="entered" onclick="ntSort('entered')">Entered</th>
+          <th class="c">Delete</th>
+        </tr>
+      </thead>
+      <tbody id="nt-body"></tbody>
+    </table>
+    <div class="nt-count" id="nt-count"></div>
+  </main>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../js/gc-dates.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-notes.js"></script>
+</body>
+</html>

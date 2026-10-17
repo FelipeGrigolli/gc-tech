@@ -1,0 +1,119 @@
+/* ==========================================
+   PAGAMENTOS (PowerBoard) + TOLLS — js/gc-powerboard.js, js/gc-tolls.js
+   ========================================== */
+.pb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.pb-card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px 18px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.pb-grid .pb-card { margin-bottom: 0; }
+.pb-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.pb-head h3 { margin: 0; font-size: 15px; color: #fff; font-weight: 600; }
+.pb-via { font-size: 11px; font-weight: 700; color: #fdba74; background: rgba(249, 115, 22, .12); border: 1px solid rgba(249, 115, 22, .35); border-radius: 999px; padding: 1px 9px; }
+.pb-muted { color: #94a3b8; font-size: 13px; margin: 0; }
+.pb-muted.small, small.pb-muted { font-size: 11px; }
+.pb-lines { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+.pb-lines div { display: flex; justify-content: space-between; color: #cbd5e1; }
+.pb-lines strong { color: #fff; font-variant-numeric: tabular-nums; }
+.pb-bal { border-top: 1px solid #334155; padding-top: 6px; margin-top: 2px; font-size: 14px; }
+.pb-bal.due strong { color: #fbbf24; }
+.pb-bal.owed strong { color: #34d399; }
+.pb-bond { font-size: 12px; color: #a5b4fc; background: rgba(99, 102, 241, .1); border: 1px solid rgba(99, 102, 241, .3); border-radius: 6px; padding: 7px 10px; }
+.pb-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border-radius: 999px; border: 1px solid #f97316; background: transparent; color: #fdba74; padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; text-decoration: none; white-space: nowrap; }
+.pb-btn:hover { background: rgba(249, 115, 22, .12); color: #fff; }
+.pb-btn.primary { background: #f97316; color: #fff; }
+.pb-btn.primary:hover { background: #ea580c; }
+.pb-btn.ghost { border-color: #475569; color: #cbd5e1; }
+.pb-btn.ghost:hover { background: rgba(255, 255, 255, .06); }
+.pb-btn.small { padding: 4px 11px; font-size: 12px; }
+.pb-btn:disabled { opacity: .45; cursor: not-allowed; }
+.pb-manual { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #cbd5e1; cursor: pointer; align-self: flex-end; }
+.pb-manual input { accent-color: #f97316; width: 16px; height: 16px; }
+.pb-manual-box { display: flex; gap: 8px; flex-wrap: wrap; }
+.pb-manual-box[hidden] { display: none; }
+.pb-manual-box input, .toll-add select, .toll-add input { flex: 1; min-width: 120px; padding: 7px 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; font-size: 13px; outline: none; color-scheme: dark; }
+.pb-manual-box input:focus, .toll-add select:focus, .toll-add input:focus { border-color: #f97316; }
+.pb-cards { display: flex; flex-direction: column; gap: 8px; }
+.pb-cc { display: flex; flex-direction: column; gap: 2px; text-align: left; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 10px 12px; color: #cbd5e1; font-size: 13px; cursor: pointer; font-family: inherit; }
+.pb-cc:hover { border-color: #64748b; }
+.pb-cc.sel { border-color: #f97316; box-shadow: 0 0 0 1px #f97316; }
+.pb-cc.expired { opacity: .75; }
+.pb-cc b { color: #fff; }
+.pb-cc-top { display: flex; align-items: baseline; gap: 6px; font-size: 14px; }
+.pb-cc-top strong { color: #fff; letter-spacing: .3px; }
+.pb-cc-top em { font-style: normal; font-size: 11px; color: #94a3b8; }
+.pb-selected { margin-left: auto; color: #fb923c; font-weight: 700; font-size: 12px; }
+.pb-bad { color: #f87171; font-weight: 600; }
+.pb-warn { color: #fbbf24; font-weight: 600; }
+.pb-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.pb-table-wrap { overflow-x: auto; border: 1px solid #334155; border-radius: 6px; }
+.pb-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.pb-table th { background: #0f172a; color: #94a3b8; text-align: left; padding: 8px 10px; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; white-space: nowrap; }
+.pb-table td { padding: 8px 10px; border-top: 1px solid #263244; color: #e2e8f0; vertical-align: middle; }
+.pb-table .r { text-align: right; font-variant-numeric: tabular-nums; }
+.pb-table .nw { white-space: nowrap; }
+.pb-st { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.pb-st.ok { background: rgba(16, 185, 129, .15); color: #34d399; }
+.pb-st.warn { background: rgba(245, 158, 11, .15); color: #fbbf24; }
+.pb-st.bad { background: rgba(239, 68, 68, .15); color: #f87171; }
+.pb-st.muted { background: rgba(148, 163, 184, .15); color: #cbd5e1; }
+.toll-add { display: flex; gap: 8px; flex-wrap: wrap; }
+.toll-add[hidden] { display: none; }
+
+/* Janela "Add payment method" */
+.pb-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, .72); z-index: 100000; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.pb-dialog { width: 440px; max-width: 100%; background: #111827; border: 1px solid #334155; border-radius: 12px; box-shadow: 0 25px 60px rgba(0, 0, 0, .55); color: #e2e8f0; overflow: hidden; }
+.pb-dhead { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 18px; border-bottom: 1px solid #1f2937; background: #0f172a; }
+.pb-dhead h3 { margin: 0; font-size: 16px; color: #fff; }
+.pb-dhead p { margin: 2px 0 0; font-size: 12px; color: #94a3b8; }
+.pb-x { background: none; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; }
+.pb-dbody { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; }
+.pb-dbody label { display: flex; flex-direction: column; gap: 5px; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: .4px; }
+.pb-dbody input { padding: 9px 11px; border-radius: 6px; border: 1px solid #334155; background: #0b1220; color: #fff; font-size: 14px; outline: none; font-family: inherit; letter-spacing: .5px; }
+.pb-dbody input:focus { border-color: #f97316; }
+.pb-two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pb-secure { font-size: 12px; color: #a7f3d0; background: rgba(16, 185, 129, .08); border: 1px solid rgba(16, 185, 129, .3); border-radius: 6px; padding: 8px 10px; line-height: 1.45; }
+.pb-dfoot { display: flex; justify-content: flex-end; gap: 10px; padding: 12px 18px; border-top: 1px solid #1f2937; background: #0f172a; }
+
+/* Página Tolls */
+.tl-search { padding: 5px 8px; border-radius: 4px; border: 1px solid #1e40af; background: #fff; color: #0f172a; font-size: 12px; width: 260px; }
+.tl-policy { margin: 16px 0 12px; display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #cbd5e1; background: rgba(59, 130, 246, .08); border: 1px solid rgba(59, 130, 246, .3); border-radius: 8px; padding: 12px 16px; max-width: 1100px; line-height: 1.5; }
+.tl-policy strong { color: #fff; }
+.tl-policy b { color: #fdba74; }
+.tl-kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 14px; }
+.tl-kpi { background: #1e293b; border: 1px solid #334155; border-top: 3px solid #475569; border-radius: 8px; padding: 10px 14px; }
+.tl-kpi.warn { border-top-color: #f59e0b; }
+.tl-kpi.bad { border-top-color: #ef4444; }
+.tl-kpi.good { border-top-color: #10b981; }
+.tl-kpi span { display: block; font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 600; letter-spacing: .4px; }
+.tl-kpi strong { display: block; font-size: 20px; color: #fff; margin-top: 3px; font-variant-numeric: tabular-nums; }
+.tl-kpi small { display: block; font-size: 12px; color: #94a3b8; }
+.tl-table { background: #111827; }
+.tl-plate { display: inline-block; background: #fde047; color: #000; font-weight: 800; font-size: 11px; padding: 1px 6px; border-radius: 3px; letter-spacing: .4px; }
+.tl-link { background: none; border: none; padding: 0; color: #60a5fa; font: inherit; font-weight: 700; cursor: pointer; }
+.tl-link:hover { text-decoration: underline; }
+.tl-empty { text-align: center; color: #94a3b8; padding: 22px !important; }
+.tl-count, .tl-demo { font-size: 12px; color: #64748b; margin: 8px 2px; }
+.tl-summary { font-size: 13px; color: #cbd5e1; margin: 0 2px 10px; }
+.tl-summary b { color: #fff; }
+.tl-act { background: none; border: none; padding: 0 4px; color: #60a5fa; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.tl-act:hover { text-decoration: underline; }
+.tl-act.warn { color: #f87171; }
+.tl-dlg-back { position: fixed; inset: 0; background: rgba(2, 6, 23, .6); display: flex; align-items: center; justify-content: center; z-index: 9000; padding: 16px; }
+.tl-dlg { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px 22px; width: 440px; max-width: 100%; color: #e2e8f0; box-shadow: 0 20px 50px rgba(0, 0, 0, .5); }
+.tl-dlg h3 { margin: 0 0 6px; font-size: 17px; color: #fff; }
+.tl-dlg-sub { margin: 14px 0 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: #94a3b8; }
+.tl-dlg-list { display: flex; flex-direction: column; gap: 6px; }
+.tl-dlg-opt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; text-align: left; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 8px 12px; color: #e2e8f0; font: inherit; font-size: 13px; cursor: pointer; }
+.tl-dlg-opt:hover { border-color: #f97316; }
+.tl-dlg-opt small { margin-left: auto; color: #94a3b8; }
+.tl-dlg-row { display: flex; gap: 8px; }
+.tl-dlg-row input { flex: 1; padding: 6px 10px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: #fff; font: inherit; font-size: 13px; }
+.tl-dlg-foot { display: flex; justify-content: flex-end; margin-top: 16px; }
+.pb-table tr.declined td, .pb-table tr.collections td { background: rgba(239, 68, 68, .05); }
+.pb-table tr.unmatched td { background: rgba(245, 158, 11, .05); }
+
+/* Activity Log */
+.log-act.toll { background: rgba(14, 165, 233, .15); color: #38bdf8; }
+
+@media (max-width: 1000px) {
+  .pb-grid { grid-template-columns: 1fr; }
+  .tl-kpis { grid-template-columns: repeat(2, 1fr); }
+}

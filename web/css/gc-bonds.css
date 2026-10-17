@@ -1,0 +1,86 @@
+/* ==========================================
+   EXTRATO DO BOOKING (Payments do Fleet Planner e Bond Refunds do Dashboard)
+   ========================================== */
+.bond-ledger { color: #e2e8f0; font-size: 13px; }
+/* Por que o refund é diferente do bond */
+.bl-why { background: rgba(251, 191, 36, .08); border: 1px solid rgba(251, 191, 36, .4); border-left: 4px solid #fbbf24; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; }
+.bl-why-title { font-weight: 700; color: #fde68a; margin-bottom: 6px; }
+.bl-why ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.bl-why li { display: flex; justify-content: space-between; gap: 16px; font-size: 13px; color: #cbd5e1; }
+.bl-why li b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bl-why li.plus b { color: #6ee7b7; }
+.bl-why li.minus b { color: #fca5a5; }
+.bl-why li.total { border-top: 1px solid rgba(251, 191, 36, .35); margin-top: 4px; padding-top: 5px; font-weight: 700; color: #fff; }
+.bn-req { display: block; margin: 4px 0; font-size: 11px; font-weight: 700; color: #93c5fd; white-space: normal; }
+.bn-why { display: block; margin-top: 3px; font-size: 11px; font-weight: 600; color: #fbbf24; white-space: normal; max-width: 260px; }
+.bl-renter { border-bottom: 1px solid #334155; padding-bottom: 12px; margin-bottom: 14px; }
+.bl-renter div { display: grid; grid-template-columns: 140px 1fr; gap: 10px; padding: 4px 10px; }
+.bl-renter div:nth-child(odd) { background: rgba(148, 163, 184, .08); }
+.bl-renter span { color: #94a3b8; }
+.bl-renter strong { color: #fff; }
+
+.bl-fees, .bl-payments { width: 100%; border-collapse: collapse; }
+.bl-fees th, .bl-payments th { color: #fff; font-weight: 700; text-align: left; padding: 6px; }
+.bl-fees td, .bl-payments td { padding: 4px 6px; }
+.bond-ledger .c { text-align: center; }
+.bond-ledger .r { text-align: right; white-space: nowrap; }
+.bl-refund-line td { color: #fbbf24; }
+
+.bl-total { display: flex; justify-content: space-between; border-top: 1px solid #334155; margin: 8px 0 16px; padding: 10px 6px 0; font-weight: 600; }
+.bl-total span:last-child { text-align: right; }
+.bl-total small { display: block; color: #94a3b8; font-weight: 400; font-size: 12px; }
+
+.bl-payments thead th { border-bottom: 1px solid #475569; }
+.bl-payments tbody td { background: rgba(148, 163, 184, .06); border-bottom: 1px solid #263244; padding: 8px 6px; }
+.bl-payments small { color: #94a3b8; }
+.bl-payments tr.bl-refund td { background: rgba(16, 185, 129, .10); color: #6ee7b7; }
+
+.bl-balance { display: flex; justify-content: space-between; border-top: 1px solid #94a3b8; padding: 10px 6px 0; margin-top: 2px; font-weight: 700; font-size: 14px; }
+.bl-balance.owed span:last-child { color: #f87171; }
+.bl-balance.due span:last-child { color: #fbbf24; }
+.bl-balance.zero span:last-child { color: #34d399; }
+
+/* ==========================================
+   MÓDULO BOND REFUNDS (Agent Dashboard)
+   ========================================== */
+.bn-menu-count { background: #ef4444; color: #fff; border-radius: 10px; padding: 0 7px; font-size: 11px; font-weight: 700; margin-left: 6px; }
+.bn-menu-count:empty { display: none; }
+.bn-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.bn-stat { background: var(--surface-dark); border: 1px solid #334155; border-radius: 10px; padding: 14px 18px; }
+.bn-stat span { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 4px; }
+.bn-stat strong { font-size: 22px; color: #fff; }
+.bn-stat strong.owed { color: #f87171; }
+.bn-stat strong.ok { color: #34d399; }
+.bn-stat strong.held { color: #fbbf24; }
+.bn-stat strong small { font-size: 13px; font-weight: 600; color: #fcd34d; margin-left: 4px; }
+.bn-held { display: inline-block; color: #fbbf24; background: rgba(245, 158, 11, .15); border: 1px solid rgba(245, 158, 11, .45); border-radius: 4px; padding: 3px 8px; font-size: 11px; font-weight: 700; white-space: nowrap; margin-right: 4px; }
+.bn-table .r { text-align: right; }
+.bn-res { color: #f87171; font-weight: 700; }
+.bn-res-link { background: none; border: none; padding: 0; font: inherit; color: inherit; font-weight: 700; cursor: pointer; }
+.bn-res-link:hover { text-decoration: underline; }
+.bn-owed { color: #f87171; font-weight: 700; }
+.bn-zero { color: #34d399; font-weight: 700; }
+.bn-closed { color: #34d399; font-weight: 600; font-size: 12px; }
+.bn-empty { text-align: center; color: #94a3b8; padding: 30px !important; }
+.bn-table small { color: #94a3b8; }
+
+.bn-ledger-card { max-width: 860px; }
+.bn-ledger-head { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #334155; padding-bottom: 12px; margin-bottom: 14px; }
+.bn-ledger-head h3 { font-size: 17px; margin-right: auto; }
+.bn-ledger-head h3 small { font-size: 12px; color: #94a3b8; font-weight: 600; }
+.bn-badge { border: 2px solid #34d399; color: #34d399; border-radius: 4px; padding: 3px 10px; font-size: 11px; font-weight: 800; letter-spacing: 1px; }
+.bn-ledger-actions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 18px; }
+.bn-ledger-msg { margin-right: auto; font-size: 13px; font-weight: 600; color: #34d399; }
+
+.bn-access-list { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+.bn-access-row { display: flex; align-items: center; gap: 12px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px 14px; cursor: pointer; }
+.bn-access-row input { accent-color: var(--gc-orange); width: 16px; height: 16px; }
+.bn-access-row span { display: flex; flex-direction: column; }
+.bn-access-row small { color: #94a3b8; font-size: 12px; }
+.bn-access-row em { margin-left: auto; font-style: normal; font-size: 11px; font-weight: 700; color: #fbbf24; }
+.bn-access-row.locked { cursor: default; opacity: .8; }
+
+@media (max-width: 760px) {
+  .bn-stats { grid-template-columns: 1fr; }
+  .bl-renter div { grid-template-columns: 1fr; gap: 2px; }
+}

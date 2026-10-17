@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GC Tech Dashboard - Operations Control</title>
+  <link rel="stylesheet" href="../css/agent-style.css">
+  <link rel="stylesheet" href="../css/gc-chat.css"> <!-- NEW -->
+  <link rel="stylesheet" href="../css/gc-payments.css">
+  <link rel="stylesheet" href="../css/gc-allocation.css">
+  <link rel="stylesheet" href="../css/gc-analytics.css">
+  <link rel="stylesheet" href="../css/gc-bonds.css">
+  <link rel="stylesheet" href="../css/gc-overview.css">
+  <link rel="stylesheet" href="../css/gc-3cx.css">
+  <link rel="stylesheet" href="../css/gc-whatsapp.css" id="wa-styles">
+  <link rel="stylesheet" href="../css/gc-rcm-shell.css">
+</head>
+<body>
+
+  <!-- AUTHENTICATION SCREEN FOR AGENTS -->
+  <div id="agent-auth-view" class="agent-view active">
+    <div class="auth-wrapper">
+      <div class="auth-box">
+        <img src="../assets/img/gc-logo.svg" alt="GC Tech Logo" class="auth-logo">
+        <h2 style="color: #1e293b; margin-bottom: 5px;">GC Tech Dashboard Login</h2>
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 25px;">Please sign in with your corporate credentials.</p>
+        
+        <form id="agent-login-form" onsubmit="handleAgentAuth(event)">
+          <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="agent-username" placeholder="e.g. felipe" required>
+          </div>
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="agent-password" placeholder="••••••••" required>
+          </div>
+          <p id="auth-error" style="color: #ef4444; font-size: 13px; margin-bottom: 15px; display: none;">Invalid credentials. Please try again.</p>
+          <button type="submit" class="btn-propose" style="width: 100%; padding: 12px; font-size: 15px;">Secure Login</button>
+        </form>
+        <div style="margin-top: 20px; font-size: 12px; color: var(--text-muted);">
+          <strong>Available Test Accounts:</strong><br>
+          <code>felipe</code> — Senior Operations Agent<br>
+          <code>alex</code> — Data Analyst<br>
+          <code>sam</code> — Owner / Managing Director<br>
+          <code>test</code> — Support Staff<br>
+          Password for all: <code>gctech</code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN GC TECH DASHBOARD -->
+  <div id="agent-main-dashboard" style="display: none;" class="app-layout">
+    
+    <!-- LEFT SIDEBAR: menu montado por js/gc-rcm-shell.js (mesmo menu de todas as telas do RCM) -->
+    <aside class="sidebar"></aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+      <div class="agent-header">
+        <div class="header-title" id="top-header-title">Agent Requests & Allocations</div>
+        <div class="agent-status">🟢 Online (Sydney Hub)</div>
+      </div>
+
+      <div class="agent-container wide">
+        
+        <!-- MÓDULO 1: AGENT REQUESTS (O que já criamos) -->
+        <div id="module-agent-requests" class="app-module active">
+          <div class="agent-tabs">
+            <div class="agent-tab active" id="tab-alerts" onclick="switchAgentTab('alerts')">🚗 Allocate Reservations <span class="al-tab-count" id="al-tab-count"></span></div>
+            <div class="agent-tab" id="tab-upcoming" onclick="switchAgentTab('upcoming')">📅 All Upcoming Bookings</div>
+            <div class="agent-tab" id="tab-status" onclick="switchAgentTab('status')">📊 Booking Status Overview</div>
+          </div>
+  
+          <!-- ALLOCATE RESERVATION (js/gc-allocation.js) -->
+          <div id="view-alerts" class="agent-view active">
+            <div class="al-title-row">
+              <h2 class="al-title">Allocate Reservation</h2>
+              <button type="button" class="pp-btn ghost al-demo-btn" onclick="alCreateDemoRequest()" title="Creates an online booking that arrived when no vehicle was available">＋ Simulate booking with no vehicle <span>demo</span></button>
+            </div>
+
+            <div class="al-filters">
+              <label>Location<select id="al-f-location" onchange="renderAllocationTable()"></select></label>
+              <label>Pickup from<input type="date" id="al-f-from" onchange="renderAllocationTable()"></label>
+              <label>To<input type="date" id="al-f-to" onchange="renderAllocationTable()"></label>
+              <label>Category<select id="al-f-category" onchange="renderAllocationTable()"></select></label>
+              <label>Search<input type="text" id="al-f-search" placeholder="Res. / name / email" oninput="renderAllocationTable()"></label>
+              <label class="al-check"><input type="checkbox" id="al-f-offers" checked onchange="renderAllocationTable()"> Include offers sent</label>
+              <label class="al-check"><input type="checkbox" id="al-f-cancelled" onchange="renderAllocationTable()"> Include declined</label>
+            </div>
+
+            <div class="al-table-wrap">
+              <table class="al-table">
+                <thead>
+                  <tr>
+                    <th>#</th><th>Res.</th><th>Type</th><th colspan="2">Allocate</th><th>Note</th><th>Name</th><th>Category</th>
+                    <th>Pickup</th><th>Pickup Date</th><th>Dropoff</th><th>Dropoff Date</th><th>Date Entered</th><th>Entered By</th><th>Booking Total</th><th>Decline</th>
+                  </tr>
+                </thead>
+                <tbody id="al-table-body"></tbody>
+              </table>
+            </div>
+            <div class="al-count" id="al-count"></div>
+
+            <div class="al-rules">
+              <strong>System rules used for the available vehicle list</strong>
+              <ol>
+                <li>Only vehicles with no overlapping booking, maintenance or hold in the Fleet Planner are offered.</li>
+                <li>Vehicles based at the pickup location are listed first (then other branches — transfer required).</li>
+                <li>Same category → allocate directly. Different category or dates → sent to the customer as an offer to accept.</li>
+                <li>Pickup and dropoff times must be between 08:00 and 17:15 in 15-minute intervals.</li>
+              </ol>
+            </div>
+          </div>
+  
+          <div id="view-upcoming" class="agent-view">
+            <h2 style="margin-bottom: 8px;">All Upcoming Bookings</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">Complete list of confirmed and pending bookings across all clients.</p>
+
+            <div class="date-filter-bar">
+              <div class="date-filter-group">
+                <label>From</label>
+                <input type="date" id="filter-date-from">
+              </div>
+              <div class="date-filter-group">
+                <label>To</label>
+                <input type="date" id="filter-date-to">
+              </div>
+              <button class="table-btn" style="background: var(--gc-orange);" onclick="applyDateFilter()">Filter</button>
+              <button class="table-btn" style="background: #334155;" onclick="clearDateFilter()">Clear</button>
+            </div>
+
+            <div id="upcoming-container"></div>
+          </div>
+  
+          <div id="view-status" class="agent-view">
+            <h2 style="margin-bottom: 8px;">Global Booking Status</h2>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">Track all client bookings, approvals, and agent audit trails.</p>
+            <div id="history-container"></div>
+          </div>
+        </div>
+
+        <!-- MÓDULO 2: TODAY'S OVERVIEW — painéis no estilo do RCM, montados por js/gc-overview.js -->
+        <div id="module-dashboard" class="app-module"></div>
+
+        <!-- MÓDULO 3: VEHICLES / FLEET (EXEMPLO) -->
+        <div id="module-vehicles" class="app-module">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 24px;">
+            <h2>Fleet Directory</h2>
+            <input type="text" placeholder="Search registration or model..." style="padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: #fff; width: 300px;">
+          </div>
+          
+          <div class="data-table-container">
+            <table class="gc-data-table">
+              <thead>
+                <tr>
+                  <th>Reg. Plate</th>
+                  <th>Make & Model</th>
+                  <th>Category</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Mileage</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-weight: 700;">XQA-441</td>
+                  <td>Toyota Corolla Hybrid</td>
+                  <td>Economy Car</td>
+                  <td>Blacktown</td>
+                  <td><span class="table-badge confirmed">Available</span></td>
+                  <td>45,210 km</td>
+                  <td><button class="table-btn">View Profile</button></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">BRT-902</td>
+                  <td>Mitsubishi Outlander</td>
+                  <td>Mid Size 7 Seater SUV</td>
+                  <td>Mascot</td>
+                  <td><span class="table-badge" style="background: #3b82f6; color: #fff;">On Rent</span></td>
+                  <td>12,400 km</td>
+                  <td><button class="table-btn">View Profile</button></td>
+                </tr>
+                <tr>
+                  <td style="font-weight: 700;">HIN-110</td>
+                  <td>Hino 300 Series Pantech</td>
+                  <td>Commercial Truck</td>
+                  <td>Parramatta</td>
+                  <td><span class="table-badge pending">Maintenance</span></td>
+                  <td>105,800 km</td>
+                  <td><button class="table-btn">View Profile</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+<!-- NEW: LIVE CHAT MODULE -->
+        <div id="module-livechat" class="app-module">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="color:#fff; font-size:16px;">Customer Conversations</h3>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="color:var(--text-muted); font-size:12px;">Assisting as:</label>
+              <input id="agent-name-input" type="text" value="Felipe" style="padding:6px 10px; border-radius:4px; border:1px solid #334155; background:#0f172a; color:#fff; font-size:12px; width:120px;">
+              <button class="btn btn-cancel" style="padding:6px 12px; font-size:12px;" onclick="setAgentName()">Save</button>
+            </div>
+          </div>
+          
+          <!-- CHAT SEARCH BAR -->
+          <div style="margin-bottom: 20px;">
+            <input type="text" id="chat-search-input" onkeyup="renderLiveChatModule()" placeholder="🔍 Search by Booking Ref, Email or Customer Name..." style="width: 100%; padding: 10px 14px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #fff; font-size: 13px; outline: none; transition: border-color 0.2s;">
+            <style> #chat-search-input:focus { border-color: #3b82f6; background: #0f172a; } </style>
+          </div>
+
+          <div id="livechat-list"></div>
+        </div>
+
+        <!-- MÓDULOS DE GESTÃO (js/gc-analytics.js) — conteúdo montado via JS -->
+        <div id="module-analytics" class="app-module"></div>
+        <div id="module-executive" class="app-module"></div>
+
+        <!-- MÓDULO: 3CX CALLS (js/gc-3cx.js) — dados simulados até conectar ao 3CX -->
+        <div id="module-3cx" class="app-module"></div>
+
+        <!-- MÓDULO: WHATSAPP VIA 3CX (js/gc-whatsapp.js) — simulado até conectar ao 3CX -->
+        <div id="module-whatsapp" class="app-module"></div>
+
+        <!-- MÓDULO: PAYMENT PLANS (js/gc-payments.js) -->
+        <div id="module-payments" class="app-module">
+          <div class="pp-head">
+            <div>
+              <h2>Payment Plans</h2>
+              <p>Weekly repayment plans for accident & damage costs. The customer pays each instalment by phone, live chat or WhatsApp (or at a branch) and the agent processes it on the card (no cash or bank transfer). Instalments paid come off the booking balance.</p>
+            </div>
+            <button class="pp-btn primary" onclick="ppOpenNewPlan()">+ New payment plan</button>
+          </div>
+
+          <div class="pp-stats" id="pp-stats"></div>
+
+          <div class="pp-today">
+            <div class="pp-today-head">
+              <h3 id="pp-today-title">Instalments due today</h3>
+            </div>
+            <div id="pp-today-list"></div>
+          </div>
+
+          <div class="pp-list-head">
+            <div class="pp-filters" id="pp-filters"></div>
+            <input type="text" class="pp-search" placeholder="Search customer, booking, plate…" oninput="ppOnSearch(this.value)">
+          </div>
+          <div class="pp-table-wrap">
+            <table class="pp-table">
+              <thead>
+                <tr><th>Customer</th><th>Booking</th><th>Reason</th><th>Weekly</th><th>Progress</th><th>Next instalment</th><th>Status</th><th></th></tr>
+              </thead>
+              <tbody id="pp-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- MÓDULO: BOND REFUNDS — "Reservations Due Closed" do RCM (js/gc-bonds-module.js) -->
+        <div id="module-bonds" class="app-module">
+          <div class="pp-head">
+            <div>
+              <h2>Reservations Due Closed — Bond Refunds</h2>
+              <p>Returned bookings with a bond to give back. Releasing a bond refunds the card through the payment gateway API (simulated) and brings the balance due to $0.00.</p>
+            </div>
+            <button class="pp-btn ghost" id="bn-access-btn" onclick="bnOpenAccess()">👥 Manage access</button>
+          </div>
+
+          <div class="bn-stats" id="bn-stats"></div>
+
+          <div class="al-filters">
+            <label>Dropoff<select id="bn-f-branch" onchange="renderBondsTable()"></select></label>
+            <label>Return date from<input type="date" id="bn-f-from" onchange="renderBondsTable()"></label>
+            <label>To<input type="date" id="bn-f-to" onchange="renderBondsTable()"></label>
+            <label>Res with
+              <select id="bn-f-status" onchange="renderBondsTable()">
+                <option value="owed">Bond to refund</option>
+                <option value="held">On hold</option>
+                <option value="refunded">Refunded</option>
+                <option value="all">All returned</option>
+              </select>
+            </label>
+            <label>Search<input type="text" id="bn-f-search" placeholder="Last name / Res # / Rego" oninput="renderBondsTable()"></label>
+          </div>
+
+          <div class="al-table-wrap">
+            <table class="al-table bn-table">
+              <thead>
+                <tr><th>#</th><th>Res #</th><th>Update</th><th>Dropoff</th><th>Dropoff Region</th><th>Dropoff Date Time</th><th>Rego</th><th>Company</th><th>Customer</th><th>Payment Type</th><th class="r">Balance</th><th>Refunded By</th><th>Close Res.</th></tr>
+              </thead>
+              <tbody id="bn-body"></tbody>
+            </table>
+          </div>
+          <div class="al-count" id="bn-count"></div>
+        </div>
+
+        <!-- MÓDULO 4: PLACEHOLDER (módulos ainda não construídos; o título vem do switchModule) -->
+        <div id="module-placeholder" class="app-module">
+          <h2 id="placeholder-title" style="margin-bottom: 8px;">Module</h2>
+          <p style="color: var(--text-muted);">This module hasn't been built yet.</p>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- PAYMENT PLANS: painel de detalhes, novo plano e toast -->
+  <div class="pp-drawer" id="pp-drawer" onclick="if (event.target === this) ppCloseDetails()">
+    <div class="pp-drawer-panel" id="pp-drawer-body"></div>
+  </div>
+
+  <div class="pp-modal" id="pp-new-modal" onclick="if (event.target === this) ppCloseNewPlan()">
+    <div class="pp-modal-card">
+      <h3>New payment plan</h3>
+      <p class="pp-sub">Pick the booking to fill in the customer automatically.</p>
+      <div class="pp-form-grid">
+        <label>Booking ref *
+          <input type="text" id="pp-new-ref" list="pp-booking-list" oninput="ppFillFromBooking()" placeholder="e.g. GC-8832">
+          <datalist id="pp-booking-list"></datalist>
+        </label>
+        <label>Linked damage report
+          <select id="pp-new-damage"></select>
+        </label>
+        <label>Customer name *<input type="text" id="pp-new-name"></label>
+        <label>Email *<input type="email" id="pp-new-email"></label>
+        <label>Phone<input type="text" id="pp-new-phone" placeholder="+61 4xx xxx xxx"></label>
+        <label>Card last 4 digits *<input type="text" id="pp-new-card" maxlength="4" placeholder="4242"></label>
+        <label class="full">Reason *<input type="text" id="pp-new-reason" placeholder="e.g. At-fault accident — rear bumper & tail light"></label>
+        <label>Total amount ($) *<input type="number" id="pp-new-total" min="0" step="0.01" oninput="ppUpdatePreview()"></label>
+        <label>Weekly instalment ($) *<input type="number" id="pp-new-weekly" min="0" step="0.01" oninput="ppUpdatePreview()"></label>
+        <label>First instalment date *<input type="date" id="pp-new-first" onchange="ppUpdatePreview()"></label>
+      </div>
+      <div class="pp-preview" id="pp-new-preview"></div>
+      <div class="pp-error" id="pp-new-error"></div>
+      <div class="pp-modal-actions">
+        <button class="pp-btn ghost" onclick="ppCloseNewPlan()">Cancel</button>
+        <button class="pp-btn primary" onclick="ppCreatePlan()">Create plan</button>
+      </div>
+    </div>
+  </div>
+  <div class="pp-toast" id="pp-toast"></div>
+
+  <!-- BOND REFUNDS: extrato do booking + liberar o bond -->
+  <div class="pp-modal" id="bn-ledger-modal" onclick="if (event.target === this) bnCloseLedger()">
+    <div class="pp-modal-card bn-ledger-card">
+      <div class="bn-ledger-head">
+        <h3 id="bn-ledger-title">Booking</h3>
+        <span class="bn-badge">RETURNED</span>
+        <button class="pp-close" onclick="bnCloseLedger()">✕</button>
+      </div>
+      <div class="bond-ledger" id="bn-ledger-body"></div>
+      <div class="bn-ledger-actions">
+        <span class="bn-ledger-msg" id="bn-ledger-msg"></span>
+        <button class="pp-btn ghost" onclick="bnCloseLedger()">Close</button>
+        <button class="pp-btn primary" id="bn-release-btn" onclick="bnReleaseBond()">Release bond via API</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOND REFUNDS: quem tem acesso (só Felipe e Alex editam) -->
+  <div class="pp-modal" id="bn-access-modal" onclick="if (event.target === this) bnCloseAccess()">
+    <div class="pp-modal-card">
+      <h3>Bond Refunds — access</h3>
+      <p class="pp-sub">Choose who can see the Bond Refunds screen and release bonds. Felipe and Alex always have access.</p>
+      <div class="bn-access-list" id="bn-access-list"></div>
+      <div class="pp-modal-actions">
+        <button class="pp-btn ghost" onclick="bnCloseAccess()">Cancel</button>
+        <button class="pp-btn primary" onclick="bnSaveAccess()">Save access</button>
+      </div>
+    </div>
+  </div>
+  <div class="pp-toast" id="bn-toast"></div>
+
+  <!-- VEHICLE ALLOCATION (AVAILABILITY ENGINE) -->
+  <div class="pp-modal" id="al-engine" onclick="if (event.target === this) alCloseEngine()">
+    <div class="pp-modal-card al-engine-card">
+      <div class="al-engine-head">
+        <h3>Vehicle Allocation (Availability Engine)</h3>
+        <button class="pp-close" onclick="alCloseEngine()">✕</button>
+      </div>
+      <div class="al-engine-controls">
+        <label>Category<select id="al-e-category" onchange="alRenderEngine()"></select></label>
+        <label>OR Rego<input type="text" id="al-e-rego" placeholder="Plate…" oninput="alRenderEngine()"></label>
+        <label>Pickup<input type="datetime-local" step="900" id="al-e-pickup" onchange="alRenderEngine()"></label>
+        <label>Dropoff<input type="datetime-local" step="900" id="al-e-dropoff" onchange="alRenderEngine()"></label>
+        <label class="al-check"><input type="checkbox" id="al-e-unavailable" onchange="alRenderEngine()"> Show unavailable</label>
+        <button class="pp-btn ghost" onclick="alResetEngineSearch()">Reset to booking</button>
+      </div>
+      <div class="al-engine-booking" id="al-e-booking"></div>
+      <div class="al-engine-note" id="al-e-note"></div>
+      <div class="al-table-wrap">
+        <table class="al-table">
+          <thead>
+            <tr><th>#</th><th>Category</th><th>Model</th><th>Rego</th><th>Current Located</th><th>Last Dropoff</th><th>Next Pickup</th><th>Availability</th><th></th><th></th></tr>
+          </thead>
+          <tbody id="al-e-body"></tbody>
+        </table>
+      </div>
+      <div class="al-count" id="al-e-count"></div>
+    </div>
+  </div>
+
+  <!-- NOTAS DA RESERVA -->
+  <div class="pp-modal" id="al-notes" onclick="if (event.target === this) alCloseNotes()">
+    <div class="pp-modal-card">
+      <div class="al-engine-head">
+        <h3 id="al-notes-title">Notes</h3>
+        <button class="pp-close" onclick="alCloseNotes()">✕</button>
+      </div>
+      <div class="pp-notes" id="al-notes-list"></div>
+      <div class="pp-note-form">
+        <input type="text" id="al-notes-input" placeholder="Add a note (e.g. customer prefers a van if no truck)">
+        <button class="pp-btn" onclick="alAddNote()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../js/gc-dates.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-fees-data.js"></script>
+  <script src="../js/gc-bonds.js"></script>
+  <script src="../js/gc-rcm-shell.js"></script>
+  <script src="../js/agent-script.js"></script>
+  <script src="../js/gc-bonds-module.js"></script>
+  <script src="../js/gc-chat.js"></script> <!-- NEW -->
+  <script src="../js/gc-payments.js"></script>
+  <script src="../js/gc-allocation.js"></script>
+  <script src="../vendor/chartjs/chart.umd.min.js"></script>
+  <script src="../js/gc-analytics-data.js"></script>
+  <script src="../js/gc-analytics.js"></script>
+  <script src="../js/gc-overview.js"></script>
+  <script src="../js/gc-3cx.js"></script>
+  <script src="../js/gc-whatsapp.js"></script>
+  <script src="../js/gc-powerboard.js"></script>
+  <script src="../js/gc-anna.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>

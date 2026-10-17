@@ -1,0 +1,146 @@
+/* ==========================================
+   DAILY ACTIVITY (js/gc-daily-activity.js)
+   Visual escuro do RCM; barra de filtros igual à do Fleet Planner
+   ========================================== */
+
+/* Ações do topo */
+.da-actions { gap: 6px; }
+.da-tool {
+  display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 1px solid var(--border-color);
+  color: #e2e8f0; border-radius: 6px; padding: 7px 11px; font-size: 12px; font-weight: 600; cursor: pointer;
+}
+.da-tool:hover { background: rgba(255,255,255,.06); border-color: #475569; }
+.da-tool svg { color: #93c5fd; }
+.da-tool.xls svg { color: #4ade80; }
+.da-tool.pdf svg { color: #f87171; }
+.da-switch { display: inline-flex; align-items: center; gap: 8px; margin-left: 8px; font-size: 12px; font-weight: 600; color: #cbd5e1; cursor: pointer; user-select: none; }
+.da-switch input { display: none; }
+.da-switch span { width: 32px; height: 18px; border-radius: 9px; background: #334155; position: relative; transition: background .15s; }
+.da-switch span::after { content: ''; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform .15s; }
+.da-switch input:checked + span { background: #2563eb; }
+.da-switch input:checked + span::after { transform: translateX(14px); }
+
+/* Filtros */
+.da-filterbar { background: #0b3a66; padding: 10px 20px; border-bottom: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 8px; }
+.da-filter-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 12px; }
+.da-filterbar label { display: flex; flex-direction: column; gap: 4px; font-size: 10px; font-weight: 700; color: #bfdbfe; text-transform: uppercase; letter-spacing: .5px; }
+.da-filterbar select, .da-filterbar input[type="date"] {
+  padding: 5px 8px; border-radius: 4px; border: 1px solid #1e40af; background: #fff; color: #0f172a; font-size: 12px; color-scheme: light; min-width: 0;
+}
+.da-filterbar select.wide { min-width: 230px; }
+.da-dt { display: inline-flex; align-items: center; gap: 4px; }
+.da-dt b { color: #bfdbfe; }
+.da-dt select { width: 52px; }
+.da-filterbar .da-check { flex-direction: row; align-items: center; gap: 6px; padding-bottom: 6px; text-transform: none; font-size: 12px; color: #e0f2fe; }
+.da-view-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 18px; font-size: 13px; }
+
+/* Dia */
+.da-daynav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px; background: var(--surface-dark); border-bottom: 1px solid var(--border-color); }
+.da-day { text-align: center; }
+.da-day strong { display: block; font-size: 17px; color: #fff; }
+.da-day span { font-size: 12px; color: var(--text-muted); }
+.da-nav-right { display: flex; gap: 8px; }
+.da-nav-btn { background: #2563eb; color: #fff; border: none; border-radius: 5px; padding: 7px 14px; font-size: 12px; font-weight: 700; cursor: pointer; }
+.da-nav-btn:hover { background: #1d4ed8; }
+.da-nav-btn.ghost { background: transparent; border: 1px solid #475569; color: #e2e8f0; }
+.da-nav-btn.ghost:hover { background: rgba(255,255,255,.06); }
+
+/* Resultados */
+.da-results { flex: 1; min-height: 0; overflow: auto; padding: 4px 20px 30px; background: #0f172a; }
+.da-section { margin-top: 18px; }
+.da-section h2 { text-align: center; font-size: 18px; color: #fff; margin-bottom: 10px; }
+.da-table-tools { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 13px; color: #cbd5e1; }
+.da-tools-left { display: flex; align-items: center; gap: 8px; }
+.da-table-tools select, .da-filter input {
+  background: #0b1120; color: #e2e8f0; border: 1px solid #475569; border-radius: 4px; padding: 4px 6px; font-size: 12px; color-scheme: dark;
+}
+.da-filter input { width: 220px; padding: 6px 8px; margin-left: 6px; }
+.da-icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 28px; border-radius: 4px; border: 1px solid #475569; background: #0b1120; color: #93c5fd; cursor: pointer; }
+.da-icon-btn.xls { color: #4ade80; }
+.da-icon-btn:hover { border-color: #94a3b8; }
+
+.da-table-wrap { border: 1px solid #1e293b; border-radius: 6px; }
+.da-table { width: max-content; min-width: 100%; border-collapse: collapse; font-size: 12px; }
+/* Larguras por coluna (a tabela rola na horizontal, como no RCM) */
+.da-table .c-res, .da-table .c-pDate, .da-table .c-dDate, .da-table .c-booked, .da-table .c-pTime, .da-table .c-dTime,
+.da-table .c-plate, .da-table .c-mobile, .da-table .c-rate, .da-table .c-value, .da-table .c-balance, .da-table .c-card { white-space: nowrap; }
+.da-table .c-status { min-width: 100px; }
+.da-table .c-category { min-width: 175px; }
+.da-table .c-customer { min-width: 150px; }
+.da-table .c-items { min-width: 120px; }
+.da-table .c-arrival { min-width: 80px; }
+.da-table .c-lastRental, .da-table .c-nextRental { min-width: 150px; }
+.da-table .c-esign, .da-table .c-esigned, .da-table .c-checkin { min-width: 70px; }
+.da-table th {
+  background: #1e4f8a; color: #fff; font-weight: 700; text-align: left; padding: 8px 7px; font-size: 11px; line-height: 1.3;
+  border-right: 1px solid #2b62a3; vertical-align: middle; min-width: 40px;
+}
+.da-table th.r, .da-table td.r { text-align: right; }
+.da-results.da-fixed .da-table th { position: sticky; top: 0; z-index: 3; box-shadow: 0 1px 0 #2b62a3; }
+.da-table td { padding: 7px; border-bottom: 1px solid #1e293b; color: #e2e8f0; vertical-align: top; line-height: 1.45; }
+.da-table td.act { white-space: nowrap; }
+.da-row:hover td { background: #131d33; }
+.da-row.maint td { background: rgba(107, 142, 35, .07); }
+.da-row.cancelled td { color: #64748b; text-decoration: line-through; }
+.da-row.cancelled td.act { text-decoration: none; }
+.da-table tfoot td { background: #0b1120; font-weight: 700; color: #fff; border-top: 2px solid #1e4f8a; }
+
+/* Notas abaixo do booking */
+.da-note td { background: #0b1222; color: #cbd5e1; font-size: 12px; padding: 6px 7px; border-bottom: 1px solid #1e293b; }
+.da-note td:last-child { border-left: 3px solid #334155; }
+.da-note.high td:last-child { border-left-color: #f59e0b; }
+.da-note-meta { margin-left: 10px; color: #64748b; font-size: 11px; }
+
+.da-btn { background: #2563eb; color: #fff; border: none; border-radius: 4px; padding: 5px 9px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.da-btn:hover { background: #1d4ed8; }
+.da-res { color: #f87171; font-weight: 700; }
+.da-plate { font-weight: 700; color: #fde047; text-decoration: none; }
+a.da-plate:hover { text-decoration: underline; }
+.da-muted { color: #94a3b8; }
+.da-red { color: #f87171; font-weight: 600; }
+.da-amber { color: #fbbf24; font-weight: 600; }
+.da-status { display: block; font-weight: 600; }
+.da-status.s-maintenance { color: #a3e635; }
+.da-status.s-hired { color: #60a5fa; }
+.da-status.s-returned { color: #34d399; }
+.da-status.s-fleet_pending, .da-status.s-proposal_sent { color: #fbbf24; }
+.da-badge { display: inline-block; margin-top: 5px; padding: 4px 7px; border-radius: 4px; font-size: 11px; font-weight: 600; line-height: 1.25; text-align: center; }
+.da-badge.clean { background: #1d4ed8; color: #fff; }
+.da-badge.dnm { background: transparent; color: #f87171; border: 1px dashed #ef4444; }
+.da-badge + .da-badge { margin-left: 4px; }
+.da-badge.series { background: rgba(59, 130, 246, .15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, .5); }
+.da-empty { text-align: center; color: var(--text-muted); font-style: italic; padding: 22px !important; }
+.da-count { margin-top: 8px; font-size: 12px; color: var(--text-muted); }
+
+/* Reservas vencidas */
+.da-stale { margin-top: 16px; background: rgba(239, 68, 68, .08); border: 1px solid rgba(239, 68, 68, .45); border-left: 4px solid #ef4444; border-radius: 6px; padding: 12px 16px; }
+.da-stale-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin-bottom: 8px; }
+.da-stale-head strong { color: #fca5a5; font-size: 14px; }
+.da-stale-head span { color: #cbd5e1; font-size: 12px; }
+.da-stale-row { display: grid; grid-template-columns: 80px minmax(120px, 1fr) minmax(200px, 1.4fr) minmax(220px, 1.4fr) auto; gap: 12px; align-items: center; padding: 7px 0; border-top: 1px solid rgba(239, 68, 68, .2); font-size: 12px; color: #e2e8f0; }
+.da-stale-actions { display: flex; gap: 6px; justify-content: flex-end; }
+.da-btn.danger { background: transparent; border: 1px solid #7f1d1d; color: #f87171; }
+.da-btn.danger:hover { background: rgba(239, 68, 68, .12); }
+.da-btn.ghost { background: transparent; border: 1px solid #475569; color: #e2e8f0; }
+.da-btn.ghost:hover { background: rgba(255, 255, 255, .06); }
+
+/* Impressão / PDF: só o relatório, em fundo branco */
+@media print {
+  @page { size: A4 landscape; margin: 10mm; }
+  body, body.has-rcm-shell, .rcm-shell, .rcm-shell-main { height: auto !important; overflow: visible !important; display: block !important; background: #fff !important; }
+  .rcm-shell-sidebar, .da-actions, .da-filterbar, .da-nav-btn, .da-nav-right, .da-table-tools, .da-count, .da-modal, .oui-stack, .da-stale-actions { display: none !important; }
+  .topbar { height: auto; background: #fff !important; border: none; box-shadow: none; padding: 0 0 4px; }
+  .topbar-title { color: #000; font-size: 14px; }
+  .da-daynav { background: #fff; border: none; padding: 0 0 6px; justify-content: center; }
+  .da-day strong, .da-day span, .da-section h2 { color: #000 !important; }
+  .da-results { overflow: visible; padding: 0; background: #fff; }
+  .da-table { font-size: 9px; }
+  .da-table th { background: #dbe7f5 !important; color: #000 !important; border: 1px solid #9ca3af; position: static !important; padding: 4px; }
+  .da-table td { color: #000 !important; background: #fff !important; border: 1px solid #d1d5db; padding: 3px 4px; }
+  .da-table .act { display: none; }
+  .da-note td { background: #f8fafc !important; font-style: italic; }
+  .da-badge.clean { background: none; color: #000; border: 1px solid #000; }
+  .da-table-wrap { border: none; }
+  .da-section { break-inside: auto; }
+  .da-row { break-inside: avoid; }
+}

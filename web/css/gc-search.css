@@ -1,0 +1,93 @@
+/* ==========================================
+   GC TECH SEARCH RESULTS — complementa gc-home.css
+   ========================================== */
+[hidden] { display: none !important; }
+
+.search-body { background: #f7f4f0; }
+.search-header { position: sticky; }
+
+/* ---------- BARRA DE BUSCA ---------- */
+.search-band { background: linear-gradient(180deg, #0f172a 0%, #1c1917 100%); padding: 22px 0 28px; }
+.progress-steps { list-style: none; display: flex; gap: 10px; margin-bottom: 18px; color: #94a3b8; font-size: 14px; }
+.progress-steps li { display: flex; align-items: center; gap: 10px; }
+.progress-steps li + li::before { content: '›'; color: #475569; }
+.progress-steps li.active { color: #fff; font-weight: 500; }
+
+.booking-widget.compact { padding: 4px 20px 14px; }
+.booking-widget.compact .widget-tabs { margin-bottom: 20px; }
+.booking-widget.compact .w-tab { padding: 12px 14px 10px; font-size: 14px; }
+.booking-widget.compact .widget-row { margin-bottom: 6px; align-items: stretch; }
+.booking-widget.compact .of-field { min-height: 50px; }
+.booking-widget.compact .of-field select, .booking-widget.compact .of-field input { font-size: 15px; padding: 11px 12px; }
+.booking-widget.compact .of-field select { padding-right: 32px; background-position: right 10px center; }
+.booking-widget.compact .btn-search { padding: 0 26px; }
+.booking-widget.compact .widget-error { margin: 4px 0 0; }
+
+/* ---------- LAYOUT ---------- */
+.results-layout { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(300px, 1fr); gap: 28px; padding-top: 30px; padding-bottom: 80px; align-items: start; }
+.results-toolbar { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+.results-toolbar h1 { font-size: 28px; font-weight: 400; }
+.results-sub { color: var(--ink-soft); font-size: 15px; margin-top: 4px; }
+.results-controls { display: flex; gap: 14px; align-items: center; }
+.toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; background: #fff; border: 1px solid #e7e5e4; padding: 8px 14px; border-radius: 20px; }
+.toggle input { accent-color: var(--orange); width: 16px; height: 16px; }
+.sort-select { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft); }
+.sort-select select { font-family: inherit; font-size: 14px; padding: 8px 12px; border-radius: 8px; border: 1px solid #e7e5e4; background: #fff; cursor: pointer; }
+
+/* ---------- CARDS DE RESULTADO ---------- */
+.result-card { display: grid; grid-template-columns: 240px minmax(0, 1fr); background: #fff; border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; box-shadow: 0 2px 10px rgba(0,0,0,.04); border: 1.5px solid transparent; transition: border-color .15s, box-shadow .15s; }
+.result-card:hover { border-color: #fdba74; box-shadow: 0 10px 28px rgba(0,0,0,.07); }
+.result-card.unavailable { opacity: .82; }
+.result-card.unavailable .result-img img { filter: grayscale(60%); }
+.result-img { background: var(--cream); position: relative; display: flex; align-items: center; justify-content: center; padding: 20px; min-height: 180px; }
+.result-img img { max-width: 100%; max-height: 140px; object-fit: contain; }
+.result-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 4px; }
+.result-top { display: flex; justify-content: space-between; gap: 16px; }
+.result-type { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600; }
+.result-name { font-size: 22px; font-weight: 500; }
+.result-desc { font-size: 14px; color: var(--ink-soft); }
+.result-specs { display: flex; gap: 16px; font-size: 14px; color: var(--ink-soft); margin: 10px 0 4px; flex-wrap: wrap; }
+.result-price { text-align: right; flex-shrink: 0; }
+.result-price .per-day { font-size: 13px; color: var(--ink-soft); }
+.result-price .per-day strong { font-size: 24px; color: var(--ink); font-weight: 600; }
+.result-price .total { font-size: 14px; margin-top: 2px; }
+.result-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: auto; padding-top: 14px; border-top: 1px solid #f3efea; }
+.avail-ok { color: #16a34a; font-size: 14px; font-weight: 500; }
+.avail-low { color: #b45309; font-size: 14px; font-weight: 500; }
+.avail-none { color: #b45309; font-size: 14px; font-weight: 500; }
+.btn-request { background: #475569; }
+.btn-request:hover { background: #334155; }
+.no-results { background: #fff; border-radius: var(--radius); padding: 50px; text-align: center; color: var(--ink-soft); }
+
+/* ---------- MAPA ---------- */
+.map-panel { position: sticky; top: 90px; }
+.map-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,.04); }
+.map-card iframe { width: 100%; height: 360px; border: 0; display: block; }
+.map-offline {
+  height: 360px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center;
+  color: #6b7280; font-size: 14px; background-color: #f5f5f4;
+  background-image: linear-gradient(#e7e5e4 1px, transparent 1px), linear-gradient(90deg, #e7e5e4 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.map-offline[hidden], .map-card iframe[hidden] { display: none; }
+.map-offline svg { color: var(--orange); }
+.map-offline strong { font-size: 18px; font-weight: 500; color: var(--ink); }
+.map-info { padding: 18px 20px; font-size: 15px; line-height: 1.5; }
+.map-info small { display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 600; margin-bottom: 4px; }
+.map-info strong { font-size: 20px; font-weight: 500; display: block; }
+
+@media (max-width: 1100px) {
+  .booking-widget.compact .widget-row { flex-wrap: wrap; }
+  .booking-widget.compact .of-field { flex: 1 1 30%; }
+  .booking-widget.compact .btn-search { padding: 14px 26px; }
+}
+@media (max-width: 960px) {
+  .results-layout { grid-template-columns: 1fr; }
+  .map-panel { display: none; }
+}
+@media (max-width: 640px) {
+  .result-card { grid-template-columns: 1fr; }
+  .result-top { flex-direction: column; }
+  .result-price { text-align: left; }
+  .booking-widget.compact .of-field { flex: 1 1 100%; }
+}

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GC Tech RCM - Customers &amp; Vehicles</title>
+  <link rel="stylesheet" href="../css/rcm-fleet-planner.css">
+  <style>
+    /* Layout Base da Base de Dados */
+    .crm-container { display: flex; height: calc(calc(100vh / var(--fit-zoom, 1)) - 60px); background: #0f172a; color: #fff; }
+    
+    /* Painel Esquerdo (Lista) */
+    .crm-sidebar { width: 350px; background: #1e293b; border-right: 1px solid #334155; display: flex; flex-direction: column; }
+    .crm-search-bar { padding: 20px; border-bottom: 1px solid #334155; background: #0f172a; }
+    .crm-search-bar input { width: 100%; padding: 12px 15px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #fff; outline: none; font-size: 13px; }
+    .crm-search-bar input:focus { border-color: #3b82f6; }
+    
+    .crm-customer-list { flex: 1; overflow-y: auto; }
+    .customer-card { padding: 16px 20px; border-bottom: 1px solid #334155; cursor: pointer; transition: background 0.2s; }
+    .customer-card:hover { background: #334155; }
+    .customer-card.active { background: #0f172a; border-left: 4px solid #3b82f6; }
+    
+    /* Painel Direito (Detalhes) */
+    .crm-main { flex: 1; min-width: 0; padding: 32px 30px; overflow-y: auto; }
+    .profile-header { display: flex; align-items: center; gap: 24px; margin-bottom: 30px; padding-bottom: 25px; border-bottom: 1px solid #334155; }
+    .avatar { width: 65px; height: 65px; background: #3b82f6; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; }
+    
+    /* Tabela de Histórico */
+    .booking-history-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #1e293b; border-radius: 8px; overflow: hidden; }
+    .booking-history-table th, .booking-history-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid #334155; font-size: 13px; }
+    .booking-history-table th { color: #94a3b8; font-size: 12px; text-transform: uppercase; background: #0f172a; }
+    .booking-history-table tr:hover td { background: #334155; }
+    .booking-history-table tr.ref-match td { background: rgba(59, 130, 246, 0.15); }
+    .booking-history-table tr.ref-match td:first-child { box-shadow: inset 4px 0 0 #3b82f6; }
+    .ref-hit { margin-top: 6px; font-size: 11px; font-weight: 700; color: #60a5fa; }
+
+    /* Abas Customers / Vehicles */
+    .crm-tabs { display: flex; gap: 4px; background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 3px; margin-bottom: 14px; }
+    .crm-tab { flex: 1; background: none; border: none; color: #94a3b8; font-size: 13px; font-weight: 600; padding: 7px 6px; border-radius: 4px; cursor: pointer; }
+    .crm-tab:hover { color: #fff; }
+    .crm-tab.active { background: #3b82f6; color: #fff; }
+
+    /* Veículos */
+    .veh-card { padding: 13px 20px; border-bottom: 1px solid #334155; cursor: pointer; transition: background 0.2s; display: flex; justify-content: space-between; gap: 10px; }
+    .veh-card:hover { background: #334155; }
+    .veh-card.active { background: #0f172a; border-left: 4px solid #3b82f6; }
+    .veh-card-model { font-size: 12px; color: #94a3b8; margin-top: 5px; }
+    .veh-card-side { text-align: right; font-size: 11px; color: #94a3b8; }
+    .plate-chip { display: inline-block; background: #fde047; color: #000; font-weight: 800; font-size: 13px; letter-spacing: .5px; padding: 3px 8px; border-radius: 4px; }
+    .plate-chip.big { font-size: 22px; padding: 8px 14px; letter-spacing: 1px; }
+    .plate-link { background: none; border: none; padding: 0; cursor: pointer; }
+    .plate-link:hover .plate-chip { box-shadow: 0 0 0 2px #3b82f6; }
+    .veh-status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
+    .veh-status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .veh-status.available { color: #34d399; background: rgba(16, 185, 129, .12); }
+    .veh-status.onhire { color: #60a5fa; background: rgba(59, 130, 246, .14); }
+    .veh-status.maint { color: #a3e635; background: rgba(132, 204, 22, .12); }
+    .veh-status.held { color: #cbd5e1; background: rgba(148, 163, 184, .15); }
+    .veh-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 26px; }
+    .veh-stat { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px 14px; }
+    .veh-stat span { display: block; font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 600; letter-spacing: .4px; }
+    .veh-stat strong { display: block; font-size: 18px; color: #fff; margin-top: 4px; }
+    .veh-stat small { display: block; font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    .booking-history-table tr.now td { background: rgba(59, 130, 246, 0.1); }
+    .booking-history-table tr.now td:first-child { box-shadow: inset 4px 0 0 #3b82f6; }
+    .crm-btn { padding: 6px 10px; font-size: 11px; border-radius: 4px; border: 1px solid #475569; background: transparent; color: #e2e8f0; cursor: pointer; font-weight: 600; }
+    .crm-btn:hover { background: #334155; }
+    .crm-btn + .crm-btn { margin-left: 6px; }
+    .crm-muted { color: #94a3b8; font-size: 12px; }
+    .veh-history th, .veh-history td { padding: 12px 12px; }
+    .crm-name-link { background: none; border: none; padding: 0; color: #e2e8f0; font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+    .crm-name-link:hover { color: #60a5fa; text-decoration: underline; }
+
+    /* Preferência de contato */
+    .ct-box { display: flex; flex-direction: column; gap: 6px; background: #1e293b; border: 1px solid #334155; border-left: 4px solid #22c55e; border-radius: 8px; padding: 12px 16px; margin: -6px 0 22px; }
+    .ct-box.nowa { border-left-color: #f59e0b; }
+    .ct-main { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .ct-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 600; letter-spacing: .4px; }
+    .ct-seg { display: inline-flex; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 3px; }
+    .ct-seg button { background: none; border: none; color: #94a3b8; font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-family: inherit; }
+    .ct-seg button.on { background: #3b82f6; color: #fff; }
+    .ct-seg button:first-child.on { background: #16a34a; }
+    .ct-flag { font-size: 11px; font-weight: 700; color: #fbbf24; background: rgba(245, 158, 11, .15); border-radius: 999px; padding: 2px 9px; }
+    .ct-meta { font-size: 12px; color: #94a3b8; }
+
+    /* Chave reserva */
+    .sk-mini { margin-top: 6px; font-size: 11px; color: #94a3b8; }
+    .sk-mini.away { color: #fbbf24; font-weight: 700; }
+    .sk-box { display: flex; align-items: flex-start; gap: 14px; background: #1e293b; border: 1px solid #334155; border-left: 4px solid #64748b; border-radius: 8px; padding: 12px 16px; margin-bottom: 14px; }
+    .sk-box.away { border-left-color: #f59e0b; }
+    .sk-box.editing { border-left-color: #3b82f6; }
+    .sk-icon { font-size: 20px; line-height: 1; padding-top: 2px; }
+    .sk-body { flex: 1; min-width: 0; }
+    .sk-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 600; letter-spacing: .4px; }
+    .sk-where { font-size: 16px; color: #fff; font-weight: 700; margin-top: 3px; }
+    .sk-note { font-weight: 400; color: #cbd5e1; font-size: 14px; }
+    .sk-meta { font-size: 12px; color: #94a3b8; margin-top: 3px; }
+    .sk-flag { color: #fbbf24; font-weight: 700; margin-right: 6px; }
+    .sk-history { margin-top: 6px; font-size: 12px; color: #94a3b8; }
+    .sk-history summary { cursor: pointer; color: #60a5fa; }
+    .sk-history ul { margin: 6px 0 0 18px; }
+    .sk-form { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; align-items: center; }
+    .sk-form select, .sk-form input { padding: 7px 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; font-size: 13px; outline: none; color-scheme: dark; }
+    .sk-form input { flex: 1; min-width: 200px; }
+    .sk-form select:focus, .sk-form input:focus { border-color: #3b82f6; }
+    .crm-btn.sk-save { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+
+    /* Bond em hold */
+    .bond-held-box { background: linear-gradient(135deg, rgba(245, 158, 11, .16), rgba(245, 158, 11, .06)); border: 1px solid rgba(245, 158, 11, .55); border-left: 5px solid #f59e0b; border-radius: 10px; padding: 16px 18px; margin: -6px 0 22px; }
+    .bh-head { display: flex; gap: 14px; align-items: flex-start; }
+    .bh-icon { font-size: 24px; line-height: 1; padding-top: 2px; }
+    .bh-label { font-size: 11px; color: #fbbf24; text-transform: uppercase; font-weight: 800; letter-spacing: .6px; }
+    .bh-title { font-size: 18px; color: #fff; font-weight: 700; margin-top: 3px; }
+    .bh-sub { font-size: 12px; color: #fcd34d; margin-top: 2px; }
+    .bh-list { list-style: none; margin: 12px 0 0 38px; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+    .bh-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; background: rgba(15, 23, 42, .55); border-radius: 6px; padding: 8px 12px; font-size: 13px; color: #e2e8f0; }
+    .bh-list strong { color: #fbbf24; margin-left: auto; }
+    .bh-ref { color: #60a5fa; font-weight: 700; }
+    .bh-meta { flex-basis: 100%; font-size: 11px; color: #94a3b8; }
+    .bh-reason { font-size: 11px; font-weight: 700; color: #fde68a; background: rgba(245, 158, 11, .18); border-radius: 4px; padding: 2px 8px; }
+    .bh-reason.next { color: #86efac; background: rgba(34, 197, 94, .15); }
+    .bh-note { font-size: 12px; color: #cbd5e1; font-style: italic; }
+    .bond-held-why { display: inline-block; margin-top: 4px; font-size: 11px; color: #fcd34d; }
+
+    /* Janela do motivo do hold */
+    .bhd-overlay { position: fixed; inset: 0; z-index: 210; background: rgba(2, 6, 23, .7); display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .bhd-dialog { width: 480px; max-width: 100%; background: #0f172a; border: 1px solid #334155; border-top: 4px solid #f59e0b; border-radius: 12px; padding: 20px 22px; box-shadow: 0 25px 60px rgba(0, 0, 0, .55); color: #e2e8f0; }
+    .bhd-dialog h3 { margin: 0 0 6px; font-size: 17px; color: #fff; }
+    .bhd-sub { margin: 0 0 14px; font-size: 13px; color: #94a3b8; }
+    .bhd-sub strong { color: #fbbf24; }
+    .bhd-reasons { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .bhd-reason { display: flex; gap: 10px; align-items: flex-start; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 9px 12px; cursor: pointer; }
+    .bhd-reason:hover { border-color: #475569; }
+    .bhd-reason:has(input:checked) { border-color: #f59e0b; background: rgba(245, 158, 11, .1); }
+    .bhd-reason input { margin-top: 3px; accent-color: #f59e0b; }
+    .bhd-reason strong { display: block; font-size: 13px; color: #fff; }
+    .bhd-reason small { display: block; font-size: 12px; color: #94a3b8; margin-top: 1px; }
+    .bhd-note-label { display: block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-bottom: 6px; }
+    .bhd-note-label span { font-weight: 400; color: #94a3b8; }
+    .bhd-dialog textarea { width: 100%; box-sizing: border-box; padding: 9px 11px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #fff; font: inherit; font-size: 13px; resize: vertical; outline: none; }
+    .bhd-dialog textarea:focus { border-color: #f59e0b; }
+    .bhd-error { min-height: 18px; margin-top: 6px; font-size: 12px; font-weight: 600; color: #f87171; }
+    .bhd-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
+    .bhd-actions .crm-btn { padding: 8px 16px; font-size: 12px; }
+    .crm-btn.bhd-save { background: #f59e0b; border-color: #f59e0b; color: #111827; }
+    .crm-btn.bhd-save:hover { background: #fbbf24; }
+    .bh-req { flex-basis: 100%; font-size: 12px; font-weight: 700; color: #93c5fd; }
+    .bh-meta a { color: #60a5fa; text-decoration: none; }
+    .bh-meta a:hover { text-decoration: underline; }
+    .bond-held-tag { display: inline-block; margin-top: 6px; background: rgba(245, 158, 11, .2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, .5); padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+    .booking-history-table tr.bond-held-row td { background: rgba(245, 158, 11, .07); }
+    .booking-history-table tr.bond-held-row td:first-child { box-shadow: inset 4px 0 0 #f59e0b; }
+    .crm-btn.bond-hold-btn { border-color: rgba(245, 158, 11, .6); color: #fbbf24; }
+    .crm-btn.bond-hold-btn:hover { background: rgba(245, 158, 11, .15); }
+
+    /* Histórico de conversas */
+    .crm-chat-link { background: none; border: none; padding: 0; color: #3b82f6; font: inherit; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+    .crm-chat-link:hover { text-decoration: underline; }
+    .crm-chat-count { background: rgba(59, 130, 246, .18); color: #93c5fd; border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 700; }
+    .crm-chat-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(2, 6, 23, .7); display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity .15s; }
+    .crm-chat-overlay.open { opacity: 1; pointer-events: auto; }
+    .cch-dialog { width: 1100px; max-width: 100%; height: calc(calc(100vh / var(--fit-zoom, 1)) - 48px); max-height: 820px; display: flex; flex-direction: column; background: #0f172a; border: 1px solid #334155; border-radius: 12px; box-shadow: 0 25px 60px rgba(0, 0, 0, .55); overflow: hidden; color: #e2e8f0; }
+    .cch-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid #334155; background: #111c31; }
+    .cch-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: .5px; }
+    .cch-name { font-size: 18px; font-weight: 700; color: #fff; margin-top: 2px; }
+    .cch-name span { font-size: 13px; font-weight: 400; color: #94a3b8; margin-left: 8px; }
+    .cch-close { background: none; border: 1px solid #334155; color: #cbd5e1; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+    .cch-close:hover { background: #1e293b; color: #fff; }
+    .cch-body { flex: 1; min-height: 0; display: flex; }
+    .cch-list { width: 300px; flex-shrink: 0; border-right: 1px solid #334155; overflow-y: auto; background: #111827; }
+    .cch-list-label { font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 700; letter-spacing: .5px; padding: 14px 16px 8px; }
+    .cch-ra { display: flex; flex-direction: column; gap: 4px; width: 100%; text-align: left; background: none; border: none; border-bottom: 1px solid #1e293b; border-left: 4px solid transparent; padding: 12px 14px; color: #e2e8f0; cursor: pointer; font-family: inherit; }
+    .cch-ra:hover:not(:disabled) { background: #1e293b; }
+    .cch-ra.active { background: #1e293b; border-left-color: #3b82f6; }
+    .cch-ra.empty { opacity: .45; cursor: default; }
+    .cch-ra-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .cch-ra-top strong { color: #60a5fa; font-size: 14px; }
+    .cch-ra-top small { color: #94a3b8; font-size: 11px; }
+    .cch-ra-sub { font-size: 12px; color: #cbd5e1; }
+    .cch-ra-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .cch-tag { font-size: 10px; font-weight: 700; border-radius: 4px; padding: 2px 7px; }
+    .cch-tag.live { background: rgba(59, 130, 246, .18); color: #93c5fd; }
+    .cch-tag.wa { background: rgba(37, 211, 102, .15); color: #4ade80; }
+    .cch-tag.none { background: rgba(148, 163, 184, .12); color: #94a3b8; }
+    .cch-conv { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #0b1324; }
+    .cch-conv-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid #1e293b; }
+    .cch-conv-title { font-size: 15px; font-weight: 700; color: #fff; }
+    .cch-conv-sub { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+    .crm-btn.cch-open-wa { border-color: rgba(37, 211, 102, .55); color: #4ade80; white-space: nowrap; }
+    .crm-btn.cch-open-wa:hover { background: rgba(37, 211, 102, .12); }
+    .cch-tabs { display: flex; gap: 4px; padding: 10px 18px 0; }
+    .cch-tabs button { background: #1e293b; border: 1px solid #334155; color: #94a3b8; font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: inherit; }
+    .cch-tabs button.on { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+    .cch-thread { flex: 1; min-height: 0; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 8px; }
+    .cch-placeholder { margin: auto; padding: 40px 20px; color: #64748b; font-size: 13px; text-align: center; font-style: italic; }
+    .cch-session { align-self: center; font-size: 11px; color: #94a3b8; background: #1e293b; border-radius: 6px; padding: 4px 12px; margin: 8px 0 4px; }
+    .cch-status { font-weight: 700; text-transform: uppercase; }
+    .cch-status.active { color: #34d399; }
+    .cch-status.waiting { color: #fbbf24; }
+    .cch-status.closed { color: #94a3b8; }
+    .cch-sys { align-self: center; font-size: 11px; color: #64748b; font-style: italic; }
+    .cch-msg { max-width: 72%; padding: 8px 12px; border-radius: 10px; font-size: 13px; line-height: 1.45; white-space: pre-wrap; word-wrap: break-word; }
+    .cch-msg.in { align-self: flex-start; background: #1e293b; border-top-left-radius: 2px; }
+    .cch-msg.out { align-self: flex-end; background: #1d4ed8; color: #fff; border-top-right-radius: 2px; }
+    .cch-who { display: block; font-size: 11px; font-weight: 700; color: #93c5fd; margin-bottom: 2px; }
+    .cch-msg.out .cch-who { color: #bfdbfe; }
+    .cch-time { display: block; font-size: 10px; color: #94a3b8; margin-top: 4px; text-align: right; }
+    .cch-msg.out .cch-time { color: #bfdbfe; }
+  </style>
+  <link rel="stylesheet" href="../css/gc-rcm-shell.css">
+  <link rel="stylesheet" href="../css/gc-whatsapp.css" id="wa-styles">
+</head>
+<body class="fleet-body-wrapper">
+
+  <header class="topbar">
+    <div class="topbar-title">
+      CUSTOMER &amp; VEHICLE HISTORY
+    </div>
+    <div class="topbar-actions">
+    </div>
+  </header>
+
+  <div class="crm-container">
+    <!-- BARRA LATERAL: busca por cliente ou por veículo (rego) -->
+    <div class="crm-sidebar">
+      <div class="crm-search-bar">
+        <div class="crm-tabs">
+          <button type="button" class="crm-tab active" id="crm-tab-customers" onclick="crmSetMode('customers')">👥 Customers</button>
+          <button type="button" class="crm-tab" id="crm-tab-vehicles" onclick="crmSetMode('vehicles')">🚙 Vehicles</button>
+        </div>
+        <label id="crm-search-label" style="display: block; font-size: 12px; color: #94a3b8; margin-bottom: 8px; font-weight: 600;">SEARCH CUSTOMER</label>
+        <input type="text" id="crm-search" placeholder="Name, Email, Phone, RA / Res # or Rego..." oninput="filterCustomers()">
+      </div>
+      <div class="crm-customer-list" id="customer-list">
+        <!-- Lista injetada aqui -->
+      </div>
+    </div>
+    
+    <!-- PAINEL PRINCIPAL COM HISTÓRICO -->
+    <div class="crm-main" id="customer-details">
+      <div style="display: flex; height: 100%; align-items: center; justify-content: center; color: #64748b; font-style: italic; font-size: 14px;">
+        Select a customer or a vehicle from the list to view its booking history.
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../js/gc-rcm-shell.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-fees-data.js"></script>
+  <script src="../js/gc-bonds.js"></script>
+  <script src="../js/gc-whatsapp.js"></script>
+  <script src="../js/gc-customers.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>

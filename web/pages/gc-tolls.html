@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GC Tech RCM - Tolls</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/img/gc-logo.svg">
+  <link rel="stylesheet" href="../css/rcm-fleet-planner.css">
+  <link rel="stylesheet" href="../css/gc-daily-activity.css">
+  <link rel="stylesheet" href="../css/gc-rcm-shell.css">
+  <link rel="stylesheet" href="../css/gc-payments-pb.css">
+</head>
+<body class="fleet-body-wrapper">
+
+  <header class="topbar">
+    <div class="topbar-title">TOLLS — DAILY REPORT, CHARGED OVERNIGHT</div>
+    <div class="topbar-actions da-actions">
+      <input type="file" id="tl-upload" accept=".csv,.xlsx,.xls,.txt" hidden onchange="tollPageUploadPicked(this)">
+      <button type="button" class="da-tool" title="Upload today's toll report (any file works in the demo)" onclick="document.getElementById('tl-upload').click()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg>
+        Upload tolls</button>
+      <button type="button" class="da-tool" title="Same report without picking a file (demo)" onclick="tollPageImport()">Use demo report</button>
+      <button type="button" class="da-tool xls" title="Demo: run now what the system does by itself every night" onclick="tollPageRunTonight()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        Run tonight's charges (demo)</button>
+    </div>
+  </header>
+
+  <div class="da-filterbar">
+    <div class="da-filter-row">
+      <label>Show
+        <select id="tl-status" onchange="tollFilter.status = this.value; tollPageRender()">
+          <option value="open">Not charged yet</option>
+          <option value="unmatched">Imported · needs a booking</option>
+          <option value="pending">Matched · charges tonight</option>
+          <option value="declined">Card declined</option>
+          <option value="collections">Debt collection</option>
+          <option value="charged">Charged</option>
+          <option value="all">All tolls</option>
+        </select>
+      </label>
+      <label>Search<input type="text" class="tl-search" placeholder="Res #, rego, customer or toll road…" oninput="tollFilter.q = this.value; tollPageRender()"></label>
+    </div>
+  </div>
+
+  <div class="da-results">
+    <div class="tl-policy">
+      <strong>How it works</strong>
+      <span>Every day we upload the toll report here. Each toll is matched to the booking by rego and time, and <b>charged automatically overnight</b> to the card on the booking. We only step in when a toll has no booking (Assign) or a card declines.</span>
+      <strong>Toll policy</strong>
+      <span>Tolls are not included in the rental. Each toll is charged at cost plus a <b>$4.40</b> administration fee. Tolls can take up to 7 days to reach GC Tech. If the card declines, a <b>$5.50</b> reprocessing fee applies per unpaid toll instead of the $4.40. In debt collection, a <b>$16.50</b> fee is added per outstanding toll. Customers can use their own toll tag or a temporary Linkt pass.</span>
+    </div>
+    <div class="tl-kpis" id="tl-kpis"></div>
+    <div class="tl-summary" id="tl-summary"></div>
+    <div id="tl-results"></div>
+    <p class="tl-demo">Demo data: tolls are generated from the demo hires and the uploaded file is not read. The new system does the same as today: upload, match by rego and time, charge overnight.</p>
+  </div>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../js/gc-dates.js"></script>
+  <script src="../js/gc-rcm-shell.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-fees-data.js"></script>
+  <script src="../js/gc-bonds.js"></script>
+  <script src="../js/gc-powerboard.js"></script>
+  <script src="../js/gc-tolls.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>

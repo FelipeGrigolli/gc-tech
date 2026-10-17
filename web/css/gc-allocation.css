@@ -1,0 +1,62 @@
+/* ==========================================
+   ALLOCATE RESERVATION + AVAILABILITY ENGINE (Agent Dashboard)
+   Reaproveita .pp-btn / .pp-pill / .pp-modal de gc-payments.css
+   ========================================== */
+.al-title { text-align: center; font-size: 26px; margin-bottom: 18px; }
+.al-title-row { position: relative; }
+.al-demo-btn { position: absolute; right: 0; top: 2px; display: inline-flex; align-items: center; gap: 8px; }
+.al-demo-btn span { background: rgba(245, 158, 11, .15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, .5); border-radius: 999px; padding: 0 7px; font-size: 10px; text-transform: uppercase; letter-spacing: .4px; }
+@keyframes alNewRow { 0% { background: rgba(255, 94, 0, .35); } 100% { background: transparent; } }
+.al-table tr.al-row-new td { animation: alNewRow 3s ease-out; }
+@media (max-width: 1100px) { .al-demo-btn { position: static; margin: 0 auto 14px; display: flex; width: fit-content; } }
+.al-tab-count { background: #ef4444; color: #fff; border-radius: 10px; padding: 0 7px; font-size: 11px; margin-left: 4px; }
+.al-tab-count:empty { display: none; }
+
+.al-filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; justify-content: center; background: var(--surface-dark); border: 1px solid #334155; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px; }
+.al-filters label, .al-engine-controls label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; text-transform: uppercase; font-weight: 700; color: #94a3b8; letter-spacing: .5px; }
+.al-filters select, .al-filters input[type="date"], .al-filters input[type="text"],
+.al-engine-controls select, .al-engine-controls input[type="text"], .al-engine-controls input[type="datetime-local"] {
+  padding: 7px 10px; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: #fff; font-size: 13px; outline: none; color-scheme: dark; text-transform: none; font-weight: 400; letter-spacing: 0;
+}
+.al-filters select:focus, .al-filters input:focus, .al-engine-controls select:focus, .al-engine-controls input:focus { border-color: #3b82f6; }
+label.al-check { flex-direction: row; align-items: center; gap: 6px; text-transform: none; font-weight: 500; font-size: 13px; color: #cbd5e1; padding-bottom: 7px; }
+.al-check input { accent-color: var(--gc-orange); }
+
+.al-table-wrap { background: var(--surface-dark); border: 1px solid #334155; border-radius: 10px; overflow-x: auto; }
+.al-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.al-table th { background: #1d4ed8; color: #fff; text-align: left; padding: 9px 10px; font-size: 11px; white-space: nowrap; }
+.al-table td { padding: 9px 10px; border-bottom: 1px solid #263244; vertical-align: middle; white-space: nowrap; }
+.al-table tbody tr:hover { background: #0f172a; }
+.al-table tbody tr:last-child td { border-bottom: none; }
+.al-res { color: #f87171; font-weight: 700; }
+.al-rego { font-weight: 700; color: #fde047; }
+.al-total { text-align: right; font-weight: 700; }
+.al-row-declined { opacity: .5; }
+.al-row-busy { opacity: .55; }
+.al-here { background: rgba(52, 211, 153, .15); color: #34d399; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 8px; margin-left: 4px; }
+.al-empty { text-align: center; color: var(--text-muted); padding: 24px !important; }
+.al-count { text-align: right; color: var(--text-muted); font-size: 13px; margin: 10px 2px 0; }
+
+.al-rules { margin: 22px auto 0; max-width: 900px; background: rgba(34, 211, 238, .08); border: 1px solid rgba(34, 211, 238, .3); border-radius: 10px; padding: 16px 22px; font-size: 14px; color: #cbd5e1; }
+.al-rules ol { margin: 10px 0 0 20px; display: flex; flex-direction: column; gap: 4px; }
+
+/* Engine */
+.al-engine-card { max-width: 1180px !important; }
+.al-engine-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.al-engine-head h3 { font-size: 20px; }
+.al-engine-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 14px; }
+.al-engine-booking { font-size: 16px; margin-bottom: 10px; line-height: 1.5; }
+.al-engine-note { font-size: 13px; padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; }
+.al-engine-note.ok { background: rgba(52, 211, 153, .1); border: 1px solid rgba(52, 211, 153, .3); color: #a7f3d0; }
+.al-engine-note.offer { background: rgba(251, 191, 36, .1); border: 1px solid rgba(251, 191, 36, .35); color: #fde68a; }
+/* Escolha do cliente para quando o veículo reservado não está livre (My Bookings) */
+.al-pref { margin-top: 4px; font-size: 11px; font-weight: 700; color: #c4b5fd; white-space: normal; max-width: 260px; }
+.al-pref.only { color: #94a3b8; }
+.al-pref-box { margin-top: 10px; font-size: 13px; line-height: 1.5; background: rgba(139, 92, 246, .1); border: 1px solid rgba(139, 92, 246, .35); border-radius: 8px; padding: 10px 14px; color: #ddd6fe; }
+.al-pref-box strong { color: #ede9fe; }
+.al-pref-box.only { background: rgba(148, 163, 184, .1); border-color: rgba(148, 163, 184, .35); color: #cbd5e1; }
+.al-pref-box.none { background: transparent; border-style: dashed; border-color: #334155; color: var(--text-muted); }
+.al-pref-choices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.al-pref-choice { display: inline-flex; align-items: center; gap: 8px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 5px 6px 5px 10px; }
+.al-pref-note { margin-top: 6px; font-style: italic; color: #c4b5fd; }
+.al-engine-note.err { background: rgba(248, 113, 113, .1); border: 1px solid rgba(248, 113, 113, .35); color: #fecaca; }

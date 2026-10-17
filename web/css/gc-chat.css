@@ -1,0 +1,194 @@
+﻿/* ==========================================
+   GC TECH CHAT (prototype) - shared styles
+   Used by: gc-chat.html (chat window) and
+   customer-portal.html (floating button)
+   ========================================== */
+
+.chat-window-body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #0f172a;
+  color: #fff;
+  height: calc(100vh / var(--fit-zoom, 1));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-header {
+  background: #ff5e00;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.chat-header-name { font-weight: 700; font-size: 15px; }
+.chat-header-status { font-size: 12px; opacity: 0.9; }
+
+/* Quem está atendendo o chat (mesmo modelo do WhatsApp) */
+#chat-assign-bar { flex-shrink: 0; }
+.chat-assign { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 14px; font-size: 12px; line-height: 1.35; border-bottom: 1px solid #334155; }
+.chat-assign.free { background: #1e293b; color: #cbd5e1; }
+.chat-assign.mine { background: rgba(16, 185, 129, .12); color: #a7f3d0; }
+.chat-assign.lock { background: rgba(245, 158, 11, .14); color: #fde68a; }
+.chat-assign button { flex-shrink: 0; background: transparent; border: 1px solid rgba(255, 255, 255, .3); color: #fff; border-radius: 4px; padding: 4px 9px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.chat-assign button:hover { background: rgba(255, 255, 255, .1); }
+.chat-locked-note { flex-shrink: 0; padding: 12px 14px; font-size: 12px; line-height: 1.4; color: #fde68a; background: #1e293b; border-top: 1px solid #334155; }
+.chat-asg { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 12px; white-space: nowrap; }
+.chat-asg.free { background: rgba(148, 163, 184, .12); color: #94a3b8; }
+.chat-asg.me { background: rgba(37, 211, 102, .15); color: #4ade80; }
+.chat-asg.other { background: rgba(245, 158, 11, .15); color: #fbbf24; }
+
+.chat-thread {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #0f172a;
+}
+
+.chat-msg-row { display: flex; }
+.chat-msg-row.mine { justify-content: flex-end; }
+.chat-msg-row.theirs { justify-content: flex-start; }
+
+.chat-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+.chat-bubble.mine { background: #ff5e00; color: #fff; border-bottom-right-radius: 3px; }
+.chat-bubble.theirs { background: #1e293b; border: 1px solid #334155; color: #e2e8f0; border-bottom-left-radius: 3px; }
+
+.chat-sender-name { font-size: 11px; font-weight: 700; color: #ff5e00; margin-bottom: 3px; }
+.chat-bubble.mine .chat-sender-name { color: rgba(255,255,255,0.85); }
+.chat-timestamp { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 4px; text-align: right; }
+.chat-bubble.theirs .chat-timestamp { color: #64748b; }
+
+.chat-input-bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  background: #1e293b;
+  border-top: 1px solid #334155;
+  flex-shrink: 0;
+}
+.chat-input-bar input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 20px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #fff;
+  font-size: 13px;
+  outline: none;
+}
+.chat-input-bar input:focus { border-color: #ff5e00; }
+.chat-input-bar button {
+  background: #ff5e00;
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.chat-input-bar button:hover { filter: brightness(1.1); }
+
+/* Floating button in Customer Portal */
+.chat-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #ff5e00;
+  color: #fff;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+.chat-fab:hover { filter: brightness(1.08); }
+
+.chat-fab-badge {
+  display: none;
+  background: #ef4444;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 7px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* ==========================================
+   (Manter todo o seu CSS anterior acima disto)
+   ========================================== */
+
+/* Booking Selection Cards */
+.booking-select-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  padding: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.booking-select-card:hover { border-color: #3b82f6; background: #0f172a; }
+.booking-select-card .b-ref { font-weight: 700; color: #3b82f6; margin-bottom: 6px; font-size: 14px; }
+.booking-select-card .b-detail { font-size: 12px; color: #cbd5e1; margin-bottom: 2px; }
+.booking-select-card .b-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; }
+.booking-select-card .b-top .b-ref { margin-bottom: 0; }
+.b-pill { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
+.b-pill.hire { background: rgba(59,130,246,.2); color: #93c5fd; }
+.b-pill.upcoming { background: rgba(16,185,129,.16); color: #34d399; }
+.b-pill.past { background: rgba(148,163,184,.18); color: #cbd5e1; }
+.b-pill.pending { background: rgba(245,158,11,.16); color: #fbbf24; }
+.b-unread { background: #ef4444; color: #fff; font-size: 10px; font-weight: 700; border-radius: 999px; padding: 1px 6px; margin-left: 6px; }
+.bk-filter { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.bk-filter input { width: 100%; box-sizing: border-box; padding: 9px 11px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #fff; font-size: 13px; outline: none; color-scheme: dark; font-family: inherit; }
+.bk-filter input:focus { border-color: #3b82f6; }
+.bk-filter-row { display: flex; gap: 8px; }
+.bk-filter-row input { flex: 1; }
+.bk-filter-row button { background: transparent; border: 1px solid #475569; color: #cbd5e1; border-radius: 6px; padding: 0 12px; font-size: 12px; cursor: pointer; }
+.bk-filter-count { font-size: 11px; color: #94a3b8; }
+.bk-reply-count { color: #ff8a3d; font-weight: 700; }
+/* Conversa em que falta o cliente responder */
+.booking-select-card.needs-reply { border: 1px solid #ff5e00; border-left-width: 4px; background: rgba(255, 94, 0, .08); }
+.booking-select-card.needs-reply:hover { border-color: #ff5e00; background: rgba(255, 94, 0, .14); }
+.b-reply { font-size: 11px; font-weight: 700; color: #ff8a3d; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 8px; }
+.b-reply-text { font-size: 12px; font-weight: 400; color: #e2e8f0; text-transform: none; letter-spacing: 0; margin-top: 3px; font-style: italic; overflow-wrap: anywhere; }
+.chat-back-btn { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35); color: #fff; border-radius: 4px; padding: 4px 8px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.chat-back-btn:hover { background: rgba(255,255,255,.22); }
+
+/* System Messages (End Chat) */
+.chat-msg-row.system { justify-content: center; margin: 15px 0; }
+.chat-bubble.system { 
+  background: transparent; 
+  border: none; 
+  color: #64748b; 
+  font-size: 11px; 
+  font-weight: 600;
+  text-align: center; 
+  max-width: 100%; 
+  padding: 0; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

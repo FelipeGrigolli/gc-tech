@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GC Tech Car & Truck Rental - Vehicle Hire in Sydney & Brisbane</title>
+
+  <link rel="stylesheet" href="../vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../vendor/flatpickr/flatpickr.min.css">
+  <link rel="stylesheet" href="../css/gc-chat.css">
+  <link rel="stylesheet" href="../css/gc-home.css">
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="gc-home.html" class="brand"><img src="../assets/img/gc-logo.svg" alt="GC Tech Car & Truck Rental"></a>
+
+      <nav class="main-nav" id="main-nav">
+        <div class="nav-item has-menu">
+          <button class="nav-link">Vehicles <span class="caret">⌄</span></button>
+          <div class="nav-menu" id="nav-vehicles-menu"></div>
+        </div>
+        <div class="nav-item has-menu">
+          <button class="nav-link">Locations <span class="caret">⌄</span></button>
+          <div class="nav-menu" id="nav-locations-menu"></div>
+        </div>
+        <div class="nav-item"><a class="nav-link" href="#business">Corporate rental</a></div>
+        <div class="nav-item"><a class="nav-link" href="#about">About</a></div>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn-ghost" href="#faq">Help</a>
+        <a class="btn-ghost" href="customer-portal.html" id="header-account-btn">My Bookings</a>
+        <button class="btn-orange" onclick="homeScrollToWidget()">Book now</button>
+        <button class="menu-toggle" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO + WIDGET ================= -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">GC Tech Vehicle Hire</h1>
+      <p class="hero-sub">Cars, SUVs, vans, trucks and utes across Sydney & Brisbane — book online, manage your hire, and chat with our team anytime.</p>
+
+      <div class="hero-grid">
+        <!-- WIDGET DE BUSCA -->
+        <div class="booking-widget" id="booking-widget">
+          <div class="widget-tabs" id="widget-tabs"></div>
+
+          <div class="widget-row">
+            <div class="of-field">
+              <label>Pick up</label>
+              <select id="hw-pickup-loc" onchange="homeSyncDropoffLabel()"></select>
+              <button type="button" class="swap-btn" title="Return to a different location" onclick="homeToggleDifferentReturn()">⇄</button>
+            </div>
+            <div class="of-field">
+              <label>Drop off</label>
+              <select id="hw-dropoff-loc"></select>
+            </div>
+          </div>
+
+          <div class="widget-row">
+            <div class="of-field">
+              <label>Pick up date</label>
+              <input type="text" id="hw-pickup-date" placeholder="Select date" readonly>
+            </div>
+            <div class="of-field small">
+              <label>Pick up time</label>
+              <select id="hw-pickup-time"></select>
+            </div>
+            <div class="of-field">
+              <label>Drop off date</label>
+              <input type="text" id="hw-dropoff-date" placeholder="Select date" readonly>
+            </div>
+            <div class="of-field small">
+              <label>Drop off time</label>
+              <select id="hw-dropoff-time"></select>
+            </div>
+          </div>
+          <div class="widget-error" id="hw-error"></div>
+
+          <div class="widget-footer">
+            <button class="btn-search" onclick="homeSubmitSearch()">Search
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <span class="widget-hint" id="hw-duration"></span>
+          </div>
+        </div>
+
+        <!-- CARD LATERAL -->
+        <div class="promo-card">
+          <div class="promo-head">
+            <div class="promo-icon">⚡</div>
+            <h2>GC Tech's hybrid fleet</h2>
+          </div>
+          <div class="promo-body">
+            <p>Hybrids pair an electric motor with a petrol engine, so you get full performance with far less fuel.</p>
+            <p>Braking energy is captured and reused, saving up to 40% on fuel — and there's nothing to plug in or charge.</p>
+            <a href="#fleet" class="promo-link" onclick="homeFilterFleet('Hybrid')">Browse hybrids</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAIXA DE BENEFÍCIOS ================= -->
+  <section class="usp-strip">
+    <div class="container usp-grid">
+      <div class="usp"><span class="usp-icon">🚐</span><div><strong>Cars, vans, trucks & utes</strong><span>One place for every job</span></div></div>
+      <div class="usp"><span class="usp-icon">🌿</span><div><strong>Hybrid fleet</strong><span>Lower fuel, lower emissions</span></div></div>
+      <div class="usp"><span class="usp-icon">📱</span><div><strong>Manage online</strong><span>Change or cancel in the portal</span></div></div>
+      <div class="usp"><span class="usp-icon">💬</span><div><strong>Live chat</strong><span>Talk to a real agent</span></div></div>
+    </div>
+  </section>
+
+  <!-- ================= FROTA ================= -->
+  <section class="section" id="fleet">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Our fleet</span>
+          <h2>Find the right vehicle</h2>
+        </div>
+        <div class="chip-row" id="fleet-filters"></div>
+      </div>
+      <div class="fleet-grid" id="fleet-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= MANAGE BOOKING (CUSTOMER PORTAL) ================= -->
+  <section class="section manage-section">
+    <div class="container manage-grid">
+      <div>
+        <span class="eyebrow light">Customer portal</span>
+        <h2>Your booking, in your hands</h2>
+        <p class="manage-text">Sign in with the email you booked with to see every reservation in one place.</p>
+        <ul class="check-list">
+          <li>Request a new pick-up time — our team approves it in real time</li>
+          <li>Accept alternative vehicle offers with one click</li>
+          <li>Cancel online and view your past hires and invoices</li>
+          <li>Chat with an agent about a specific booking</li>
+        </ul>
+        <div class="manage-actions">
+          <a href="customer-portal.html" class="btn-orange">Sign in to My Bookings</a>
+          <a href="customer-portal.html#find" class="btn-outline-light">Find a booking by reference</a>
+        </div>
+      </div>
+      <div class="manage-preview" aria-hidden="true">
+        <div class="preview-card">
+          <div class="preview-top"><strong>Booking GC-8832</strong><span class="preview-badge">✅ Confirmed</span></div>
+          <div class="preview-body">
+            <img src="../assets/img/truck.png" alt="">
+            <div>
+              <div class="preview-label">Vehicle</div><div class="preview-value">Auto Pantech Truck + Lift</div>
+              <div class="preview-label">Pick-up</div><div class="preview-value">Mascot · 08:30 AM</div>
+            </div>
+          </div>
+          <div class="preview-actions"><span>Request change</span><span class="primary">💬 Chat about this booking</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LOCALIZAÇÕES ================= -->
+  <section class="section" id="locations">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Locations</span>
+          <h2>Pick up close to you</h2>
+        </div>
+      </div>
+      <div class="locations-grid" id="locations-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= EMPRESAS + SOBRE ================= -->
+  <section class="section alt" id="business">
+    <div class="container split">
+      <div class="split-card">
+        <span class="eyebrow">Corporate rental</span>
+        <h3>Vehicles for your business</h3>
+        <p>From a single ute for a weekend job to a fleet of vans for a busy season — talk to our team about business hire.</p>
+        <button class="btn-orange" onclick="homeOpenChat()">Talk to our team</button>
+      </div>
+      <div class="split-card" id="about">
+        <span class="eyebrow">About GC Tech</span>
+        <h3>Local, practical, easy</h3>
+        <p>GC Tech Car & Truck Rental serves Sydney and Brisbane with a modern fleet of cars, SUVs, people movers, vans, trucks and utes.</p>
+        <a href="#locations" class="text-link">See our locations →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section" id="faq">
+    <div class="container faq-wrap">
+      <div>
+        <span class="eyebrow">Help</span>
+        <h2>Frequently asked questions</h2>
+        <p class="manage-text dark">Can't find what you need? Our team is one click away.</p>
+        <button class="btn-orange" onclick="homeOpenChat()">💬 Chat with us</button>
+      </div>
+      <div class="faq-list">
+        <details><summary>What do I need to pick up a vehicle?</summary><p>Bring your valid driver's licence and the card used for the booking. Your booking reference is in your confirmation and in My Bookings.</p></details>
+        <details><summary>Can I change my pick-up time?</summary><p>Yes. Sign in to My Bookings and choose "Request Change". Our team reviews the request and you'll see the update in the portal as soon as it's approved.</p></details>
+        <details><summary>What if the vehicle I want isn't available?</summary><p>Your request goes straight to our operations team, who will offer you the closest alternative vehicle or time. You can accept the offer from My Bookings.</p></details>
+        <details><summary>Can I return the vehicle to a different location?</summary><p>Use the ⇄ button next to "Pick up" in the search form to choose a different drop-off branch.</p></details>
+        <details><summary>How do I talk to someone about my booking?</summary><p>Use the chat button at the bottom of the page. If you're signed in, you can pick the booking you want to talk about so the agent has all the details.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <img src="../assets/img/gc-logo.svg" alt="GC Tech" class="footer-logo">
+        <p>Car & truck rental across Sydney and Brisbane.</p>
+      </div>
+      <div>
+        <h4>Hire</h4>
+        <a href="#fleet">Our fleet</a>
+        <a href="#locations">Locations</a>
+        <a href="#business">Corporate rental</a>
+      </div>
+      <div>
+        <h4>Your booking</h4>
+        <a href="customer-portal.html">My Bookings</a>
+        <a href="customer-portal.html#find">Find a booking</a>
+        <a href="#faq">Help & FAQ</a>
+      </div>
+      <div>
+        <h4>Staff</h4>
+        <a href="agent-dashboard.html">GC Tech RCM login</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">© <span id="footer-year"></span> GC Tech Car & Truck Rental · Prototype</div>
+  </footer>
+
+  <!-- ================= CHAT ================= -->
+  <button class="chat-fab" id="chat-fab-btn" onclick="homeOpenChat()">
+    💬 Chat with us
+    <span class="chat-fab-badge" id="chat-fab-badge"></span>
+  </button>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../vendor/flatpickr/flatpickr.min.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-chat.js"></script>
+  <script src="../js/gc-home.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>

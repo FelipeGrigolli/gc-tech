@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GC Tech Booking Platform · Prototype</title>
+  <meta name="description" content="Prototype of the GC Tech Car & Truck Rental website, customer portal and RCM operations tools.">
+  <link rel="icon" type="image/svg+xml" href="assets/img/gc-logo.svg">
+  <link rel="stylesheet" href="vendor/fonts/fonts.css">
+  <style>
+    :root {
+      --orange: #FF5E00;
+      --orange-dark: #e65500;
+      --cream: #FCF8F4;
+      --paper: #ffffff;
+      --ink: #1a1a1a;
+      --ink-soft: #57534e;
+      --ink-faint: #8a837c;
+      --line: #e7e2dc;
+      --navy: #0f172a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', -apple-system, 'Segoe UI', Roboto, sans-serif; background: var(--cream); color: var(--ink); -webkit-font-smoothing: antialiased; line-height: 1.5; }
+    a { color: inherit; }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+
+    /* ---------- Header ---------- */
+    .top { background: var(--paper); border-bottom: 1px solid var(--line); }
+    .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .brand img { height: 38px; width: 38px; border-radius: 6px; }
+    .brand strong { font-size: 17px; font-weight: 600; letter-spacing: -.1px; }
+    .brand span { display: block; font-size: 12px; color: var(--ink-faint); }
+    .top-meta { display: flex; align-items: center; gap: 18px; font-size: 13px; color: var(--ink-faint); }
+    .btn-reset { background: none; border: 1px solid var(--line); border-radius: 6px; padding: 7px 12px; font: inherit; font-size: 13px; color: var(--ink-soft); cursor: pointer; }
+    .btn-reset:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 72px 0 64px; }
+    .hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+    .kicker { font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
+    h1 { font-size: 46px; line-height: 1.1; font-weight: 600; letter-spacing: -.8px; margin-bottom: 20px; }
+    .lead { font-size: 18px; color: var(--ink-soft); max-width: 520px; margin-bottom: 30px; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 600; font-size: 15px; padding: 12px 20px; border-radius: 6px; border: 1px solid transparent; }
+    .btn-primary { background: var(--orange); color: #fff; }
+    .btn-primary:hover { background: var(--orange-dark); }
+    .btn-secondary { background: var(--paper); border-color: var(--line); color: var(--ink); }
+    .btn-secondary:hover { border-color: var(--ink-soft); }
+    .facts { display: flex; gap: 0; border-top: 1px solid var(--line); padding-top: 22px; max-width: 520px; }
+    .fact { flex: 1; padding-right: 16px; }
+    .fact + .fact { padding-left: 20px; border-left: 1px solid var(--line); }
+    .fact strong { display: block; font-size: 26px; font-weight: 600; line-height: 1.1; }
+    .fact span { font-size: 13px; color: var(--ink-faint); }
+
+    /* Foto da empresa (some o aviso quando o arquivo existe) */
+    .photo { position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: #efe9e2; }
+    .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo .ph { display: none; }
+    .photo.is-empty img { display: none; }
+    .photo.is-empty .ph {
+      position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; padding: 26px;
+      border: 1px dashed #c9bfb4; border-radius: 12px; color: var(--ink-soft); font-size: 14px;
+      background: repeating-linear-gradient(135deg, #f3eee8 0 14px, #efe9e2 14px 28px);
+    }
+    .ph-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+    .ph code { font-family: Consolas, 'Courier New', monospace; font-size: 12px; background: rgba(255,255,255,.7); padding: 2px 6px; border-radius: 4px; align-self: flex-start; }
+
+    /* ---------- Sections ---------- */
+    section.block { padding: 72px 0; border-top: 1px solid var(--line); }
+    .section-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; margin-bottom: 36px; }
+    h2 { font-size: 30px; font-weight: 600; letter-spacing: -.4px; line-height: 1.2; }
+    .section-head p { font-size: 15px; color: var(--ink-soft); max-width: 440px; }
+
+    /* Partes do protótipo */
+    .parts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .part { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: border-color .15s, box-shadow .15s; }
+    .part:hover { border-color: #cfc6bc; box-shadow: 0 10px 30px rgba(26, 26, 26, .07); }
+    .part-shot { aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 1px solid var(--line); background: #ece6df; }
+    .part-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; }
+    .part-body { padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+    .part-meta { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+    .part h3 { font-size: 20px; font-weight: 600; }
+    .part p { font-size: 15px; color: var(--ink-soft); flex: 1; }
+    .part-link { font-size: 14px; font-weight: 600; color: var(--orange); margin-top: 6px; }
+
+    /* Acessos */
+    .access { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 24px 26px; }
+    .card h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+    .card .sub { font-size: 14px; color: var(--ink-faint); margin-bottom: 16px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { text-align: left; font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-faint); padding: 0 0 10px; border-bottom: 1px solid var(--line); }
+    td { padding: 11px 0; border-bottom: 1px solid var(--line); color: var(--ink-soft); vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    td:first-child { color: var(--ink); font-family: Consolas, 'Courier New', monospace; font-size: 14px; width: 110px; }
+    .kv { display: grid; grid-template-columns: 110px 1fr; gap: 10px 12px; font-size: 14px; }
+    .kv dt { color: var(--ink-faint); }
+    .kv dd { color: var(--ink); }
+    .kv code { font-family: Consolas, 'Courier New', monospace; }
+
+    /* Notas */
+    .notes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .note h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .note p { font-size: 14px; color: var(--ink-soft); }
+
+    footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 13px; color: var(--ink-faint); }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+    @media (max-width: 960px) {
+      .hero .wrap, .access { grid-template-columns: 1fr; }
+      .parts, .notes { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+      h1 { font-size: 36px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { padding: 0 16px; }
+      .top-meta .date { display: none; }
+      .facts { flex-direction: column; gap: 14px; }
+      .fact + .fact { padding-left: 0; border-left: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top">
+    <div class="wrap">
+      <a class="brand" href="index.html">
+        <img src="assets/img/gc-logo.svg" alt="GC Tech">
+        <div><strong>GC Tech Car &amp; Truck Rental</strong><span>Booking platform prototype</span></div>
+      </a>
+      <div class="top-meta">
+        <span class="date">October 2026</span>
+        <button type="button" class="btn-reset" onclick="gcOpenResetDemo()" title="Shortcut: Alt + Shift + R">Reset demo data</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Booking &amp; operations platform</p>
+        <h1>Bookings, fleet and customers in one connected system.</h1>
+        <p class="lead">A working prototype of a car &amp; truck rental platform: public website, customer portal and the staff operations system (RCM), all sharing one set of data. GC Tech is a fictional company; the workflows come from real rental operations.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="pages/gc-home.html">Open the website</a>
+          <a class="btn btn-secondary" href="pages/agent-dashboard.html">Open the RCM</a>
+        </div>
+        <div class="facts">
+          <div class="fact"><strong>6</strong><span>Branches</span></div>
+          <div class="fact"><strong>16</strong><span>Vehicle categories</span></div>
+          <div class="fact"><strong>160</strong><span>Vehicles in the planner</span></div>
+        </div>
+      </div>
+
+      <figure class="photo" id="hero-photo">
+        <img src="assets/img/cover/screen-planner.png" alt="Fleet Planner: every vehicle on one timeline" style="object-position: top left;">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= PARTES ================= -->
+  <section class="block" id="parts">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Four parts, one set of data</h2>
+        <p>A booking made on the website appears in the customer portal, the RCM and the Fleet Planner at the same time.</p>
+      </div>
+
+      <div class="parts">
+        <a class="part" href="pages/gc-home.html">
+          <div class="part-shot"><img src="assets/img/cover/screen-website.png" alt="GC Tech website home page" loading="lazy"></div>
+          <div class="part-body">
+            <span class="part-meta">For customers</span>
+            <h3>Public website</h3>
+            <p>Search by branch and date, compare vehicles with real daily rates and excess options, and book online.</p>
+            <span class="part-link">Open the website →</span>
+          </div>
+        </a>
+
+        <a class="part" href="pages/customer-portal.html">
+          <div class="part-shot"><img src="assets/img/cover/screen-portal.png" alt="Customer portal sign-in" loading="lazy"></div>
+          <div class="part-body">
+            <span class="part-meta">For customers</span>
+            <h3>Customer portal</h3>
+            <p>Customers change pick-up times, accept alternative vehicles, follow payment plans and chat about a specific booking.</p>
+            <span class="part-link">Open the portal →</span>
+          </div>
+        </a>
+
+        <a class="part" href="pages/agent-dashboard.html">
+          <div class="part-shot"><img src="assets/img/cover/screen-rcm.png" alt="GC Tech RCM daily overview" loading="lazy"></div>
+          <div class="part-body">
+            <span class="part-meta">For staff · sign-in required</span>
+            <h3>GC Tech RCM</h3>
+            <p>The daily overview for the team: pick-ups and returns, allocations, live chat, payment plans, bond refunds and reports.</p>
+            <span class="part-link">Open the RCM →</span>
+          </div>
+        </a>
+
+        <a class="part" href="pages/gc-fleet-planner.html">
+          <div class="part-shot"><img src="assets/img/cover/screen-planner.png" alt="Fleet Planner timeline" loading="lazy"></div>
+          <div class="part-body">
+            <span class="part-meta">For staff · sign-in required</span>
+            <h3>Fleet Planner</h3>
+            <p>Every vehicle on one timeline. Move bookings between cars, hold vehicles, extend hires and mark returns.</p>
+            <span class="part-link">Open the planner →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ACESSOS ================= -->
+  <section class="block" id="access">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Sign-in details</h2>
+        <p>Each staff login shows the screens that role would use.</p>
+      </div>
+
+      <div class="access">
+        <div class="card">
+          <h3>Staff · GC Tech RCM</h3>
+          <p class="sub">Password for every account: <strong>gctech</strong></p>
+          <table>
+            <thead><tr><th>Username</th><th>Role</th><th>Also sees</th></tr></thead>
+            <tbody>
+              <tr><td>felipe</td><td>Senior Operations Agent</td><td>Executive Overview, Reports, Bond Refunds</td></tr>
+              <tr><td>alex</td><td>Data Analyst</td><td>Executive Overview, Reports, Bond Refunds</td></tr>
+              <tr><td>sam</td><td>Owner / Managing Director</td><td>Executive Overview, Reports</td></tr>
+              <tr><td>test</td><td>Support Staff</td><td>Operations screens only</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Customer · My Bookings</h3>
+          <p class="sub">Already filled in on the sign-in page.</p>
+          <dl class="kv">
+            <dt>Email</dt><dd><code>felipe@testgctech.com</code></dd>
+            <dt>Password</dt><dd><code>password123</code></dd>
+            <dt>Other options</dt><dd>Quick access with any email, or find a booking by its reference.</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NOTAS ================= -->
+  <section class="block">
+    <div class="wrap notes">
+      <div class="note">
+        <h3>Runs in the browser</h3>
+        <p>No server or database yet: the whole prototype is HTML, CSS and JavaScript. A real REST API is being built step by step in the <code>api/</code> folder of the repository.</p>
+      </div>
+      <div class="note">
+        <h3>Demo data</h3>
+        <p>Everything created during the demo is saved in this browser. Reset demo data restores the original sample bookings.</p>
+      </div>
+      <div class="note">
+        <h3>Sample data</h3>
+        <p>GC Tech, its branches, customers and bookings are fictional. Payments, WhatsApp, calls and revenue history are simulated; the business rules are the ones a real rental counter uses.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>GC Tech Car &amp; Truck Rental · Booking platform prototype</span>
+      <span>Built by <a href="https://github.com/FelipeGrigolli">Felipe Grigolli</a> · 2026</span>
+    </div>
+  </footer>
+
+  <script src="js/gc-demo.js"></script>
+</body>
+</html>

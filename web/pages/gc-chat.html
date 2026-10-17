@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GC Tech Chat</title>
+<link rel="stylesheet" href="../css/gc-chat.css">
+</head>
+<body class="chat-window-body">
+
+  <div class="chat-header">
+    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
+      <button id="back-to-bookings-btn" class="chat-back-btn" onclick="backToBookingSelection()" style="display: none;" title="Choose another booking">← My bookings</button>
+      <div class="chat-header-name" id="chat-header-name" style="flex: 1;">Chat</div>
+      <button id="end-chat-btn" onclick="endCurrentChat()" style="background: transparent; border: 1px solid rgba(255,255,255,0.4); color: #fff; border-radius: 4px; padding: 4px 8px; font-size: 11px; cursor: pointer; display: none;">End Chat</button>
+    </div>
+    <div class="chat-header-status" id="chat-header-status">—</div>
+  </div>
+  <!-- Agente: quem está atendendo este chat (js/gc-chat.js) -->
+  <div id="chat-assign-bar" style="display: none;"></div>
+
+  <!-- VIEW 1: BOOKING SELECTION (Customer Only) -->
+  <div id="booking-selection-view" style="display: none; padding: 20px; overflow-y: auto; flex: 1; background: #0f172a;">
+    <h3 style="margin-top: 0; font-size: 14px; margin-bottom: 12px; color: #fff;">Select a booking to discuss:</h3>
+    <div class="bk-filter">
+      <input type="text" id="bk-filter-text" placeholder="Search Res # (e.g. GC-7240)" autocomplete="off" oninput="renderBookingSelectList()">
+      <div class="bk-filter-row">
+        <input type="date" id="bk-filter-date" title="Show bookings on this date" onchange="renderBookingSelectList()">
+        <button type="button" id="bk-filter-clear" onclick="clearBookingFilter()">Clear</button>
+      </div>
+      <div class="bk-filter-count" id="bk-filter-count"></div>
+    </div>
+    <div id="booking-list-container" style="display: flex; flex-direction: column; gap: 10px;"></div>
+  </div>
+
+  <!-- VIEW 2: ACTUAL CHAT INTERFACE -->
+  <div id="chat-interface-view" style="display: flex; flex-direction: column; flex: 1; overflow: hidden; display: none;">
+    <div class="chat-thread" id="chat-thread"></div>
+    
+    <!-- REOPEN CHAT BAR (Visible only when chat is closed) -->
+    <div id="chat-reopen-bar" style="display: none; padding: 12px; background: #1e293b; border-top: 1px solid #334155; text-align: center;">
+      <button onclick="reopenCurrentChat()" style="background: #3b82f6; color: #fff; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 600; cursor: pointer; width: 100%; font-size: 13px; transition: background 0.2s;">
+        ↻ Reopen Chat
+      </button>
+    </div>
+
+    <!-- Chat de outro agente: resposta travada (js/gc-chat.js) -->
+    <div class="chat-locked-note" id="chat-locked-note" style="display: none;"></div>
+
+    <!-- INPUT BAR -->
+    <div class="chat-input-bar" id="chat-input-bar">
+      <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+      <button id="chat-send-btn" title="Send">➤</button>
+    </div>
+  </div>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../js/gc-dates.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-fees-data.js"></script>
+  <script src="../js/gc-anna.js"></script>
+  <script src="../js/gc-chat.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GC Tech RCM - Damage Control</title>
+  <link rel="stylesheet" href="../css/rcm-fleet-planner.css">
+  <link rel="stylesheet" href="../css/gc-payments.css">
+  <style>
+    /* Layout Base (Split Screen) */
+    .dc-container { display: flex; height: calc(calc(100vh / var(--fit-zoom, 1)) - 60px); background: #0f172a; color: #fff; }
+    
+    /* Painel Esquerdo (Lista) */
+    .dc-sidebar { width: 350px; background: #1e293b; border-right: 1px solid #334155; display: flex; flex-direction: column; }
+    .dc-search-bar { padding: 20px; border-bottom: 1px solid #334155; background: #0f172a; }
+    .dc-search-bar input { width: 100%; padding: 12px 15px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #fff; outline: none; font-size: 13px; }
+    .dc-search-bar input:focus { border-color: #ef4444; }
+    
+    .dc-list { flex: 1; overflow-y: auto; }
+    .dc-card { padding: 16px 20px; border-bottom: 1px solid #334155; cursor: pointer; transition: background 0.2s; }
+    .dc-card:hover { background: #334155; }
+    .dc-card.active { background: #0f172a; border-left: 4px solid #ef4444; }
+    
+    /* Painel Direito (Detalhes & Formulário) */
+    .dc-main { flex: 1; padding: 40px; overflow-y: auto; }
+    
+    /* Grelha do Formulário */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 12px; color: #94a3b8; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #ef4444; background: #1e293b; }
+    
+    .badge-damage { background: rgba(239, 68, 68, 0.2); color: #ef4444; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+    
+    /* Secções de Seguros e Uploads */
+    .section-title { font-size: 14px; color: #fca5a5; text-transform: uppercase; margin-bottom: 15px; margin-top: 30px; border-bottom: 1px solid #334155; padding-bottom: 8px; }
+    .doc-item { background: #1e293b; border: 1px solid #334155; padding: 10px 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 13px; }
+    .doc-item-info { display: flex; flex-direction: column; gap: 4px; }
+    .doc-item-meta { font-size: 11px; color: #94a3b8; }
+    .audit-trail { margin-top: 30px; font-size: 12px; color: #64748b; text-align: right; font-style: italic; border-top: 1px solid #334155; padding-top: 15px; }
+
+    /* Custom File Upload Styling (English enforcement) */
+    .file-upload-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; }
+    .file-upload-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
+    .file-upload-btn { border: 1px solid #475569; color: #fff; background: #1e293b; padding: 10px 16px; border-radius: 6px; font-size: 13px; display: inline-block; width: 100%; text-align: center; cursor: pointer; transition: background 0.2s; }
+    .file-upload-btn:hover { background: #334155; border-color: #3b82f6; }
+
+    /* Reserva ligada ao relatório (Find booking / Open / cobrança no Booking Fees) */
+    .dc-link { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 14px 16px; }
+    .dc-link-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .dc-link-head small { color: #94a3b8; font-size: 12px; }
+    .dc-bk-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .dc-bk-table th { text-align: left; font-size: 11px; color: #94a3b8; text-transform: uppercase; font-weight: 700; padding: 8px 10px; border-bottom: 1px solid #334155; }
+    .dc-bk-table td { padding: 10px; border-bottom: 1px solid #1e293b; vertical-align: middle; }
+    .dc-bk-table tr.match td { background: rgba(59, 130, 246, .08); }
+    .dc-ref { color: #60a5fa; font-weight: 700; }
+    .dc-plate { display: inline-block; background: #fde047; color: #000; font-weight: 800; font-size: 11px; padding: 1px 6px; border-radius: 3px; margin-top: 3px; letter-spacing: .4px; }
+    .dc-pill { display: inline-block; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: .3px; }
+    .dc-pill.reservation { background: rgba(16, 185, 129, .16); color: #34d399; }
+    .dc-pill.hired { background: rgba(59, 130, 246, .18); color: #60a5fa; }
+    .dc-pill.returned { background: rgba(148, 163, 184, .2); color: #e2e8f0; }
+    .dc-pill.cancelled { background: rgba(239, 68, 68, .18); color: #f87171; }
+    .dc-mini-btn { background: transparent; border: 1px solid #475569; color: #e2e8f0; border-radius: 5px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .dc-mini-btn:hover { border-color: #60a5fa; color: #fff; }
+    .dc-mini-btn.blue { background: #2563eb; border-color: #2563eb; color: #fff; }
+    .dc-mini-btn.red { background: #ef4444; border-color: #ef4444; color: #fff; }
+    .dc-search-row { display: flex; gap: 8px; margin: 10px 0; }
+    .dc-search-row input { flex: 1; padding: 9px 12px; background: #1e293b; border: 1px solid #475569; color: #fff; border-radius: 6px; font-size: 13px; outline: none; }
+    .dc-charge { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-top: 14px; padding-top: 12px; border-top: 1px dashed #334155; }
+    .dc-charge label { display: flex; flex-direction: column; gap: 5px; font-size: 11px; color: #94a3b8; font-weight: 700; text-transform: uppercase; }
+    .dc-charge select, .dc-charge input { padding: 8px 10px; background: #1e293b; border: 1px solid #475569; color: #fff; border-radius: 6px; font-size: 13px; outline: none; color-scheme: dark; }
+    .dc-charge input { width: 130px; text-align: right; }
+    .dc-charge-done { margin-top: 10px; font-size: 13px; color: #34d399; }
+    .dc-warn { color: #fbbf24; font-size: 13px; }
+    .dc-muted { color: #94a3b8; font-size: 12px; }
+    .dc-status-switch { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
+    .dc-status-switch span { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-right: 4px; }
+    .dc-status-switch button { background: transparent; border: 1px solid #475569; color: #cbd5e1; border-radius: 999px; padding: 5px 14px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .dc-status-switch button:hover { border-color: var(--c); color: #fff; }
+    .dc-status-switch button.on { background: var(--c); border-color: var(--c); color: #fff; }
+  </style>
+  <link rel="stylesheet" href="../css/gc-rcm-shell.css">
+</head>
+<body class="fleet-body-wrapper">
+
+  <header class="topbar" style="border-bottom-color: #ef4444;">
+    <div class="topbar-title">
+      DAMAGE CONTROL & INCIDENT REPORTS
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-submit" style="background: #ef4444;" onclick="showNewDamageForm()">➕ New Damage Report</button>
+    </div>
+  </header>
+
+  <div class="dc-container">
+    <!-- BARRA LATERAL COM PESQUISA -->
+    <div class="dc-sidebar">
+      <div class="dc-search-bar">
+        <label style="display: block; font-size: 12px; color: #94a3b8; margin-bottom: 8px; font-weight: 600;">SEARCH REPORTS</label>
+        <input type="text" id="dc-search" placeholder="Ref, Plate, Renter or Driver..." onkeyup="filterDamageReports()">
+      </div>
+      <div class="dc-list" id="damage-list">
+        <!-- Lista injetada aqui via JS -->
+      </div>
+    </div>
+    
+    <!-- PAINEL PRINCIPAL -->
+    <div class="dc-main" id="dc-main-area">
+      <div style="display: flex; height: 100%; align-items: center; justify-content: center; color: #64748b; font-style: italic; font-size: 14px;">
+        Select a report from the list or click "New Damage Report" to begin.
+      </div>
+    </div>
+  </div>
+
+  <!-- NOVO PLANO DE PAGAMENTO A PARTIR DO RELATÓRIO (usa js/gc-payments.js) -->
+  <div class="pp-modal" id="dc-plan-modal" onclick="if (event.target === this) dcClosePlanModal()">
+    <div class="pp-modal-card">
+      <h3>Create payment plan</h3>
+      <p class="pp-sub" id="dc-plan-context"></p>
+      <div class="pp-form-grid">
+        <label>Customer name *<input type="text" id="dc-pp-name"></label>
+        <label>Email *<input type="email" id="dc-pp-email"></label>
+        <label>Booking ref *<input type="text" id="dc-pp-ref"></label>
+        <label>Phone<input type="text" id="dc-pp-phone" placeholder="+61 4xx xxx xxx"></label>
+        <label class="full">Reason *<input type="text" id="dc-pp-reason"></label>
+        <label>Amount owed by customer ($) *<input type="number" id="dc-pp-total" min="0" step="0.01" oninput="dcUpdatePlanPreview()"></label>
+        <label>Weekly instalment ($) *<input type="number" id="dc-pp-weekly" min="0" step="0.01" oninput="dcUpdatePlanPreview()"></label>
+        <label>First instalment date *<input type="date" id="dc-pp-first" onchange="dcUpdatePlanPreview()"></label>
+        <label>Card last 4 digits *<input type="text" id="dc-pp-card" maxlength="4" placeholder="4242"></label>
+      </div>
+      <div class="pp-preview" id="dc-pp-preview"></div>
+      <div class="pp-error" id="dc-pp-error"></div>
+      <div class="pp-modal-actions">
+        <button type="button" class="pp-btn ghost" onclick="dcClosePlanModal()">Cancel</button>
+        <button type="button" class="pp-btn primary" onclick="dcCreatePlan()">Create plan</button>
+      </div>
+    </div>
+  </div>
+  <div class="pp-toast" id="pp-toast"></div>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../js/gc-dates.js"></script>
+  <script src="../js/gc-rcm-shell.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-fees-data.js"></script>
+  <script src="../js/gc-bonds.js"></script>
+  <script src="../js/gc-payments.js"></script>
+  <script src="../js/gc-damage-control.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GC Tech RCM - Add New Booking</title>
+  
+  <!-- Flatpickr CSS -->
+  <link rel="stylesheet" href="../vendor/flatpickr/flatpickr.min.css">
+  <link rel="stylesheet" href="../vendor/flatpickr/themes/dark.css">
+  
+  <!-- CSS Dedicado -->
+  <link rel="stylesheet" href="../css/rcm-add-booking.css">
+  <link rel="stylesheet" href="../css/gc-rcm-shell.css">
+  <link rel="stylesheet" href="../css/gc-payments-pb.css">
+</head>
+<body class="rcm-body-wrapper">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-title">
+      ADD BOOKING — Rental Management System (RCM)
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-cancel" onclick="window.location.href='agent-dashboard.html'">Cancel</button>
+      <button class="btn btn-submit" onclick="submitBooking()">Submit & Sync</button>
+    </div>
+  </header>
+
+  <!-- TABS BAR -->
+  <div class="rcm-tabs">
+    <div class="rcm-tab active" onclick="switchTab('drivers', this)">👤 Drivers Details</div>
+    <div class="rcm-tab" onclick="switchTab('booking', this)">🚗 Booking Details</div>
+    <div class="rcm-tab" onclick="switchTab('fees', this)">➕ Booking Fees</div>
+    <div class="rcm-tab" onclick="switchTab('payments', this)">💳 Payments</div>
+    <div class="rcm-tab" onclick="switchTab('docs', this)">📄 Documents</div>
+  </div>
+
+  <!-- CONTENT CONTAINER -->
+  <div class="rcm-content-container">
+    
+    <!-- TAB 1: DRIVERS DETAILS -->
+    <div class="rcm-tab-content active" id="tab-drivers">
+      <h3 style="margin-bottom: 20px; font-size: 15px; color: #fff; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-weight: 600;">Primary Driver</h3>
+      <div class="form-grid">
+        <div>
+          <div class="form-group">
+            <label>Last Name *</label>
+            <input type="text" id="rcm-lastname" placeholder="Grigolli" value="Grigolli">
+          </div>
+          <div class="form-group">
+            <label>First Name *</label>
+            <input type="text" id="rcm-firstname" placeholder="Felipe" value="Felipe">
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" id="rcm-email" placeholder="felipe@testgctech.com" value="felipe@testgctech.com">
+          </div>
+          <div class="form-group">
+            <label>Phone / Mobile</label>
+            <input type="text" id="rcm-phone" placeholder="+61 412 345 678" value="+61 412 345 678">
+          </div>
+          <div class="form-group">
+            <label>License No</label>
+            <input type="text" id="rcm-license" placeholder="DL-9928310" value="DL-9928310">
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label>Address</label>
+            <input type="text" id="rcm-address" placeholder="123 George St" value="123 George St">
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <input type="text" id="rcm-city" placeholder="Sydney" value="Sydney">
+          </div>
+          <div class="form-group">
+            <label>State & Postcode</label>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" id="rcm-state" placeholder="NSW" value="NSW" style="flex: 1;">
+              <input type="text" id="rcm-postcode" placeholder="2000" value="2000" style="flex: 1;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Country of Residence</label>
+            <select id="rcm-country">
+              <option value="Australia" selected>Australia</option>
+              <option value="New Zealand">New Zealand</option>
+              <option value="Brazil">Brazil</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: BOOKING DETAILS -->
+    <div class="rcm-tab-content" id="tab-booking">
+      <h3 style="margin-bottom: 20px; font-size: 15px; color: #fff; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-weight: 600;">Booking Details, Routing & Schedule</h3>
+      <div class="form-grid">
+        <div>
+          <div class="form-group">
+            <label>Vehicle Category</label>
+            <select id="rcm-category" onchange="updateVehicleModels()">
+              <option value="Passenger" selected>Passenger (Cars, SUVs, 8 Seater)</option>
+              <option value="Commercial">Commercial (Vans, Trucks, Utes)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Vehicle Model Selection</label>
+            <select id="rcm-vehicle">
+              <!-- Preenchido via JS -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Pickup Location</label>
+            <select id="rcm-loc">
+              <option value="Sydney - Blacktown">Sydney - Blacktown</option>
+              <option value="Sydney - Parramatta">Sydney - Parramatta</option>
+              <option value="Sydney - Mascot" selected>Sydney - Mascot</option>
+              <option value="Sydney - North Sydney">Sydney - North Sydney</option>
+              <option value="Brisbane - Eagle Farm">Brisbane - Eagle Farm</option>
+              <option value="Brisbane - Woolloongabba">Brisbane - Woolloongabba</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Pickup Date & Time</label>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" id="rcm-date" placeholder="26 Sep 2026" style="flex: 2;">
+              <select id="rcm-time" style="flex: 1;">
+                <option value="08:30 AM" selected>08:30 AM</option>
+                <option value="09:00 AM">09:00 AM</option>
+                <option value="02:00 PM">02:00 PM</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label>Drop-off Location</label>
+            <select id="rcm-dropoff-loc">
+              <option value="Same as Pick up" selected>Same as Pick up</option>
+              <option value="Sydney - Blacktown">Sydney - Blacktown</option>
+              <option value="Sydney - Parramatta">Sydney - Parramatta</option>
+              <option value="Sydney - Mascot">Sydney - Mascot</option>
+              <option value="Sydney - North Sydney">Sydney - North Sydney</option>
+              <option value="Brisbane - Eagle Farm">Brisbane - Eagle Farm</option>
+              <option value="Brisbane - Woolloongabba">Brisbane - Woolloongabba</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Drop-off Date & Time</label>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" id="rcm-dropoff-date" placeholder="28 Sep 2026" style="flex: 2;">
+              <select id="rcm-dropoff-time" style="flex: 1;">
+                <option value="08:30 AM" selected>08:30 AM</option>
+                <option value="09:00 AM">09:00 AM</option>
+                <option value="05:00 PM">05:00 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Rev. Booking (Revenue Booking)</label>
+            <div style="display: flex; gap: 20px; padding: 6px 0;">
+              <label style="font-weight: normal; cursor: pointer;"><input type="radio" name="rev_booking" value="Yes" checked> Yes</label>
+              <label style="font-weight: normal; cursor: pointer;"><input type="radio" name="rev_booking" value="No"> No</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Source (Where did the client find us?)</label>
+            <select id="rcm-source">
+              <option value="Google Search" selected>Google Search</option>
+              <option value="Google Maps">Google Maps</option>
+              <option value="Repeat Customer">Repeat Customer</option>
+              <option value="Word of Mouth">Word of Mouth</option>
+              <option value="Facebook / Instagram">Facebook / Instagram</option>
+              <option value="Direct Website">Direct Website</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- REPEAT WEEKLY: replica esta reserva toda semana (js/gc-repeat.js) -->
+      <div class="repeat-box">
+        <label class="repeat-check">
+          <input type="checkbox" id="rcm-repeat" onchange="abRepeatUpdate()">
+          <span>↻ Repeat weekly <small>(regular customer)</small></span>
+        </label>
+        <div class="repeat-detail" id="rcm-repeat-detail" hidden>
+          <span id="rcm-repeat-text"></span>
+          <label>for the next
+            <select id="rcm-repeat-months" onchange="abRepeatUpdate()">
+              <option value="1">1 month</option><option value="2">2 months</option><option value="3">3 months</option>
+              <option value="4">4 months</option><option value="5">5 months</option><option value="6" selected>6 months</option>
+              <option value="7">7 months</option><option value="8">8 months</option><option value="9">9 months</option>
+              <option value="10">10 months</option><option value="11">11 months</option><option value="12">12 months</option>
+            </select>
+          </label>
+          <small class="repeat-hint">Any free vehicle of this category based at the pick-up location. You will see every date before anything is created.</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: BOOKING FEES (mesmo layout e cálculo da aba Booking Fees do Fleet Planner) -->
+    <div class="rcm-tab-content ab-plain" id="tab-fees">
+      <div class="fe-summary">
+        <span><strong>Total:</strong> <span id="ab-fe-sum-total">$0.00</span></span>
+        <span><strong>Extras:</strong> <span id="ab-fe-sum-extras">$0.00</span></span>
+        <span><strong>Grand Total:</strong> <span id="ab-fe-sum-grand">$0.00</span></span>
+      </div>
+      <div class="bd-panel">
+        <div class="bd-title">Fees and Extras:</div>
+        <div class="fe-season">
+          <div><label>Season:</label><span>Default</span></div>
+          <div><label>Quantity:</label><span><input type="number" id="ab-fe-days" min="1" step="1" oninput="abFeRecalc()"> Days</span></div>
+          <div><label>Rates:</label><span><input type="number" id="ab-fe-rate" min="0" step="0.01" oninput="abFeRecalc()"> daily</span></div>
+          <div><label>Total:</label><span id="ab-fe-hire-total">$0.00</span></div>
+        </div>
+        <div class="fe-options">
+          <div class="bd-row"><label>Discounts:</label><select id="ab-fe-discount" onchange="abFeRecalc()"></select></div>
+          <div class="bd-row"><label>Insurance:</label><select id="ab-fe-insurance" onchange="abFeRecalc()"></select></div>
+          <div class="bd-row"><label>Kms Options:</label><select id="ab-fe-kms" class="short" onchange="abFeRecalc()"></select></div>
+        </div>
+        <table class="fe-table">
+          <thead>
+            <tr><th>Name</th><th class="c">Select</th><th class="c">Qty</th><th class="r">Total</th><th class="r">Charged</th></tr>
+          </thead>
+          <tbody id="ab-fe-items"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 4: PAYMENTS (mesmo painel PowerBoard do Fleet Planner; a cobrança acontece no Create) -->
+    <div class="rcm-tab-content ab-plain" id="tab-payments">
+      <div id="ab-pay-panel"></div>
+    </div>
+
+    <!-- TAB 5: DOCUMENTS -->
+    <div class="rcm-tab-content" id="tab-docs">
+      <h3 style="margin-bottom: 20px; font-size: 15px; color: #fff; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-weight: 600;">Documents, Emails & Management Options</h3>
+      
+      <div class="docs-grid-modern">
+        
+        <!-- Coluna 1: Documents -->
+        <div class="docs-card-group">
+          <div class="docs-card-title">Documents</div>
+          <div class="docs-buttons-wrapper">
+            <button class="doc-action-btn" onclick="triggerAction('Summary')">📊 Summary</button>
+            <button class="doc-action-btn" onclick="triggerAction('Agreement')">📄 Agreement</button>
+            <button class="doc-action-btn" onclick="triggerAction('Print Invoice')">🖨️ Print Invoice</button>
+            <button class="doc-action-btn" onclick="triggerAction('Print Receipt')">🖨️ Print Receipt</button>
+            <button class="doc-action-btn" onclick="triggerAction('Print Confirmation')">🖨️ Print Confirmation</button>
+            <button class="doc-action-btn" onclick="triggerAction('Images/Uploads')">🖼️ Images / Uploads</button>
+            <button class="doc-action-btn" onclick="triggerAction('Pickup Sign')">🏷️ Pickup Sign</button>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Email -->
+        <div class="docs-card-group">
+          <div class="docs-card-title">Email & Messaging</div>
+          <div class="docs-buttons-wrapper">
+            <button class="doc-action-btn" onclick="triggerAction('Email Receipt')">✉️ Email Receipt</button>
+            <button class="doc-action-btn" onclick="triggerAction('Email Invoice')">✉️ Email Invoice</button>
+            <button class="doc-action-btn" onclick="triggerAction('Email Confirmation')">✉️ Email Confirmation</button>
+            <button class="doc-action-btn" onclick="triggerAction('Email Agreement')">✉️ Email Agreement</button>
+            <button class="doc-action-btn" onclick="triggerAction('Credit Card Link')">💳 Credit Card Link</button>
+            <button class="doc-action-btn" onclick="triggerAction('Email Customer')">👤 Email Customer</button>
+            <button class="doc-action-btn" onclick="triggerAction('SMS')">📱 Send SMS</button>
+          </div>
+        </div>
+
+        <!-- Coluna 3: Other -->
+        <div class="docs-card-group">
+          <div class="docs-card-title">Other Actions</div>
+          <div class="docs-buttons-wrapper">
+            <button class="doc-action-btn" onclick="triggerAction('Additional Drivers')">➕ Additional Drivers</button>
+            <button class="doc-action-btn" onclick="triggerAction('Notes')">📝 Internal Notes</button>
+            <button class="doc-action-btn" onclick="triggerAction('Vehicle Details')">🚗 Vehicle Specifications</button>
+            <button class="doc-action-btn" onclick="triggerAction('Vehicle Photos')">📷 Fleet Photos</button>
+            <button class="doc-action-btn" onclick="triggerAction('Vehicle Damage List')">⚠️ Damage Inspection Log</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <script>
+  // A leitura e preenchimento das datas vindas do Fleet Planner agora
+  // acontece dentro do rcm-add-booking.js, na inicialização do Flatpickr
+  // (era aqui que o bug estava: este bloco procurava input[type="date"]/
+  // input[type="time"], mas os campos reais são #rcm-date, um texto
+  // controlado pelo Flatpickr, e #rcm-time, um <select> — nunca batiam).
+  </script>
+
+  <!-- FOOTER -->
+  <footer class="rcm-footer">
+    <button class="btn btn-cancel" onclick="window.location.href='agent-dashboard.html'">Cancel</button>
+    <button class="btn btn-submit" onclick="submitBooking()">Create & Sync Booking</button>
+  </footer>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../js/gc-rcm-shell.js"></script>
+  <!-- Flatpickr JS -->
+  <script src="../vendor/flatpickr/flatpickr.min.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-fees-data.js"></script>
+  <script src="../js/gc-powerboard.js"></script>
+  <script src="../js/gc-repeat.js"></script>
+  <script src="../js/rcm-add-booking.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>

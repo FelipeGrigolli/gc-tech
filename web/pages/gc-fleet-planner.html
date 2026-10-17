@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GC Tech RCM - Fleet Management Planner</title>
+  <link rel="stylesheet" href="../css/rcm-fleet-planner.css">
+  <link rel="stylesheet" href="../css/gc-chat.css"> <!-- NEW: reuses chat bubble styles for the booking modal's Chat tab -->
+  <link rel="stylesheet" href="../css/gc-bonds.css">
+  <link rel="stylesheet" href="../css/gc-rcm-shell.css">
+  <link rel="stylesheet" href="../css/gc-whatsapp.css" id="wa-styles">
+  <link rel="stylesheet" href="../css/gc-payments-pb.css">
+</head>
+<body class="fleet-body-wrapper">
+
+  <header class="topbar">
+    <div class="topbar-title">
+      FLEET MANAGEMENT & ALLOCATION (GANTT PLANNER)
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-cancel" style="border-color: #ef4444; color: #ef4444; font-size: 13px;" onclick="clearAllBookings()">🗑️ Clear All</button>
+    </div>
+  </header>
+
+  <!-- BARRA DE FILTROS (estilo RCM): Branch / From / To / Seção / Categoria / Busca -->
+  <div class="planner-filterbar">
+    <label>Branch
+      <select id="flt-branch"></select>
+    </label>
+    <label>From
+      <input type="date" id="flt-from">
+    </label>
+    <label>To
+      <input type="date" id="flt-to">
+    </label>
+    <label>Fleet
+      <select id="flt-section" onchange="populateCategoryFilter()">
+        <option value="ALL">All Fleet</option>
+        <option value="Passenger">Passenger</option>
+        <option value="Commercial">Commercial</option>
+      </select>
+    </label>
+    <label>Category
+      <select id="flt-category"></select>
+    </label>
+    <label>Search
+      <input type="text" id="flt-search" placeholder="Plate or model..." oninput="applyPlannerFilters()">
+    </label>
+    <button class="btn btn-submit filter-btn" onclick="applyPlannerFilters()">View</button>
+    <button class="btn btn-cancel filter-btn" onclick="resetPlannerFilters()">Reset</button>
+  </div>
+
+  <!-- RESERVAS VENCIDAS: ainda "Reservation" com retirada antes de hoje (js/rcm-fleet-planner.js) -->
+  <div class="stale-banner" id="planner-stale" hidden></div>
+
+  <div class="planner-toolbar">
+    <div class="legend-items">
+      <span class="legend-item"><span class="color-box type-bg-reservation"></span> Reservation</span>
+      <span class="legend-item"><span class="color-box type-bg-hired"></span> Hired (On Rent)</span>
+      <span class="legend-item"><span class="color-box type-bg-returned"></span> Returned</span>
+      <span class="legend-item"><span class="color-box type-bg-maintenance"></span> Maintenance</span>
+      <span class="legend-item"><span class="color-box" style="background: transparent; border: 2px dashed #ef4444;"></span> Do Not Move!</span>
+      <span class="legend-item"><span class="color-box" style="background: #ffffff4f; border: 1px dashed #64748b;"></span> Possible Ext.</span>
+      <span class="legend-item"><span class="color-box" style="background: transparent; box-shadow: 0 0 0 2px #a78bfa;"></span> In Virtual</span>
+    </div>
+    <div class="date-controls">
+      <button class="btn btn-cancel toolbar-btn" onclick="setAllCategories(false)">Expand All</button>
+      <button class="btn btn-cancel toolbar-btn" onclick="setAllCategories(true)">Collapse All</button>
+      <span id="planner-range-label" class="range-label"></span>
+      <button class="btn btn-cancel toolbar-btn" onclick="shiftPlannerWeek(-1)">◀ 7 Days</button>
+      <button class="btn btn-submit toolbar-btn" onclick="goToToday()">Today</button>
+      <button class="btn btn-cancel toolbar-btn" onclick="shiftPlannerWeek(1)">7 Days ▶</button>
+    </div>
+  </div>
+
+  <div class="fleet-planner-container">
+    <div class="planner-header">
+      <div class="plate-col-header">Vehicle · Plate, Branch</div>
+      <div class="days-row" id="planner-days"></div>
+    </div>
+    <div class="planner-body" id="planner-body"></div>
+  </div>
+
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-window">
+      
+      <div class="modal-ra-bar" id="modal-ra-bar"></div>
+      <div class="modal-tabs">
+        <div class="modal-tab" onclick="switchModalTab('mod-drivers', this)" id="tab-btn-drivers">👤 Drivers Details</div>
+        <div class="modal-tab active" onclick="switchModalTab('mod-booking-details', this)" id="tab-btn-booking-details">🚗 Booking Details</div>
+        <div class="modal-tab" onclick="switchModalTab('mod-fees', this)" id="tab-btn-fees">➕ Booking Fees</div>
+        <div class="modal-tab" onclick="switchModalTab('mod-payments', this)" id="tab-btn-payments">💳 Payments</div>
+        <div class="modal-tab" onclick="switchModalTab('mod-docs', this)" id="tab-btn-docs">📄 Documents</div>
+        <div class="modal-tab" onclick="switchModalTab('mod-notes', this)" id="tab-btn-notes">📝 Notes</div>
+        <div class="modal-tab" onclick="switchModalTab('mod-chat', this)" id="tab-btn-chat">💬 Chat</div>
+        <div class="modal-tab" onclick="renderLogTable(); switchModalTab('mod-log', this)" id="tab-btn-log">🕘 Log</div>
+        <span class="type-badge" id="bd-type-badge">RESERVATION</span>
+        <button class="close-modal-btn" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="modal-content-area">
+
+        <!-- DRIVERS DETAILS -->
+        <div id="mod-drivers" class="modal-tab-content">
+          <div class="bd-panel">
+            <div class="bd-title">Primary Driver</div>
+            <div class="bd-grid">
+              <!-- COLUNA ESQUERDA -->
+              <div>
+                <div class="bd-row"><label class="strong">Last Name:</label><input type="text" id="mod-lname"></div>
+                <div class="bd-row"><label>First Name:</label><input type="text" id="mod-fname"></div>
+                <div class="bd-row"><label>Email:</label><input type="email" id="mod-email"></div>
+                <div class="bd-row"><label class="strong">DOB:</label><div class="bd-date" id="dv-dob"></div></div>
+                <div class="bd-row"><label>Phone:</label><input type="text" id="mod-phone"></div>
+                <div class="bd-row"><label>Mobile:</label><input type="text" id="dv-mobile"></div>
+                <div class="bd-row"><label>Fax:</label><input type="text" id="dv-fax"></div>
+
+                <div class="bd-row gap-top"><label>License No:</label><input type="text" id="mod-licence"></div>
+                <div class="bd-row"><label>Issued In:</label><input type="text" id="dv-issued" list="dv-issued-list" placeholder="Enter state or select country issued..."></div>
+                <datalist id="dv-issued-list"></datalist>
+                <div class="bd-row">
+                  <label>Expiry Date:</label>
+                  <div class="bd-inline">
+                    <div class="bd-date" id="dv-expiry"></div>
+                    <label class="bd-check"><input type="checkbox" id="dv-lifetime" onchange="dvToggleLifetime()"> Life Time</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- COLUNA DIREITA -->
+              <div>
+                <div class="bd-row"><label>Company:</label><input type="text" id="dv-company" list="dv-company-list" placeholder="Search or type a company..."></div>
+                <datalist id="dv-company-list"></datalist>
+                <div class="bd-row"><label>Address:</label><input type="text" id="dv-address"></div>
+                <div class="bd-row"><label>City:</label><input type="text" id="dv-city"></div>
+                <div class="bd-row"><label>State:</label><input type="text" id="dv-state"></div>
+                <div class="bd-row"><label>Postcode:</label><input type="text" id="dv-postcode"></div>
+                <div class="bd-row"><label>Country of Residence:</label><select id="dv-country"></select></div>
+                <div class="bd-row"><label>Local Address:</label><input type="text" id="dv-local-address"></div>
+
+                <div class="bd-row gap-top"><label>Occupation:</label><select id="dv-occupation" class="short"></select></div>
+                <div class="bd-row">
+                  <label>Mailing List:</label>
+                  <div class="bd-inline">
+                    <label class="bd-check"><input type="radio" name="dv-mailing" value="Yes" checked> Yes</label>
+                    <label class="bd-check"><input type="radio" name="dv-mailing" value="No"> No</label>
+                  </div>
+                </div>
+                <div class="bd-row"><label>Payment Type:</label><select id="dv-payment-type" class="short"></select></div>
+                <div class="bd-row"><label>Invoicing Method:</label><select id="dv-invoicing" class="short"></select></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bd-panel">
+            <button type="button" class="bd-title bd-title-btn" onclick="dvAddAdditionalDriver()">Additional Drivers <span>+</span></button>
+            <div id="dv-additional"></div>
+          </div>
+
+          <div class="bd-footer">
+            <span class="bd-message"></span>
+            <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-submit" onclick="saveBookingDetails()">💾 Save Booking</button>
+          </div>
+        </div>
+
+        <!-- BOOKING DETAILS (layout do Rental Car Manager) -->
+        <div id="mod-booking-details" class="modal-tab-content active">
+          <div class="bd-panel">
+            <div class="bd-title bd-title-row">Booking Details:
+              <button type="button" class="bd-last-update" id="bd-last-update" onclick="renderLogTable(); switchModalTab('mod-log', document.getElementById('tab-btn-log'))" title="Open the booking log"></button>
+            </div>
+            <div class="bd-grid">
+              <!-- COLUNA ESQUERDA -->
+              <div>
+                <div class="bd-row">
+                  <label class="strong">Type:</label>
+                  <div class="bd-inline">
+                    <select id="bd-type" class="type-select" onchange="bdOnTypeChange()">
+                      <option value="reservation">Reservation</option>
+                      <option value="hired">Hired</option>
+                      <option value="returned">Returned</option>
+                      <option value="maintenance">Maintenance</option>
+                      <option value="maint-done" hidden disabled>Maintenance Completed</option>
+                      <option value="possible-ext" hidden disabled>Possible Extension</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
+                    <label class="bd-check"><input type="checkbox" id="bd-donotmove" onchange="bdOnTypeChange()"> Do Not Move!</label>
+                  </div>
+                </div>
+                <div class="bd-row">
+                  <label class="strong">Vehicle Category:</label>
+                  <select id="bd-category" disabled title="The vehicle model of a booking can't be changed"></select>
+                </div>
+
+                <div class="bd-row gap-top">
+                  <label class="strong">Pickup Location:</label>
+                  <select id="bd-pickup-loc"></select>
+                </div>
+                <div class="bd-row">
+                  <label class="strong">Pickup Date:</label>
+                  <div class="bd-date" id="bd-p-date"></div>
+                </div>
+                <div class="bd-row">
+                  <label>Pickup Time:</label>
+                  <div class="bd-time" id="bd-p-time"></div>
+                </div>
+
+                <div class="bd-row gap-top">
+                  <label class="strong">Dropoff Location:</label>
+                  <select id="bd-dropoff-loc"></select>
+                </div>
+                <div class="bd-row">
+                  <label class="strong">Dropoff Date:</label>
+                  <div class="bd-inline">
+                    <div class="bd-date" id="bd-d-date"></div>
+                    <button type="button" class="bd-mini-btn" onclick="extendBooking(1)" title="Extend 1 day">+1d</button>
+                    <button type="button" class="bd-mini-btn" onclick="extendBooking(7)" title="Extend 1 week">+1w</button>
+                  </div>
+                </div>
+                <div class="bd-row">
+                  <label>Dropoff Time:</label>
+                  <div class="bd-time" id="bd-d-time"></div>
+                </div>
+
+                <div class="bd-row gap-top">
+                  <label class="strong">Source:</label>
+                  <select id="bd-source"></select>
+                </div>
+                <div class="bd-row"><label>Youngest Driver:</label><select id="bd-youngest" class="short"></select></div>
+                <div class="bd-row"><label>Transmission:</label><select id="bd-transmission" class="short"></select></div>
+                <div class="bd-row"><label>Travellers:</label><select id="bd-travellers" class="short"></select></div>
+                <div class="bd-row"><label class="strong">Area of Use:</label><select id="bd-area"></select></div>
+              </div>
+
+              <!-- COLUNA DIREITA -->
+              <div>
+                <div class="bd-row">
+                  <label>Rev. Booking:</label>
+                  <div class="bd-inline">
+                    <label class="bd-check"><input type="radio" name="bd-rev" value="Yes" checked> Yes</label>
+                    <label class="bd-check"><input type="radio" name="bd-rev" value="No"> No</label>
+                  </div>
+                </div>
+                <div class="bd-row"><label>Arrival:</label><input type="text" id="bd-arrival" placeholder="Flight No. Arrival..."></div>
+                <div class="bd-row"><label>Collection Point:</label><input type="text" id="bd-collection" list="bd-points" placeholder="Please click for list..."></div>
+                <div class="bd-row"><label>Departure:</label><input type="text" id="bd-departure" placeholder="Flight No. Departure..."></div>
+                <div class="bd-row"><label>Return Point:</label><input type="text" id="bd-return" list="bd-points" placeholder="Please click for list..."></div>
+                <datalist id="bd-points"></datalist>
+
+                <div class="bd-row gap-top"><label>Campaign Code:</label><select id="bd-campaign"></select></div>
+                <div class="bd-row"><label>Referred By:</label><select id="bd-referred"></select></div>
+                <div class="bd-row"><label>Referral Name:</label><input type="text" id="bd-referral-name"></div>
+
+                <div class="bd-row gap-top"><label>Agency:</label><select id="bd-agency"></select></div>
+                <div class="bd-row"><label>Agent:</label><input type="text" id="bd-agent"></div>
+                <div class="bd-row"><label>Agent Email:</label><input type="email" id="bd-agent-email"></div>
+                <div class="bd-row"><label>Reference No:</label><input type="text" id="bd-reference"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bd-panel">
+            <div class="bd-title">Vehicle Selection:</div>
+            <div class="bd-row wide">
+              <label class="strong">Vehicle: <span id="bd-vehicle-status" class="bd-vehicle-status"></span></label>
+              <select id="bd-vehicle" onchange="bdRefreshVehicleStatus(); bdOnTypeChange()"></select>
+            </div>
+            <div class="bd-spare-key" id="bd-spare-key"></div>
+            <div class="bd-row">
+              <label>Recalc Kms cost:</label>
+              <div class="bd-inline" title="Yes: the kms charge is worked out again from Kms Out / Kms In whenever they change">
+                <label class="bd-check"><input type="radio" name="bd-kms-recalc" value="Yes" checked onchange="feAutoKms()"> Yes</label>
+                <label class="bd-check"><input type="radio" name="bd-kms-recalc" value="No" onchange="feAutoKms()"> No</label>
+              </div>
+            </div>
+            <div class="bd-grid">
+              <div class="bd-row"><label>Kms Out:</label><input type="number" id="bd-kms-out" min="0" step="1" placeholder="Odometer reading on pickup" oninput="feAutoKms()"></div>
+              <div class="bd-row"><label class="strong">Kms In:</label><input type="number" id="bd-kms-in" min="0" step="1" placeholder="Odometer reading on drop off" oninput="feAutoKms()"></div>
+              <div class="bd-row"><label>Fuel Out:</label><select id="bd-fuel-out" class="short"></select></div>
+              <div class="bd-row"><label>Fuel In:</label><select id="bd-fuel-in" class="short"></select></div>
+            </div>
+            <div class="bd-odo-hint" id="bd-odo-hint"></div>
+          </div>
+
+          <div class="bd-panel">
+            <div class="bd-title">Notes: <span class="bd-hint">(please note that these notes may appear on customer facing documents depending on your system parameters)</span></div>
+            <textarea id="bd-notes" rows="3"></textarea>
+          </div>
+
+          <div class="bd-footer">
+            <span class="bd-message" id="bd-message"></span>
+            <button class="btn btn-repeat" onclick="plannerRepeatWeekly()" title="Replicate this booking every week for the next months">↻ Repeat weekly</button>
+            <button class="btn anna-link-btn" onclick="plannerAnnaSummary()" title="Concept: Anna summarises the booking">✦ Summarise</button>
+            <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-submit" onclick="saveBookingDetails()">💾 Save Booking</button>
+          </div>
+        </div>
+
+        <!-- BOOKING FEES (layout do Rental Car Manager) -->
+        <div id="mod-fees" class="modal-tab-content">
+          <div class="fe-summary">
+            <span><strong>Total:</strong> <span id="fe-sum-total">$0.00</span></span>
+            <span><strong>Extras:</strong> <span id="fe-sum-extras">$0.00</span></span>
+            <span><strong>Grand Total:</strong> <span id="fe-sum-grand">$0.00</span></span>
+          </div>
+
+          <div class="bd-panel">
+            <div class="bd-title">Fees and Extras:</div>
+            <div class="fe-season">
+              <div><label>Season:</label><span>Default</span></div>
+              <div><label>Quantity:</label><span><input type="number" id="fe-days" min="1" step="1" oninput="feRecalc()"> Days</span></div>
+              <div><label>Rates:</label><span><input type="number" id="fe-rate" min="0" step="0.01" oninput="feRecalc()"> daily</span></div>
+              <div><label>Total:</label><span id="fe-hire-total">$0.00</span></div>
+            </div>
+            <div class="fe-options">
+              <div class="bd-row"><label>Discounts:</label><select id="fe-discount" onchange="feRecalc()"></select></div>
+              <div class="bd-row"><label>Insurance:</label><select id="fe-insurance" onchange="feRecalc()"></select></div>
+              <div class="bd-row"><label>Kms Options:</label><select id="fe-kms" onchange="feOnKmsOptionChange()"></select></div>
+              <div class="fe-kms-hint" id="fe-kms-hint"></div>
+              <div class="bd-row">
+                <label>Kms Cost:</label>
+                <div class="bd-inline">
+                  <input type="number" id="fe-kms-cost" class="fe-kms-cost" min="0" step="0.01" oninput="feOnKmsCostInput()">
+                  <button type="button" class="fe-calc-btn" onclick="feAutoKms(true)" title="Work out the kms charge from Kms Out / Kms In">🧮</button>
+                  <span class="fe-kms-detail" id="fe-kms-detail"></span>
+                </div>
+              </div>
+            </div>
+
+            <table class="fe-table">
+              <thead>
+                <tr><th>Name</th><th class="c">Select</th><th class="c">Qty</th><th class="r">Total</th><th class="r">Charged</th></tr>
+              </thead>
+              <tbody id="fe-items"></tbody>
+            </table>
+          </div>
+
+          <div class="bd-footer">
+            <span class="bd-message"></span>
+            <button class="btn btn-cancel" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-submit" onclick="saveBookingDetails()">💾 Save Booking</button>
+          </div>
+        </div>
+
+        <div id="mod-payments" class="modal-tab-content">
+          <!-- Cartões e cobranças via PowerBoard (js/gc-powerboard.js) e pedágios (js/gc-tolls.js) -->
+          <div id="mod-pb-panel"></div>
+          <div id="mod-toll-panel"></div>
+          <!-- Extrato igual ao "Booking Payments" do RCM (js/gc-bonds.js) -->
+          <div class="bd-panel bond-ledger" id="mod-ledger"></div>
+
+          <div id="extension-box" style="background: #1e293b; padding: 24px; border-radius: 8px; border: 1px solid #334155;">
+            <h3 id="extension-title" style="font-size: 15px; color: #fff; font-weight: 600; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 10px;">Process Extension Payment</h3>
+            <div id="extension-summary" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3); padding: 16px; border-radius: 6px; margin-bottom: 20px; color: #fff; font-size: 14px; line-height: 1.6;">
+              No pending extensions to process.
+            </div>
+            <div id="extension-charge">
+              <div class="form-group"><label>Cardholder Name</label><input type="text" id="ext-card-holder" value="Card on File (Tokenized)" disabled></div>
+              <div class="form-group"><label>Card on file (PowerBoard)</label><input type="text" id="ext-card-number" value="•••• •••• •••• 4242" disabled style="color: var(--success); font-weight: 600;"></div>
+              <button class="btn btn-submit" style="width: 100%; margin-top: 10px; padding: 12px; font-size: 14px;" onclick="processModalPayment()">Charge Card & Continue</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="mod-docs" class="modal-tab-content">
+          <div style="background: #1e293b; padding: 24px; border-radius: 8px; border: 1px solid #334155; text-align: center;">
+            <h3 style="font-size: 15px; color: #fff; font-weight: 600; margin-bottom: 15px;">Payment Successful!</h3>
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 25px;">The booking has been officially updated. Would you like to send the updated invoice to the customer?</p>
+            <div style="display: flex; justify-content: center; gap: 15px;">
+              <button class="btn btn-cancel" style="background: #2563eb; border-color: #2563eb; color: #fff;" onclick="sendModalInvoice()">✉️ Email Updated Invoice</button>
+              <button class="btn btn-cancel" onclick="closeModal()">Close Window</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="mod-notes" class="modal-tab-content">
+          <div style="background: #1e293b; padding: 24px; border-radius: 8px; border: 1px solid #334155;">
+             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="font-size: 15px; color: #fff; font-weight: 600;">Internal Booking Notes</h3>
+                <button class="btn btn-submit" style="padding: 6px 12px; font-size: 12px; background: #10b981;" onclick="toggleAddNoteForm()">+ Add Note</button>
+             </div>
+
+             <div id="add-note-form" style="display: none; background: #0f172a; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #334155;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 10px;">
+                    <div class="form-group" style="margin: 0;">
+                        <label>Priority</label>
+                        <select id="new-note-priority" style="width: 100%; padding: 8px; background: #1e293b; border: 1px solid #334155; color: #fff; border-radius: 4px;">
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                     <div class="form-group" style="margin: 0;">
+                        <label>Subject (Optional)</label>
+                        <input type="text" id="new-note-subject" placeholder="e.g. Follow up call">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Note Detail</label>
+                    <textarea id="new-note-content" rows="3" placeholder="Enter note details here..."></textarea>
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                     <button class="btn btn-cancel" style="padding: 6px 12px; font-size: 12px;" onclick="toggleAddNoteForm()">Cancel</button>
+                     <button class="btn btn-submit" style="padding: 6px 12px; font-size: 12px;" onclick="saveInternalNote()">Save Note</button>
+                </div>
+             </div>
+
+             <div style="overflow-x: auto;">
+                 <table class="notes-table">
+                     <thead>
+                         <tr>
+                             <th>Priority</th>
+                             <th>Status</th>
+                             <th>Subject</th>
+                             <th>Notes</th>
+                             <th>Entered</th>
+                             <th>Action</th>
+                         </tr>
+                     </thead>
+                     <tbody id="notes-table-body">
+                         <!-- Notes rendered here via JS -->
+                     </tbody>
+                 </table>
+             </div>
+          </div>
+        </div>
+
+        <div id="mod-chat" class="modal-tab-content">
+          <div style="background: #1e293b; padding: 24px; border-radius: 8px; border: 1px solid #334155; display: flex; flex-direction: column; height: 420px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom: 1px solid #334155; padding-bottom: 10px;">
+              <h3 style="font-size: 15px; color: #fff; font-weight: 600;">Chat linked to this booking</h3>
+              <button class="btn btn-cancel" id="mod-chat-open-btn" style="padding:6px 14px; font-size:12px; display:none;">Open Full Chat ↗</button>
+            </div>
+            <div id="mod-chat-thread" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:8px; padding: 4px;"></div>
+          </div>
+          <!-- WhatsApp do cliente (via 3CX) — js/gc-whatsapp.js -->
+          <div id="mod-wa-panel"></div>
+        </div>
+
+        <!-- LOG: histórico de alterações da reserva (quem, quando, o quê) -->
+        <div id="mod-log" class="modal-tab-content">
+          <div class="log-panel">
+            <div class="log-head">
+              <div>
+                <h3 id="log-title">Booking Log</h3>
+                <span class="log-sub" id="log-sub"></span>
+              </div>
+              <div class="log-head-actions">
+                <a class="btn btn-cancel log-report-link" id="log-report-link" href="gc-activity-log.html" onclick="window.open(this.href, '_blank'); return false;">Full log report ↗</a>
+              </div>
+            </div>
+            <div class="log-table-wrap">
+              <table class="log-table">
+                <thead><tr><th>#</th><th>Res #</th><th>Operator</th><th>Date Updated</th><th>Action</th><th>Details</th><th>Rate</th><th>Info</th><th class="num">Total</th></tr></thead>
+                <tbody id="log-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- POSSIBLE EXTENSION: abrir, mudar datas ou cancelar (js/rcm-fleet-planner.js → extOpen) -->
+  <div class="modal-overlay" id="ext-modal" onclick="if (event.target === this) extClose()">
+    <div class="modal-window ext-window">
+      <div class="ext-head">
+        <h3><span class="ext-title" id="ext-title">Possible Extension</span> <span id="ext-plate"></span></h3>
+        <span class="type-badge t-possible-ext" id="ext-badge">POSSIBLE EXT.</span>
+        <button class="close-modal-btn ext-close" onclick="extClose()">✕</button>
+      </div>
+      <div class="ext-body">
+        <div class="bd-panel">
+          <div class="bd-title">Hold Details:</div>
+          <div class="ext-grid">
+            <label>Vehicle</label><div id="ext-vehicle" class="ext-value"></div>
+            <label id="ext-linked-label">Extends booking</label><div id="ext-linked" class="ext-value"></div>
+            <label>From</label>
+            <div class="ext-dt">
+              <input type="date" id="ext-from-date">
+              <select id="ext-from-h"></select><b>:</b><select id="ext-from-m"></select>
+            </div>
+            <label>To</label>
+            <div class="ext-dt">
+              <input type="date" id="ext-to-date">
+              <select id="ext-to-h"></select><b>:</b><select id="ext-to-m"></select>
+              <button type="button" class="ext-quick" onclick="extAddDays(1)">+1d</button>
+              <button type="button" class="ext-quick" onclick="extAddDays(7)">+1w</button>
+            </div>
+            <label>Days</label><div id="ext-days" class="ext-value"></div>
+            <label>Note</label><textarea id="ext-note" rows="3" placeholder="e.g. Customer may keep the van until Friday, will confirm by phone"></textarea>
+            <label>Created</label><div id="ext-created" class="ext-value muted"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ext-footer">
+        <button type="button" class="btn ext-delete" id="ext-delete-btn" onclick="extDelete()">Cancel extension</button>
+        <button type="button" class="btn ext-delete" id="ext-delete-series" hidden onclick="extDeleteSeries()">Cancel all future holds</button>
+        <span class="ext-spacer"></span>
+        <button type="button" class="btn btn-cancel" onclick="extClose()">Close</button>
+        <button type="button" class="btn btn-submit" onclick="extSave()">💾 Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="quick-action-modal">
+    <div class="modal-window" style="width: 500px;">
+      <div style="padding: 20px; background: #0f172a; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 15px; color: #fff; font-weight: 600;">Action for <span id="qa-plate" style="color: var(--gc-orange);"></span></h3>
+        <button class="close-modal-btn" style="position: static;" onclick="closeQuickActionModal()">✕</button>
+      </div>
+      <div style="padding: 30px; background: #1e293b; text-align: center;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; text-align: left;">
+          <div class="form-group"><label>Start Date & Time</label><input type="datetime-local" step="900" id="qa-start-date" style="color-scheme: dark;"></div>
+          <div class="form-group"><label>End Date & Time</label><input type="datetime-local" step="900" id="qa-end-date" style="color-scheme: dark;"></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+          <button class="btn btn-submit" style="padding: 14px; font-size: 14px;" onclick="redirectToAddBooking()">➕ Create New Booking</button>
+          <button class="btn btn-cancel" style="padding: 14px; font-size: 14px; border-color: #64748b; color: #cbd5e1;" onclick="addPossibleExtension()">⏳ Add "Possible Extension" Hold</button>
+          <button class="btn btn-weekend" style="padding: 14px; font-size: 14px;" onclick="plannerWeekendHold()">🗓️ Weekend Hold <small>(repeat every weekend)</small></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hover-tooltip" class="gantt-tooltip"></div>
+  <script src="../js/gc-ui.js"></script>
+  <script src="../js/gc-dates.js"></script>
+  <script src="../js/gc-rcm-shell.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-fees-data.js"></script>
+  <script src="../js/gc-bonds.js"></script>
+  <script src="../js/gc-repeat.js"></script>
+  <script src="../js/gc-powerboard.js"></script>
+  <script src="../js/gc-tolls.js"></script>  <script src="../js/rcm-fleet-planner.js"></script>
+  <script src="../js/gc-chat.js"></script> <!-- NEW -->
+  <script src="../js/gc-anna.js"></script>
+  <script src="../js/gc-whatsapp.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>

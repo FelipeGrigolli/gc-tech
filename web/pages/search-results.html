@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results - GC Tech Car & Truck Rental</title>
+
+  <link rel="stylesheet" href="../vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../vendor/flatpickr/flatpickr.min.css">
+  <link rel="stylesheet" href="../css/gc-chat.css">
+  <link rel="stylesheet" href="../css/gc-home.css">
+  <link rel="stylesheet" href="../css/gc-search.css">
+</head>
+<body class="search-body">
+
+  <!-- HEADER (mesmo da Home, versão sólida) -->
+  <header class="site-header scrolled search-header">
+    <div class="container header-inner">
+      <a href="gc-home.html" class="brand"><img src="../assets/img/gc-logo.svg" alt="GC Tech Car & Truck Rental"></a>
+      <nav class="main-nav">
+        <div class="nav-item"><a class="nav-link" href="gc-home.html#fleet">Vehicles</a></div>
+        <div class="nav-item"><a class="nav-link" href="gc-home.html#locations">Locations</a></div>
+        <div class="nav-item"><a class="nav-link" href="gc-home.html#business">Corporate rental</a></div>
+        <div class="nav-item"><a class="nav-link" href="gc-home.html#about">About</a></div>
+      </nav>
+      <div class="header-actions">
+        <a class="btn-ghost" href="gc-home.html#faq">Help</a>
+        <a class="btn-ghost" href="customer-portal.html">My Bookings</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- BARRA DE BUSCA EDITÁVEL -->
+  <section class="search-band">
+    <div class="container">
+      <ol class="progress-steps">
+        <li class="active">Search</li>
+        <li>Driver</li>
+        <li>Extras</li>
+        <li>Payment</li>
+      </ol>
+
+      <div class="booking-widget compact">
+        <div class="widget-tabs" id="sr-tabs"></div>
+        <div class="widget-row">
+          <div class="of-field">
+            <label>Pick up</label>
+            <select id="sr-pickup-loc" onchange="srSyncDropoffLabel()"></select>
+          </div>
+          <div class="of-field">
+            <label>Drop off</label>
+            <select id="sr-dropoff-loc"></select>
+          </div>
+          <div class="of-field">
+            <label>Pick up date</label>
+            <input type="text" id="sr-pickup-date" readonly>
+          </div>
+          <div class="of-field small">
+            <label>Time</label>
+            <select id="sr-pickup-time"></select>
+          </div>
+          <div class="of-field">
+            <label>Drop off date</label>
+            <input type="text" id="sr-dropoff-date" readonly>
+          </div>
+          <div class="of-field small">
+            <label>Time</label>
+            <select id="sr-dropoff-time"></select>
+          </div>
+          <button class="btn-search" onclick="srApplySearch()">Update</button>
+        </div>
+        <div class="widget-error" id="sr-error"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS + MAPA -->
+  <main class="container results-layout">
+    <section>
+      <div class="results-toolbar">
+        <div>
+          <h1 id="sr-count">Searching…</h1>
+          <p class="results-sub" id="sr-trip-summary"></p>
+        </div>
+        <div class="results-controls">
+          <label class="toggle">
+            <input type="checkbox" id="sr-hybrid-only" onchange="srRenderResults()"> ⚡ Hybrid only
+          </label>
+          <label class="sort-select">Sort
+            <select id="sr-sort" onchange="srRenderResults()">
+              <option value="recommended">Recommended</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div id="sr-results"></div>
+    </section>
+
+    <aside class="map-panel">
+      <div class="map-card">
+        <iframe id="sr-map" title="Branch location" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <!-- Sem internet o Google Maps não carrega: mostra este quadro no lugar (js/search-script.js) -->
+        <div class="map-offline" id="sr-map-offline" hidden></div>
+        <div class="map-info" id="sr-map-info"></div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- CHAT -->
+  <button class="chat-fab" id="chat-fab-btn" onclick="srOpenChat()">
+    💬 Chat with us
+    <span class="chat-fab-badge" id="chat-fab-badge"></span>
+  </button>
+
+  <script src="../js/gc-ui.js"></script>
+  <script src="../vendor/flatpickr/flatpickr.min.js"></script>
+  <script src="../js/gc-fleet-data.js"></script>
+  <script src="../js/gc-chat.js"></script>
+  <script src="../js/search-script.js"></script>
+  <script src="../js/gc-demo.js"></script>
+</body>
+</html>
