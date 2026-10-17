@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-label="Full size sedan">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3f5f8"/><stop offset="1" stop-color="#e3e7ec"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7dce3"/><stop offset="1" stop-color="#eceff3"/></linearGradient>
+    <linearGradient id="paint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b6573"/><stop offset="1" stop-color="#3b4350"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a4757"/><stop offset="1" stop-color="#26303c"/></linearGradient>
+    <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="440" fill="url(#wall)"/>
+  <rect y="300" width="640" height="140" fill="url(#floor)"/>
+  <ellipse cx="320" cy="362" rx="270" ry="16" fill="url(#shadow)"/>
+  <path d="M100,318 L100,264 Q102,248 122,244 L196,236 C226,190 262,170 312,168 L392,168 C428,170 452,188 478,214 L524,226 C542,232 548,250 546,278 L546,318 Q546,326 538,326 L108,326 Q100,326 100,318 Z" fill="url(#paint)" stroke="#2c333d" stroke-width="2"/>
+  <path d="M208,234 C234,196 264,178 308,177 L334,177 L334,232 Z" fill="url(#glass)"/>
+  <path d="M344,177 L390,177 C418,179 440,194 462,216 L344,232 Z" fill="url(#glass)"/>
+  <path d="M339,212 L339,318" stroke="#2c333d" stroke-width="2" opacity=".8"/>
+  <path d="M112,290 L536,290" stroke="#FF5E00" stroke-width="6" stroke-linecap="round"/>
+  <path d="M100,252 L118,248 L118,266 L100,268 Z" fill="#d93a2b"/>
+  <path d="M528,234 L545,242 L544,254 L524,250 Z" fill="#fff6d6" stroke="#c9b98a" stroke-width="1.5"/>
+  
+  <circle cx="200" cy="320" r="47" fill="#2a2f36"/>
+    <circle cx="200" cy="320" r="40" fill="#1c2026"/>
+    <circle cx="200" cy="320" r="24.8" fill="#c8cdd4"/>
+    <circle cx="200" cy="320" r="24.8" fill="none" stroke="#9aa2ad" stroke-width="3"/>
+    <circle cx="200" cy="320" r="8" fill="#7d8591"/>
+  <circle cx="462" cy="320" r="47" fill="#2a2f36"/>
+    <circle cx="462" cy="320" r="40" fill="#1c2026"/>
+    <circle cx="462" cy="320" r="24.8" fill="#c8cdd4"/>
+    <circle cx="462" cy="320" r="24.8" fill="none" stroke="#9aa2ad" stroke-width="3"/>
+    <circle cx="462" cy="320" r="8" fill="#7d8591"/>
+</svg>

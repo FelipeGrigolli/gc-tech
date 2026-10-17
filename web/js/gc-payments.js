@@ -89,9 +89,9 @@ function ppStatus(plan) {
 // ---------- Dados de exemplo ----------
 // Cada plano de exemplo é o resto de um dano de exemplo: mesma reserva devolvida (gc-fleet-data.js,
 // taxa lançada na devolução), mesmo cliente e o mesmo relatório do Damage Control (dmg-seed-NN).
-// Total do plano = dano − $500 do bond que a GC Tech ficou. As parcelas começam depois da devolução.
+// Total do plano = dano − $400 do bond que a GC Tech ficou. As parcelas começam depois da devolução.
 const PP_SEED_VERSION_KEY = 'gc_pp_seeded_v';
-const PP_SEED_VERSION = '2';
+const PP_SEED_VERSION = '3';
 const PP_SEED_IDS = ['pp-GC-8832', 'pp-GC-7716', 'pp-429424', 'pp-493149', 'pp-492814', 'pp-101992', 'pp-500100', 'pp-500101'];
 
 function ppSeedIfEmpty() {
@@ -111,19 +111,19 @@ function ppSeedIfEmpty() {
       id: 'pp-' + seed.ref, status: 'active', phone: '+61 400 000 000',
       customerName: `${seed.fname} ${seed.lname}`, email: seed.clientEmail, bookingRef: seed.ref, vehicle: cat.model || '', plate: seed.plate,
       createdBy: 'Felipe Grigolli', createdAt: first,
-      notes: [{ date: first, author: 'Felipe Grigolli', text: `Damage ${ppMoney(p.totalAmount + 500)} charged at return: $500 kept from the bond, ${ppMoney(p.totalAmount)} agreed as a weekly plan. Instalments taken by card by the team (phone, chat or branch).` }],
+      notes: [{ date: first, author: 'Felipe Grigolli', text: `Damage ${ppMoney(p.totalAmount + 400)} charged at return: $400 kept from the bond, ${ppMoney(p.totalAmount)} agreed as a weekly plan. Instalments taken by card by the team (phone, chat or branch).` }],
       ...rest, installments, ...extra
     };
   };
 
   const plans = [
-    make({ bookingId: 'bk-or7716', damageReportId: 'dmg-seed-10', reason: 'At-fault accident — front left bumper', totalAmount: 1150, weeklyAmount: 150, cardLast4: '4242' }, -35, 4),
-    make({ bookingId: 'bk2', damageReportId: 'dmg-seed-11', reason: 'Rear bumper & boot lid — reversed into a bollard', totalAmount: 900, weeklyAmount: 100, cardLast4: PP_DECLINE_CARD }, -8, 0),
-    make({ bookingId: 'bk6', damageReportId: 'dmg-seed-12', reason: 'Rear-end collision — damage excess', totalAmount: 2000, weeklyAmount: 250, cardLast4: '1881' }, 0, -1),
-    make({ bookingId: 'bk7', damageReportId: 'dmg-seed-13', reason: 'Side mirror & door panel', totalAmount: 600, weeklyAmount: 75, cardLast4: '5100' }, -5, 0, { status: 'paused' }),
-    make({ bookingId: 'bk1', damageReportId: 'dmg-seed-14', reason: 'Tyres & rim damage', totalAmount: 400, weeklyAmount: 100, cardLast4: '3055' }, -6, 0),
-    make({ bookingId: 'bk-truck-0', damageReportId: 'dmg-seed-03', reason: 'Tail lift repair', totalAmount: 740, weeklyAmount: 185, cardLast4: '7713' }, 3, -1),
-    make({ bookingId: 'bk-truck-1', damageReportId: 'dmg-seed-04', reason: 'Roof damage — low clearance', totalAmount: 2300, weeklyAmount: 300, cardLast4: '2026' }, -3, 0)
+    make({ bookingId: 'bk-or7716', damageReportId: 'dmg-seed-10', reason: 'At-fault accident — front left bumper', totalAmount: 1250, weeklyAmount: 150, cardLast4: '4242' }, -35, 4),
+    make({ bookingId: 'bk2', damageReportId: 'dmg-seed-11', reason: 'Rear bumper & boot lid — reversed into a bollard', totalAmount: 1000, weeklyAmount: 100, cardLast4: PP_DECLINE_CARD }, -8, 0),
+    make({ bookingId: 'bk6', damageReportId: 'dmg-seed-12', reason: 'Rear-end collision — damage excess', totalAmount: 2100, weeklyAmount: 250, cardLast4: '1881' }, 0, -1),
+    make({ bookingId: 'bk7', damageReportId: 'dmg-seed-13', reason: 'Side mirror & door panel', totalAmount: 700, weeklyAmount: 75, cardLast4: '5100' }, -5, 0, { status: 'paused' }),
+    make({ bookingId: 'bk1', damageReportId: 'dmg-seed-14', reason: 'Tyres & rim damage', totalAmount: 500, weeklyAmount: 100, cardLast4: '3055' }, -6, 0),
+    make({ bookingId: 'bk-truck-0', damageReportId: 'dmg-seed-03', reason: 'Tail lift repair', totalAmount: 840, weeklyAmount: 210, cardLast4: '7713' }, 3, -1),
+    make({ bookingId: 'bk-truck-1', damageReportId: 'dmg-seed-04', reason: 'Roof damage — low clearance', totalAmount: 2400, weeklyAmount: 300, cardLast4: '2026' }, -3, 0)
   ];
 
   // Emily: a parcela de ontem foi recusada no balcão
@@ -462,7 +462,7 @@ function ppReminderText(plan, channel) {
   const body = overdue
     ? `Your payment plan instalment of ${ppMoney(next.amount)} for booking ${plan.bookingRef} (${plan.reason}) is overdue. Reply to this message or call us and our team will take it on your credit or debit card right away — the remaining balance is ${balance}.`
     : `A friendly reminder that your next payment plan instalment of ${ppMoney(next.amount)} for booking ${plan.bookingRef} is due on ${ppFormat(next.dueDate, true)}. No need to come in: reply to this message or call us and our team will take it on your credit or debit card (we don't accept cash or bank transfer). Remaining balance after this payment: ${ppMoney(plan.totalAmount - ppPaid(plan) - next.amount)}.`;
-  if (channel === 'email') return `Hi ${firstName},\n\n${body}\n\nIf you have any questions, just reply to this email.\n\nKind regards,\n${agent}\nGC Tech Car & Truck Rental`;
+  if (channel === 'email') return `Hi ${firstName},\n\n${body}\n\nIf you have any questions, just reply to this email.\n\nKind regards,\n${agent}\nGC Tech Rentals`;
   return `Hi ${firstName}, this is ${agent} from GC Tech. ${body}`;
 }
 

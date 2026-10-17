@@ -3,7 +3,7 @@
 // ⚠️ SIMULADO: no protótipo nada é cobrado. Na versão real cada ação chama a API do PowerBoard:
 //   • o cartão é digitado no formulário seguro do PowerBoard e vira um "vault token"
 //     (o número do cartão nunca passa pelo servidor da GC Tech);
-//   • cobrança = charge no token; caução = cobrança real de $505.50 e refund depois da devolução.
+//   • cobrança = charge no token; caução = cobrança real de $404.00 e refund depois da devolução.
 // Hoje isso é feito num sistema separado (site da GC Tech → admin/agent/bookings). Aqui vira
 // parte da aba Payments do booking.
 // Depende de: gc-fleet-data.js, gc-fees-data.js, gc-bonds.js, gc-ui.js

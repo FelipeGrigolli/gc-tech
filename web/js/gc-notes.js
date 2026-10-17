@@ -182,7 +182,7 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('nt-main').innerHTML = `<p class="nt-empty">${!authed ? 'Please sign in to the GC Tech RCM to see booking notes.' : 'Booking not found.'}</p>`;
     return;
   }
-  document.title = `Notes :: ${info.ref} :: GC Tech Car & Truck Rental`;
+  document.title = `Notes :: ${info.ref} :: GC Tech Rentals`;
   document.getElementById('nt-title').textContent = `Notes · Res ${info.ref}`;
   document.getElementById('nt-sub').textContent = [info.who, info.vehicle, info.plate].filter(Boolean).join(' · ');
   ntRender();

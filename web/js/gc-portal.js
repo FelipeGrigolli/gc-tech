@@ -36,11 +36,11 @@ function getVehicleImage(vehicleName) {
   const cat = fleetFindCategoryByModel(vehicleName);
   if (cat) return '../assets/img/' + cat.img;
   const name = (vehicleName || '').toLowerCase();
-  const byKeyword = [['yaris', 'yaris.png'], ['cross', 'cross.png'], ['sedan', 'sedan.png'], ['corolla', 'hatch.png'],
-    ['camry', 'camry.png'], ['asx', 'asx.png'], ['outlander', 'outlander.png'], ['kluger', 'kluger.png'],
-    ['staria', 'staria.png'], ['hiace', 'van.png'], ['van', 'van.png'], ['hilux', 'UTE.png'], ['ute', 'UTE.png']];
+  const byKeyword = [['yaris', 'fleet/car-small.svg'], ['cross', 'fleet/suv-cross.svg'], ['sedan', 'fleet/car-sedan.svg'], ['corolla', 'fleet/car-hatch.svg'],
+    ['camry', 'fleet/car-full.svg'], ['asx', 'fleet/suv-compact.svg'], ['outlander', 'fleet/suv-7seat.svg'], ['kluger', 'fleet/suv-large.svg'],
+    ['staria', 'fleet/people-mover.svg'], ['hiace', 'fleet/van.svg'], ['van', 'fleet/van.svg'], ['hilux', 'fleet/ute.svg'], ['ute', 'fleet/ute.svg']];
   const hit = byKeyword.find(([k]) => name.includes(k));
-  return '../assets/img/' + (hit ? hit[1] : 'truck.png');
+  return '../assets/img/' + (hit ? hit[1] : 'fleet/truck.svg');
 }
 
 function portalBranch(loc) {
@@ -1046,7 +1046,7 @@ function portalWaRender(resetText) {
         <span class="wa-cust-logo">${typeof waIcon === 'function' ? waIcon(22) : ''}</span>
         <div>
           <h3>Message us on WhatsApp</h3>
-          <p>GC Tech Car &amp; Truck Rental · usually replies within minutes, 8:00–17:15</p>
+          <p>GC Tech Rentals · usually replies within minutes, 8:00–17:15</p>
         </div>
         <button type="button" class="wa-cust-x" onclick="portalWaClose()" aria-label="Close">✕</button>
       </div>
@@ -1069,7 +1069,7 @@ function portalWaRender(resetText) {
             <span class="wa-cust-proto">Prototype: the message is delivered to the GC Tech team's WhatsApp inbox (via 3CX) without leaving this page.</span></p>
         </div>
         <div class="wa-cust-phone">
-          <div class="wa-cust-phone-top"><span class="wa-cust-avatar">O</span><div><strong>GC Tech Car &amp; Truck Rental</strong><small>Business account</small></div></div>
+          <div class="wa-cust-phone-top"><span class="wa-cust-avatar">O</span><div><strong>GC Tech Rentals</strong><small>Business account</small></div></div>
           <div class="wa-cust-chat" id="wa-p-chat"></div>
         </div>
       </div>

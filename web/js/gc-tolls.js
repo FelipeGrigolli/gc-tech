@@ -2,10 +2,10 @@
 // TOLLS — pedágios das locações
 // Política aprovada da GC Tech:
 //  • Pedágios não estão incluídos na locação.
-//  • Processado pela GC Tech: custo do pedágio + $4.40 de taxa administrativa por pedágio.
+//  • Processado pela GC Tech: custo do pedágio + $3.95 de taxa administrativa por pedágio.
 //  • Pode levar até 7 dias para o pedágio chegar à GC Tech; depois é cobrado no cartão da locação.
-//  • Cartão recusado: $5.50 de taxa de reprocessamento por pedágio não pago (no lugar dos $4.40).
-//  • Cobrança judicial (debt collection): + $16.50 por pedágio em aberto.
+//  • Cartão recusado: $6.50 de taxa de reprocessamento por pedágio não pago (no lugar dos $3.95).
+//  • Cobrança judicial (debt collection): + $15.00 por pedágio em aberto.
 //  • O cliente pode usar a própria tag ou um passe temporário Linkt.
 // ⚠️ SIMULADO: os pedágios de exemplo e o "extrato" importado são gerados a partir das locações
 // de demonstração. Na versão real o extrato vem do Linkt / operadoras e é casado pela placa e pelo horário.
@@ -13,9 +13,9 @@
 // ==========================================
 
 const TOLL_KEY = 'gc_tolls';   // { items: [pedágios importados/manuais], state: { tollId: { status, fee, chargedAt, chargeId, by } } }
-const TOLL_FEE_ADMIN = 4.40;
-const TOLL_FEE_DECLINE = 5.50;
-const TOLL_FEE_COLLECTION = 16.50;
+const TOLL_FEE_ADMIN = 3.95;
+const TOLL_FEE_DECLINE = 6.50;
+const TOLL_FEE_COLLECTION = 15.00;
 const TOLL_ROADS = {
   SYD: [['WestConnex M8', 7.12], ['M5 South-West', 5.31], ['Eastern Distributor', 9.18], ['Sydney Harbour Bridge', 4.00], ['Lane Cove Tunnel', 3.94],
         ['M2 Hills Motorway', 9.84], ['M7 Westlink', 9.05], ['NorthConnex', 9.06], ['Cross City Tunnel', 6.79], ['WestConnex M4', 6.50]],

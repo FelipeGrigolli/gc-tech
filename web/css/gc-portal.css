@@ -19,8 +19,7 @@ svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round
 .auth-brand {
   color: #fff; padding: 48px 56px; display: flex; flex-direction: column; justify-content: space-between;
   background:
-    linear-gradient(160deg, rgba(12,10,9,.92) 0%, rgba(28,25,23,.85) 60%, rgba(124,45,18,.75) 100%),
-    url('../assets/img/hero.jpg') center/cover no-repeat, #1c1917;
+    linear-gradient(160deg, rgba(12,10,9,.92) 0%, rgba(28,25,23,.85) 60%, rgba(124,45,18,.75) 100%), #1c1917;
 }
 .auth-logo { height: 46px; border-radius: 6px; }
 .auth-brand-copy h1 { font-size: clamp(34px, calc(3.6vw / var(--fit-zoom, 1)), 50px); font-weight: 400; line-height: 1.1; margin-bottom: 14px; }

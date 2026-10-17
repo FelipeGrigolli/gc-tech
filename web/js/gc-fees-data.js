@@ -11,36 +11,36 @@
 // ==========================================
 
 const FEE_ITEMS = [
-  { id: 'car-seat-4plus',     kind: 'daily',   name: 'Car Seat - 4 years +',                         amount: 5.50 },
-  { id: 'car-seat-6m-4y',     kind: 'daily',   name: 'Car Seat - 6 Months to 4 Years',               amount: 5.50 },
+  { id: 'car-seat-4plus',     kind: 'daily',   name: 'Car Seat - 4 years +',                         amount: 6.00 },
+  { id: 'car-seat-6m-4y',     kind: 'daily',   name: 'Car Seat - 6 Months to 4 Years',               amount: 6.00 },
 
-  { id: 'debit-bond',         kind: 'fixed',   name: 'Visa/MC Debit Bond (5-7 Working Days Return)', amount: 505.50, bond: true },
-  { id: 'debit-bond-refund',  kind: 'fixed',   name: 'Visa/MC Debit Bond Refund',                    amount: -500.00, refund: true },
-  { id: 'snow-fee',           kind: 'fixed',   name: 'One off Snow Fee (Minimum 3 day rental)',      amount: 49.50 },
+  { id: 'debit-bond',         kind: 'fixed',   name: 'Visa/MC Debit Bond (5-7 Working Days Return)', amount: 404.00, bond: true },
+  { id: 'debit-bond-refund',  kind: 'fixed',   name: 'Visa/MC Debit Bond Refund',                    amount: -400.00, refund: true },
+  { id: 'snow-fee',           kind: 'fixed',   name: 'One off Snow Fee (Minimum 3 day rental)',      amount: 45.00 },
   { id: 'accessories',        kind: 'fixed',   name: 'Acessories',                                   amount: 0 },
-  { id: 'admin-fee',          kind: 'fixed',   name: 'Admin Fee',                                    amount: 110.00 },
+  { id: 'admin-fee',          kind: 'fixed',   name: 'Admin Fee',                                    amount: 95.00 },
   { id: 'amex-recovery',      kind: 'fixed',   name: 'Amex Recovery (Before 1st October 2026)',      amount: 0 },
-  { id: 'assessment-fee',     kind: 'fixed',   name: 'Assessment Fee',                               amount: 198.00 },
+  { id: 'assessment-fee',     kind: 'fixed',   name: 'Assessment Fee',                               amount: 175.00 },
   { id: 'bad-debt',           kind: 'fixed',   name: 'Bad Debt Written Off',                         amount: 0 },
-  { id: 'battery',            kind: 'fixed',   name: 'Battery Replacement',                          amount: 240.00 },
-  { id: 'call-out',           kind: 'fixed',   name: 'Call Out Fee',                                 amount: 44.40 },
+  { id: 'battery',            kind: 'fixed',   name: 'Battery Replacement',                          amount: 220.00 },
+  { id: 'call-out',           kind: 'fixed',   name: 'Call Out Fee',                                 amount: 49.00 },
   { id: 'cancellation',       kind: 'fixed',   name: 'Cancellation Fee',                             amount: 0 },
-  { id: 'card-decline',       kind: 'fixed',   name: 'Card Decline Fee',                             amount: 1.65 },
+  { id: 'card-decline',       kind: 'fixed',   name: 'Card Decline Fee',                             amount: 1.50 },
   { id: 'charge-back',        kind: 'fixed',   name: 'Charge Back',                                  amount: 0 },
-  { id: 'cleaning',           kind: 'fixed',   name: 'Cleaning Fee',                                 amount: 330.00 },
+  { id: 'cleaning',           kind: 'fixed',   name: 'Cleaning Fee',                                 amount: 250.00 },
   { id: 'damage-ext',         kind: 'fixed',   name: 'Damage Recovery Exterior',                     amount: 0 },
   { id: 'damage-int',         kind: 'fixed',   name: 'Damage Recovery Interior',                     amount: 0 },
-  { id: 'damage-admin',       kind: 'fixed',   name: 'Damage repairs administration fee',            amount: 110.00 },
-  { id: 'deposit',            kind: 'fixed',   name: 'Deposit',                                      amount: 1000.00, bond: true },
-  { id: 'deposit-spare-key',  kind: 'fixed',   name: 'Deposit for Spare Key',                        amount: 660.00, bond: true },
+  { id: 'damage-admin',       kind: 'fixed',   name: 'Damage repairs administration fee',            amount: 95.00 },
+  { id: 'deposit',            kind: 'fixed',   name: 'Deposit',                                      amount: 900.00, bond: true },
+  { id: 'deposit-spare-key',  kind: 'fixed',   name: 'Deposit for Spare Key',                        amount: 500.00, bond: true },
   { id: 'deposit-refund',     kind: 'fixed',   name: 'Deposit Refund',                               amount: 0, refund: true },
-  { id: 'drop-off',           kind: 'fixed',   name: 'Drop Off Fee',                                 amount: 27.50 },
+  { id: 'drop-off',           kind: 'fixed',   name: 'Drop Off Fee',                                 amount: 25.00 },
   { id: 'enforcement',        kind: 'fixed',   name: 'Enforcement Order',                            amount: 0 },
-  { id: 'fuel',               kind: 'fixed',   name: 'Fuel',                                         amount: 0.75 },
-  { id: 'infringement',       kind: 'fixed',   name: 'Infringement Handling Fee Fine',               amount: 27.50 },
+  { id: 'fuel',               kind: 'fixed',   name: 'Fuel',                                         amount: 0.80 },
+  { id: 'infringement',       kind: 'fixed',   name: 'Infringement Handling Fee Fine',               amount: 30.00 },
   { id: 'insurance-adj',      kind: 'fixed',   name: 'Insurance Adjustment',                         amount: 0 },
   { id: 'interest-charge',    kind: 'fixed',   name: 'Interest Charge',                              amount: 0 },
-  { id: 'lease-insurance',    kind: 'fixed',   name: 'Lease Insurance',                              amount: 70.00 },
+  { id: 'lease-insurance',    kind: 'fixed',   name: 'Lease Insurance',                              amount: 65.00 },
   { id: 'lease-balloon',      kind: 'fixed',   name: 'Lease Purchase Plan Balloon',                  amount: 0 },
   { id: 'lease-deposit',      kind: 'fixed',   name: 'Lease Purchase Plan Deposit',                  amount: 0 },
   { id: 'legal',              kind: 'fixed',   name: 'Legal Fees',                                   amount: 0 },
@@ -48,29 +48,29 @@ const FEE_ITEMS = [
   { id: 'mercantile-comm',    kind: 'fixed',   name: 'Mercantile Commission Fees',                   amount: 0 },
   { id: 'mercantile-exp',     kind: 'fixed',   name: 'Mercantile expense recovery',                  amount: 0 },
   { id: 'merchant-cb',        kind: 'fixed',   name: 'Merchant Chargeback',                          amount: 0 },
-  { id: 'interstate',         kind: 'fixed',   name: 'One off inter state charge: SA QLD VIC',       amount: 99.00 },
+  { id: 'interstate',         kind: 'fixed',   name: 'One off inter state charge: SA QLD VIC',       amount: 89.00 },
   { id: 'overdue-interest',   kind: 'fixed',   name: 'Overdue interest expense',                     amount: 0 },
-  { id: 'payment-overdue',    kind: 'fixed',   name: 'Payment Overdue Fee',                          amount: 3.50 },
+  { id: 'payment-overdue',    kind: 'fixed',   name: 'Payment Overdue Fee',                          amount: 4.00 },
   { id: 'pre-quote-deposit',  kind: 'fixed',   name: 'Pre quotation damage deposit',                 amount: 0 },
   { id: 'recovery-comm',      kind: 'fixed',   name: 'Recovery Commission Incurred',                 amount: 0 },
   { id: 'refund',             kind: 'fixed',   name: 'Refund',                                       amount: 0, refund: true },
   { id: 'registration',       kind: 'fixed',   name: 'Registration',                                 amount: 0 },
-  { id: 'relocation',         kind: 'fixed',   name: 'Relocation Fee',                               amount: 38.50 },
-  { id: 'remote-bond',        kind: 'fixed',   name: 'Remote Location Bond',                         amount: 1500.00, bond: true },
+  { id: 'relocation',         kind: 'fixed',   name: 'Relocation Fee',                               amount: 35.00 },
+  { id: 'remote-bond',        kind: 'fixed',   name: 'Remote Location Bond',                         amount: 1200.00, bond: true },
   { id: 'replacement',        kind: 'fixed',   name: 'Replacement Vehicle',                          amount: 0 },
-  { id: 'roof-racks',         kind: 'fixed',   name: 'Roof Racks',                                   amount: 38.50 },
-  { id: 'rubbish',            kind: 'fixed',   name: 'Rubbish Removal Fee',                          amount: 61.00 },
+  { id: 'roof-racks',         kind: 'fixed',   name: 'Roof Racks',                                   amount: 35.00 },
+  { id: 'rubbish',            kind: 'fixed',   name: 'Rubbish Removal Fee',                          amount: 55.00 },
   { id: 'service',            kind: 'fixed',   name: 'Service',                                      amount: 0 },
   { id: 'signage',            kind: 'fixed',   name: 'Signage',                                      amount: 0 },
-  { id: 'smoking',            kind: 'fixed',   name: 'Smoking Fee',                                  amount: 330.00 },
+  { id: 'smoking',            kind: 'fixed',   name: 'Smoking Fee',                                  amount: 300.00 },
   { id: 'stamp-duty',         kind: 'fixed',   name: 'Stamp Duty',                                   amount: 0 },
   { id: 'termination',        kind: 'fixed',   name: 'Termination Fee',                              amount: 0 },
-  { id: 'toll-handling',      kind: 'fixed',   name: 'Toll Charge Handling Fee',                     amount: 8.80 },
-  { id: 'toll-inc-handling',  kind: 'fixed',   name: 'Toll Charge Inc Handling Fee',                 amount: 6.60 },
+  { id: 'toll-handling',      kind: 'fixed',   name: 'Toll Charge Handling Fee',                     amount: 7.50 },
+  { id: 'toll-inc-handling',  kind: 'fixed',   name: 'Toll Charge Inc Handling Fee',                 amount: 5.50 },
   { id: 'towing',             kind: 'fixed',   name: 'Towing',                                       amount: 0 },
-  { id: 'trolley-lost',       kind: 'fixed',   name: 'Trolley Lost',                                 amount: 250.00 },
+  { id: 'trolley-lost',       kind: 'fixed',   name: 'Trolley Lost',                                 amount: 220.00 },
   { id: 'tyre',               kind: 'fixed',   name: 'Tyre',                                         amount: 0 },
-  { id: 'repossession',       kind: 'fixed',   name: 'Vehicle Repossesion Fee',                      amount: 440.00 },
+  { id: 'repossession',       kind: 'fixed',   name: 'Vehicle Repossesion Fee',                      amount: 400.00 },
   { id: 'windscreen',         kind: 'fixed',   name: 'windscreen repair',                            amount: 0 },
 
   { id: 'pct-discount',       kind: 'percent', name: 'Discount',                                     amount: 10.00, negative: true },
@@ -85,12 +85,12 @@ const FEE_GROUPS = [
 ];
 
 // Bond → linha de devolução lançada automaticamente quando o booking é marcado como Returned
-// (o Visa/MC Debit Bond retém $5.50 de taxa do cartão; os depósitos voltam inteiros)
+// (o Visa/MC Debit Bond retém $4.00 de taxa do cartão; os depósitos voltam inteiros)
 const FEE_BOND_REFUNDS = {
-  'debit-bond':        { refundId: 'debit-bond-refund', amount: -500.00 },
-  'deposit':           { refundId: 'deposit-refund',    amount: -1000.00 },
-  'deposit-spare-key': { refundId: 'deposit-refund',    amount: -660.00 },
-  'remote-bond':       { refundId: 'deposit-refund',    amount: -1500.00 }
+  'debit-bond':        { refundId: 'debit-bond-refund', amount: -400.00 },
+  'deposit':           { refundId: 'deposit-refund',    amount: -900.00 },
+  'deposit-spare-key': { refundId: 'deposit-refund',    amount: -500.00 },
+  'remote-bond':       { refundId: 'deposit-refund',    amount: -1200.00 }
 };
 
 // pct: desconto sobre o valor do hire (rate × dias)
@@ -102,25 +102,25 @@ const FEE_DISCOUNTS = [
 
 // ------------------------------------------
 // POLÍTICA DE KMS (veículos comerciais). Carros e people movers: ilimitado.
-//   Caminhão (Pantech): 1–3 dias = 100 kms/dia · 4+ dias = 300 kms/dia · excedente $0.30/km
-//   Hiace 1T Van: 150 kms/dia · $0.28/km     Hiace 1.5T Van: 100 kms/dia · $0.30/km
-//   Ute (Hilux): 100 kms/dia · $0.28/km
+//   Caminhão (Pantech): 1–3 dias = 120 kms/dia · 4+ dias = 250 kms/dia · excedente $0.32/km
+//   Hiace 1T Van: 160 kms/dia · $0.29/km     Hiace 1.5T Van: 120 kms/dia · $0.31/km
+//   Ute (Hilux): 120 kms/dia · $0.29/km
 // Todo booking segue a política da categoria; o agente pode trocar na aba Booking Fees (kmsManual).
 // O excedente é calculado pelas leituras do odômetro (Kms Out / Kms In) e gravado em fees.kmsCharge.
 // ------------------------------------------
 const FEE_KMS = [
   { id: 'unlimited', name: 'Unlimited kms', freePerDay: null, perKm: 0 },
-  { id: 'truck',     name: 'Truck: 100 kms free per day (1-3 days), 300 kms per day (4+ days), additional per kms $0.30', perKm: 0.30,
-    tiers: [{ maxDays: 3, freePerDay: 100 }, { maxDays: Infinity, freePerDay: 300 }] },
-  { id: '150-028',   name: '150 kms free per day, additional per kms $0.28', freePerDay: 150, perKm: 0.28 },
-  { id: '100-030',   name: '100 kms free per day, additional per kms $0.30', freePerDay: 100, perKm: 0.30 },
-  { id: '100-028',   name: '100 kms free per day, additional per kms $0.28', freePerDay: 100, perKm: 0.28 },
+  { id: 'truck',     name: 'Truck: 120 kms free per day (1-3 days), 250 kms per day (4+ days), additional per kms $0.32', perKm: 0.32,
+    tiers: [{ maxDays: 3, freePerDay: 120 }, { maxDays: Infinity, freePerDay: 250 }] },
+  { id: 'van-1t',    name: '160 kms free per day, additional per kms $0.29', freePerDay: 160, perKm: 0.29 },
+  { id: 'van-15t',   name: '120 kms free per day, additional per kms $0.31', freePerDay: 120, perKm: 0.31 },
+  { id: 'ute',       name: '120 kms free per day, additional per kms $0.29', freePerDay: 120, perKm: 0.29 },
   // Opções antigas (bookings gravados antes da política): só aparecem se já estiverem no booking
   { id: '250-day',   name: '250 kms free per day, additional per kms $0.30', freePerDay: 250, perKm: 0.30, legacy: true },
   { id: '100-day',   name: '100 kms free per day, additional per kms $0.30', freePerDay: 100, perKm: 0.30, legacy: true }
 ];
 
-const FEE_KMS_BY_CATEGORY = { 'pantech': 'truck', 'hiace-1t': '150-028', 'hiace-15t': '100-030', 'hilux-auto': '100-028', 'hilux-diesel': '100-028' };
+const FEE_KMS_BY_CATEGORY = { 'pantech': 'truck', 'hiace-1t': 'van-1t', 'hiace-15t': 'van-15t', 'hilux-auto': 'ute', 'hilux-diesel': 'ute' };
 
 function feeKmsDefault(cat) {
   return (cat && FEE_KMS_BY_CATEGORY[cat.id]) || 'unlimited';
@@ -143,7 +143,7 @@ function feeKmsAllowance(opt, days) {
   return per == null ? Infinity : per * days;
 }
 
-// "100 kms free per day, additional per kms $0.30" para os dias do booking (o caminhão muda com os dias)
+// "120 kms free per day, additional per kms $0.31" para os dias do booking (o caminhão muda com os dias)
 function feeKmsLabel(opt, days) {
   if (opt.freePerDay === null && !opt.tiers) return opt.name;
   return `${feeKmsFreePerDay(opt, days)} kms free per day, additional per kms ${feeMoney(opt.perKm)}`;

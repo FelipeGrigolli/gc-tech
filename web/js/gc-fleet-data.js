@@ -28,54 +28,54 @@ const FLEET_BRANCHES = {
 // model: nome canônico (igual ao catálogo do Customer Portal / search-results)
 // aliases: nomes antigos que já existem em reservas gravadas no localStorage
 const FLEET_CATEGORIES = [
-  { id: 'small-auto',     section: 'Passenger',  name: 'SMALL CAR AUTOMATIC',          model: 'Toyota Yaris',               label: 'Yaris 4Dr',          rate: 65.50,  aliases: [] },
-  { id: 'small-new',      section: 'Passenger',  name: 'SMALL CAR AUTOMATIC-NEW',      model: 'New Toyota Yaris',           label: 'Yaris 4Dr (New)',    rate: 70.50,  aliases: [] },
-  { id: 'small-hybrid',   section: 'Passenger',  name: 'SMALL CAR HYBRID',             model: 'Hybrid Toyota Yaris',        label: 'Yaris Hybrid',       rate: 72.00,  aliases: ['Toyota Yaris Hybrid'] },
-  { id: 'mid-hatch',      section: 'Passenger',  name: 'MID SIZE CAR HATCH HYBRID',    model: 'Toyota Corolla',             label: 'Corolla Hatch',      rate: 77.50,  aliases: ['Toyota Corolla Hatch'] },
-  { id: 'mid-sedan',      section: 'Passenger',  name: 'MID SIZE CAR SEDAN HYBRID',    model: 'Toyota Corolla Sedan',       label: 'Corolla Sedan',      rate: 77.50,  aliases: [] },
-  { id: 'full-car',       section: 'Passenger',  name: 'FULL SIZE CAR HYBRID',         model: 'Toyota Camry',               label: 'Camry',              rate: 80.50,  aliases: [] },
-  { id: 'mid-suv',        section: 'Passenger',  name: 'MID SIZE SUV',                 model: 'Mitsubishi ASX',             label: 'ASX',                rate: 77.50,  aliases: [] },
-  { id: 'cross-suv',      section: 'Passenger',  name: 'MID SIZE CROSS SUV',           model: 'Toyota Corolla Cross',       label: 'Corolla Cross',      rate: 77.50,  aliases: [] },
-  { id: 'mid-7seat',      section: 'Passenger',  name: 'MID SIZE 7 SEATER SUV',        model: 'Mitsubishi Outlander',       label: 'Outlander 7 Seater', rate: 97.50,  aliases: ['Mitsubishi Outlander (7 Seater)'] },
-  { id: 'full-7seat',     section: 'Passenger',  name: 'FULL SIZE 7 SEATER HYBRID',    model: 'Hybrid Toyota Kluger',       label: 'Kluger Hybrid',      rate: 139.50, aliases: ['Toyota Kluger'] },
-  { id: 'eight-seat',     section: 'Passenger',  name: 'EIGHT SEATER AUTOMATIC',       model: 'Hyundai Staria',             label: 'Staria 8 Seater',    rate: 144.50, aliases: ['Hyundai Staria Van'] },
-  { id: 'hiace-1t',       section: 'Commercial', name: 'TOYOTA HIACE 1T VAN AUTO',     model: 'Toyota Hiace 1T Van',        label: 'Hiace 1T Van',       rate: 89.50,  aliases: ['Toyota Hiace 1T Van DIESEL'] },
-  { id: 'hiace-15t',      section: 'Commercial', name: 'TOYOTA HIACE 1.5T VAN AUTO',   model: 'Toyota Hiace 1.5T Van',      label: 'Hiace 1.5T Van',     rate: 103.50, aliases: [] },
-  { id: 'pantech',        section: 'Commercial', name: 'PANTECH TRUCK + TAIL LIFT',    model: 'Auto Pantech Truck',         label: 'Hino 300 Pantech',   rate: 169.00, aliases: ['Hino 300 Series Pantech', 'Auto Pantech Truck (Long)+Lift', 'Hino 300 Series Pantech (Long) + Lift', 'Auto Pantech'] },
-  { id: 'hilux-auto',     section: 'Commercial', name: 'TOYOTA HILUX UTILITY AUTO',    model: 'Toyota Hilux Utility Auto',  label: 'Hilux Ute Auto',     rate: 69.00,  aliases: ['Toyota Hilux'] },
-  { id: 'hilux-diesel',   section: 'Commercial', name: 'TOYOTA HILUX UTILITY DIESEL',  model: 'Toyota Hilux Utility DIESEL', label: 'Hilux Ute 4x4',     rate: 72.00,  aliases: [] }
+  { id: 'small-auto',     section: 'Passenger',  name: 'SMALL CAR AUTOMATIC',          model: 'Toyota Yaris',               label: 'Yaris 4Dr',          rate: 59.00,  aliases: [] },
+  { id: 'small-new',      section: 'Passenger',  name: 'SMALL CAR AUTOMATIC-NEW',      model: 'New Toyota Yaris',           label: 'Yaris 4Dr (New)',    rate: 64.00,  aliases: [] },
+  { id: 'small-hybrid',   section: 'Passenger',  name: 'SMALL CAR HYBRID',             model: 'Hybrid Toyota Yaris',        label: 'Yaris Hybrid',       rate: 67.00,  aliases: ['Toyota Yaris Hybrid'] },
+  { id: 'mid-hatch',      section: 'Passenger',  name: 'MID SIZE CAR HATCH HYBRID',    model: 'Toyota Corolla',             label: 'Corolla Hatch',      rate: 72.00,  aliases: ['Toyota Corolla Hatch'] },
+  { id: 'mid-sedan',      section: 'Passenger',  name: 'MID SIZE CAR SEDAN HYBRID',    model: 'Toyota Corolla Sedan',       label: 'Corolla Sedan',      rate: 74.00,  aliases: [] },
+  { id: 'full-car',       section: 'Passenger',  name: 'FULL SIZE CAR HYBRID',         model: 'Toyota Camry',               label: 'Camry',              rate: 79.00,  aliases: [] },
+  { id: 'mid-suv',        section: 'Passenger',  name: 'MID SIZE SUV',                 model: 'Mitsubishi ASX',             label: 'ASX',                rate: 76.00,  aliases: [] },
+  { id: 'cross-suv',      section: 'Passenger',  name: 'MID SIZE CROSS SUV',           model: 'Toyota Corolla Cross',       label: 'Corolla Cross',      rate: 81.00,  aliases: [] },
+  { id: 'mid-7seat',      section: 'Passenger',  name: 'MID SIZE 7 SEATER SUV',        model: 'Mitsubishi Outlander',       label: 'Outlander 7 Seater', rate: 95.00,  aliases: ['Mitsubishi Outlander (7 Seater)'] },
+  { id: 'full-7seat',     section: 'Passenger',  name: 'FULL SIZE 7 SEATER HYBRID',    model: 'Hybrid Toyota Kluger',       label: 'Kluger Hybrid',      rate: 129.00, aliases: ['Toyota Kluger'] },
+  { id: 'eight-seat',     section: 'Passenger',  name: 'EIGHT SEATER AUTOMATIC',       model: 'Hyundai Staria',             label: 'Staria 8 Seater',    rate: 139.00, aliases: ['Hyundai Staria Van'] },
+  { id: 'hiace-1t',       section: 'Commercial', name: 'TOYOTA HIACE 1T VAN AUTO',     model: 'Toyota Hiace 1T Van',        label: 'Hiace 1T Van',       rate: 85.00,  aliases: ['Toyota Hiace 1T Van DIESEL'] },
+  { id: 'hiace-15t',      section: 'Commercial', name: 'TOYOTA HIACE 1.5T VAN AUTO',   model: 'Toyota Hiace 1.5T Van',      label: 'Hiace 1.5T Van',     rate: 99.00, aliases: [] },
+  { id: 'pantech',        section: 'Commercial', name: 'PANTECH TRUCK + TAIL LIFT',    model: 'Auto Pantech Truck',         label: 'Hino 300 Pantech',   rate: 159.00, aliases: ['Hino 300 Series Pantech', 'Auto Pantech Truck (Long)+Lift', 'Hino 300 Series Pantech (Long) + Lift', 'Auto Pantech'] },
+  { id: 'hilux-auto',     section: 'Commercial', name: 'TOYOTA HILUX UTILITY AUTO',    model: 'Toyota Hilux Utility Auto',  label: 'Hilux Ute Auto',     rate: 72.00,  aliases: ['Toyota Hilux'] },
+  { id: 'hilux-diesel',   section: 'Commercial', name: 'TOYOTA HILUX UTILITY DIESEL',  model: 'Toyota Hilux Utility DIESEL', label: 'Hilux Ute 4x4',     rate: 78.00,  aliases: [] }
 ];
 
 // Dados de vitrine para o site do cliente (Home / Search):
 // aba do widget, foto, combustível, lugares e descrição curta
 const FLEET_CATEGORY_WEB = {
-  'small-auto':   { tab: 'Cars',   img: 'yaris.png',     fuel: 'Petrol', seats: 5, desc: 'Our best value entry' },
-  'small-new':    { tab: 'Cars',   img: 'yaris.png',     fuel: 'Petrol', seats: 5, desc: 'Compact yet spacious' },
-  'small-hybrid': { tab: 'Cars',   img: 'yaris.png',     fuel: 'Hybrid', seats: 5, desc: 'Impressive 3.3L/100km fuel consumption' },
-  'mid-hatch':    { tab: 'Cars',   img: 'hatch.png',     fuel: 'Hybrid', seats: 5, desc: 'Saves 25–35% on fuel' },
-  'mid-sedan':    { tab: 'Cars',   img: 'sedan.png',     fuel: 'Hybrid', seats: 5, desc: 'Achieves approx 3.9L/100km' },
-  'full-car':     { tab: 'Cars',   img: 'camry.png',     fuel: 'Hybrid', seats: 5, desc: 'Unlimited kilometres included' },
-  'mid-suv':      { tab: 'SUVs',   img: 'asx.png',       fuel: 'Petrol', seats: 5, desc: 'Comfortable with plenty of boot space' },
-  'cross-suv':    { tab: 'SUVs',   img: 'cross.png',     fuel: 'Hybrid', seats: 5, desc: 'Big on space, low on fuel' },
-  'mid-7seat':    { tab: 'SUVs',   img: 'outlander.png', fuel: 'Petrol', seats: 7, desc: 'Ideal for family travel' },
-  'full-7seat':   { tab: 'SUVs',   img: 'kluger.png',    fuel: 'Hybrid', seats: 7, desc: 'Spacious interior, high efficiency' },
-  'eight-seat':   { tab: 'Cars',   img: 'staria.png',    fuel: 'Diesel', seats: 8, desc: 'Perfect for group trips' },
-  'hiace-1t':     { tab: 'Vans',   img: 'van.png',       fuel: 'Diesel', seats: 3, desc: 'Practical and efficient for daily use' },
-  'hiace-15t':    { tab: 'Vans',   img: 'van.png',       fuel: 'Diesel', seats: 3, desc: 'Extra capacity for large cargo' },
-  'pantech':      { tab: 'Trucks', img: 'truck.png',     fuel: 'Diesel', seats: 3, desc: 'Hydraulic tail lift. Standard car licence' },
-  'hilux-auto':   { tab: 'Utes',   img: 'UTE.png',       fuel: 'Diesel', seats: 5, desc: 'Open tray for easy loading' },
-  'hilux-diesel': { tab: 'Utes',   img: 'UTE.png',       fuel: 'Diesel', seats: 5, desc: 'Rugged 4x4 for tough terrain' }
+  'small-auto':   { tab: 'Cars',   img: 'fleet/car-small.svg', fuel: 'Petrol', seats: 5, desc: 'Our best value entry' },
+  'small-new':    { tab: 'Cars',   img: 'fleet/car-small.svg', fuel: 'Petrol', seats: 5, desc: 'Compact yet spacious' },
+  'small-hybrid': { tab: 'Cars',   img: 'fleet/car-small.svg', fuel: 'Hybrid', seats: 5, desc: 'Impressive 3.3L/100km fuel consumption' },
+  'mid-hatch':    { tab: 'Cars',   img: 'fleet/car-hatch.svg', fuel: 'Hybrid', seats: 5, desc: 'Saves 25–35% on fuel' },
+  'mid-sedan':    { tab: 'Cars',   img: 'fleet/car-sedan.svg', fuel: 'Hybrid', seats: 5, desc: 'Achieves approx 3.9L/100km' },
+  'full-car':     { tab: 'Cars',   img: 'fleet/car-full.svg',  fuel: 'Hybrid', seats: 5, desc: 'Unlimited kilometres included' },
+  'mid-suv':      { tab: 'SUVs',   img: 'fleet/suv-compact.svg', fuel: 'Petrol', seats: 5, desc: 'Comfortable with plenty of boot space' },
+  'cross-suv':    { tab: 'SUVs',   img: 'fleet/suv-cross.svg', fuel: 'Hybrid', seats: 5, desc: 'Big on space, low on fuel' },
+  'mid-7seat':    { tab: 'SUVs',   img: 'fleet/suv-7seat.svg', fuel: 'Petrol', seats: 7, desc: 'Ideal for family travel' },
+  'full-7seat':   { tab: 'SUVs',   img: 'fleet/suv-large.svg', fuel: 'Hybrid', seats: 7, desc: 'Spacious interior, high efficiency' },
+  'eight-seat':   { tab: 'Cars',   img: 'fleet/people-mover.svg', fuel: 'Diesel', seats: 8, desc: 'Perfect for group trips' },
+  'hiace-1t':     { tab: 'Vans',   img: 'fleet/van.svg', fuel: 'Diesel', seats: 3, desc: 'Practical and efficient for daily use' },
+  'hiace-15t':    { tab: 'Vans',   img: 'fleet/van.svg', fuel: 'Diesel', seats: 3, desc: 'Extra capacity for large cargo' },
+  'pantech':      { tab: 'Trucks', img: 'fleet/truck.svg', fuel: 'Diesel', seats: 3, desc: 'Hydraulic tail lift. Standard car licence' },
+  'hilux-auto':   { tab: 'Utes',   img: 'fleet/ute.svg', fuel: 'Diesel', seats: 5, desc: 'Open tray for easy loading' },
+  'hilux-diesel': { tab: 'Utes',   img: 'fleet/ute.svg', fuel: 'Diesel', seats: 5, desc: 'Rugged 4x4 for tough terrain' }
 };
 FLEET_CATEGORIES.forEach(c => Object.assign(c, FLEET_CATEGORY_WEB[c.id]));
 
-// Excess (franquia) por faixa de veículo — valores reais da GC Tech (AUD)
+// Excess (franquia) por faixa de veículo — valores da GC Tech (AUD)
 // standard: excess sem redução | reducedPerDay: custo diário da redução | reduced: excess com redução
 const FLEET_EXCESS_TIERS = {
-  smallCar:  { standard: 2000, reducedPerDay: 12.50, reduced: 330 },
-  midCar:    { standard: 3300, reducedPerDay: 16.50, reduced: 330 },
-  largePax:  { standard: 3300, reducedPerDay: 29.00, reduced: 750 },
-  vanUte:    { standard: 3300, reducedPerDay: 29.00, reduced: 1500 },
-  truck:     { standard: 3950, reducedPerDay: 33.00, reduced: 1500 }
+  smallCar:  { standard: 1800, reducedPerDay: 11.00, reduced: 300 },
+  midCar:    { standard: 2900, reducedPerDay: 15.00, reduced: 300 },
+  largePax:  { standard: 3200, reducedPerDay: 27.00, reduced: 650 },
+  vanUte:    { standard: 3200, reducedPerDay: 26.00, reduced: 1200 },
+  truck:     { standard: 3800, reducedPerDay: 31.00, reduced: 1200 }
 };
 const FLEET_CATEGORY_EXCESS = {
   'small-auto': 'smallCar', 'small-new': 'smallCar', 'small-hybrid': 'smallCar',
@@ -670,7 +670,7 @@ const FLEET_SEED_BASE = (function buildSeedBookings() {
     const dmg = DAMAGE_AT_RETURN[s.id];
     if (!dmg) return;
     s.fees = { rate: fleetGetCategory(s.cat).rate, discount: '', insurance: 'standard', kms: 'unlimited',
-      items: [{ id: 'debit-bond', qty: 1, amount: 505.50 }, { id: 'debit-bond-refund', qty: 1, amount: -500.00 },
+      items: [{ id: 'debit-bond', qty: 1, amount: 404.00 }, { id: 'debit-bond-refund', qty: 1, amount: -400.00 },
               { id: dmg[0], qty: 1, amount: dmg[1], atReturn: true }] };
   });
 

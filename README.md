@@ -1,10 +1,10 @@
-# GC Tech — Car & Truck Rental Platform
+# GC Tech Rentals — Car & Truck Rental Platform
 
 A working prototype of a complete rental platform: a public booking website, a customer portal and the staff operations system (RCM) that runs the counter — all sharing one set of data.
 
 **▶ Live demo: https://felipegrigolli.github.io/gc-tech/**
 
-> GC Tech is a fictional company. The project started from real problems I saw working at a car & truck rental counter, so the workflows and business rules are the ones a real team deals with every day.
+> GC Tech Rentals is a fictional company, and all prices, branches, people and vehicle illustrations are made up for this project. The project started from real problems I saw working at a car & truck rental counter, so the workflows and business rules are the ones a real team deals with every day.
 
 ![Fleet Planner — every vehicle on one timeline](web/assets/img/cover/screen-planner.png)
 

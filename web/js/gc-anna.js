@@ -143,7 +143,7 @@ function annaAnswer(question) {
   if (annaIsPaymentQuestion(t)) {
     return { html: `<ul>
       <li><strong>Nothing is charged before pick-up.</strong> Bookings made online or by phone are not charged in advance.</li>
-      <li>Payment is taken <strong>at the branch, at pick-up, by the agent</strong>: the rental total plus the <strong>${annaMoney(505.5)} bond</strong>.</li>
+      <li>Payment is taken <strong>at the branch, at pick-up, by the agent</strong>: the rental total plus the <strong>${annaMoney(404)} bond</strong>.</li>
       <li><strong>Extensions and payment plan instalments</strong> don't need a branch visit: the customer pays by phone, live chat or WhatsApp and the agent processes it on the card.</li>
       <li><strong>Credit or debit card only</strong>, in the main driver's name.</li>
       <li><strong>No cash and no bank transfer.</strong></li></ul>`, source: 'GC Tech payment policy' };
@@ -196,8 +196,8 @@ function annaAnswer(question) {
   if (/(bond|deposit|refund)/.test(t)) {
     const bond = annaFee('debit-bond'), refund = annaFee('debit-bond-refund'), remote = annaFee('remote-bond');
     return { html: `<ul>
-      <li>Visa/MC bond: <strong>${annaMoney(bond ? bond.amount : 505.5)}</strong>, charged at pick-up (never before), of which <strong>${annaMoney(Math.abs(refund ? refund.amount : 500))}</strong> is refunded after return (5–7 working days).</li>
-      <li>Remote location bond: <strong>${annaMoney(remote ? remote.amount : 1500)}</strong>, refunded in full.</li>
+      <li>Visa/MC bond: <strong>${annaMoney(bond ? bond.amount : 404)}</strong>, charged at pick-up (never before), of which <strong>${annaMoney(Math.abs(refund ? refund.amount : 400))}</strong> is refunded after return (5–7 working days).</li>
+      <li>Remote location bond: <strong>${annaMoney(remote ? remote.amount : 1200)}</strong>, refunded in full.</li>
       <li>Fees charged at return (e.g. cleaning, smoking) come out of the bond first.</li></ul>`, source: 'Fees catalogue · bonds' };
   }
 
@@ -289,7 +289,7 @@ function annaNoShowText(r) {
   const first = (r.customer || '').split(' ')[0] || 'there';
   return `Hi ${first},\n\nWe had your ${r.model || 'vehicle'} ready for pick-up at our ${annaBranchName(r.branch)} branch on ${annaDate(r.start)} at ${annaTime(r.start)} (booking ${r.ref}), but we didn't see you.\n\n` +
          `Would you like us to move your booking to another day? Reply with a new date and time (we're open 08:00–17:15) and we'll check the vehicle for you. ` +
-         `If you no longer need it, just let us know and we'll cancel it.\n\nKind regards,\n${annaAgentName()}\nGC Tech Car & Truck Rental`;
+         `If you no longer need it, just let us know and we'll cancel it.\n\nKind regards,\n${annaAgentName()}\nGC Tech Rentals`;
 }
 
 function annaDraftNoShow(id) {
@@ -402,7 +402,7 @@ function annaNoVehicleText(b, info, picked, keepPrice, channel) {
     `${short ? '' : 'Thanks for booking with GC Tech. '}Unfortunately the ${model} you booked (${b.ref}) isn't available for ${annaDate(info.r.start)} ${annaTime(info.r.start)} to ${annaDate(info.r.end)} ${annaTime(info.r.end)} at our ${annaBranchName(info.pickup)} branch.\n\n` +
     `Here is what we can offer instead:\n${list}\n\n` +
     `Reply with the option that suits you best and I'll confirm it straight away. If none of these work, just let us know and we'll close the request. You haven't been charged.` +
-    (short ? `\n\n${annaAgentName()} · GC Tech` : `\n\nKind regards,\n${annaAgentName()}\nGC Tech Car & Truck Rental`);
+    (short ? `\n\n${annaAgentName()} · GC Tech` : `\n\nKind regards,\n${annaAgentName()}\nGC Tech Rentals`);
 }
 
 function annaDraftNoVehicle(email, id) {
@@ -525,7 +525,7 @@ function annaSuggestReply(session, customerText) {
 
   // Regras da locação primeiro: "posso levar meu cachorro na retirada?" é sobre animais, não sobre horário
   if (annaIsPaymentQuestion(t)) {
-    return { why: 'Payment question', text: `Hi ${first}, nothing is charged before pick-up. You pay at the branch when you collect the vehicle${b ? ` (booking ${b.ref})` : ''}: the rental total plus the ${annaMoney(505.5)} bond, which is refunded after the return. We take credit or debit cards in the main driver's name only — we don't accept cash or bank transfer.${sign}` };
+    return { why: 'Payment question', text: `Hi ${first}, nothing is charged before pick-up. You pay at the branch when you collect the vehicle${b ? ` (booking ${b.ref})` : ''}: the rental total plus the ${annaMoney(404)} bond, which is refunded after the return. We take credit or debit cards in the main driver's name only — we don't accept cash or bank transfer.${sign}` };
   }
   if (annaIsOneWayQuestion(t)) {
     return { why: 'One-way question', text: `Hi ${first}, unfortunately we don't do one-way hires between Sydney and Brisbane, so the vehicle needs to be returned to a branch in the same city it was picked up from. Within the same city you can return it to any of our branches.${sign}` };
@@ -567,7 +567,7 @@ function annaSuggestReply(session, customerText) {
       : `Hi ${first}, the excess depends on the vehicle. If you send me your booking reference I'll give you the exact amount and the excess reduction option.${sign}` };
   }
   if (/(bond|deposit|refund|money back)/.test(t)) {
-    return { why: 'Bond question', text: `Hi ${first}, the bond is ${annaMoney(505.5)}, charged at pick-up to a Visa/Mastercard credit or debit card in the driver's name. After the vehicle is returned, ${annaMoney(500)} is refunded to the same card, which usually takes 5–7 working days depending on your bank.${sign}` };
+    return { why: 'Bond question', text: `Hi ${first}, the bond is ${annaMoney(404)}, charged at pick-up to a Visa/Mastercard credit or debit card in the driver's name. After the vehicle is returned, ${annaMoney(400)} is refunded to the same card, which usually takes 5–7 working days depending on your bank.${sign}` };
   }
   if (/(where|address|location|branch|directions)/.test(t)) {
     return { why: 'Branch / location', text: b

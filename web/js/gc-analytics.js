@@ -453,7 +453,7 @@ function renderExecutive() {
   const profile = JSON.parse(localStorage.getItem('gc_agent_profile') || '{}');
   const hour = new Date().getHours();
   document.getElementById('ex-greeting').textContent = `${hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening'}, ${(profile.name || 'there').split(' ')[0]}`;
-  document.getElementById('ex-date').textContent = new Date().toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ' · GC Tech Car & Truck Rental';
+  document.getElementById('ex-date').textContent = new Date().toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ' · GC Tech Rentals';
 
   const live = anLiveRecords();
   const all = anAllRecords();

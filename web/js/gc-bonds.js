@@ -40,25 +40,25 @@ function bondIsAdmin(username) {
 // BOOKINGS "ANTIGOS" JÁ DEVOLVIDOS (dados de teste da fila de refund)
 // ------------------------------------------
 const BOND_SEED_RETURNED = (function () {
-  const debit = [{ id: 'debit-bond', qty: 1, amount: 505.50 }, { id: 'debit-bond-refund', qty: 1, amount: -500.00 }];
+  const debit = [{ id: 'debit-bond', qty: 1, amount: 404.00 }, { id: 'debit-bond-refund', qty: 1, amount: -400.00 }];
   const seeds = [
     { id: 'old-1', ref: '488102', cat: 'cross-suv',  idx: 2, fname: 'Marcus', lname: 'Hale',     email: 'marcus.hale@example.com',   pickup: '2026-09-24T17:00', dropoff: '2026-09-26T11:45', branch: 'PAR', card: 'visa',
       items: debit },
     { id: 'old-2', ref: '488317', cat: 'small-auto', idx: 4, fname: 'Priya', lname: 'Raman',      email: 'priya.raman@example.com',   pickup: '2026-09-22T09:00', dropoff: '2026-09-27T13:45', branch: 'BLK', card: 'mastercard', excess: 'reduced',
-      items: [...debit, { id: 'car-seat-4plus', qty: 1, amount: 5.50 }] },
+      items: [...debit, { id: 'car-seat-4plus', qty: 1, amount: 6.00 }] },
     { id: 'old-3', ref: '488590', cat: 'hiace-1t',   idx: 2, fname: 'Tomás', lname: 'Ortega',     email: 'tomas.ortega@example.com',  pickup: '2026-09-25T08:00', dropoff: '2026-09-28T15:15', branch: 'PAR', card: 'visa', company: 'Ortega Removals',
       items: debit },
     { id: 'old-4', ref: '488644', cat: 'full-car',   idx: 1, fname: 'Hannah', lname: 'Cole',      email: 'hannah.cole@example.com',   pickup: '2026-09-26T10:00', dropoff: '2026-09-29T12:30', branch: 'MAS', card: 'visa',
-      // devolveu com cheiro de cigarro: o Smoking Fee lançado na devolução sai do bond (refund de $170)
-      items: [...debit, { id: 'smoking', qty: 1, amount: 330.00, atReturn: true }] },
+      // devolveu com cheiro de cigarro: o Smoking Fee lançado na devolução sai do bond (refund de $100)
+      items: [...debit, { id: 'smoking', qty: 1, amount: 300.00, atReturn: true }] },
     { id: 'old-5', ref: '488712', cat: 'eight-seat', idx: 0, fname: 'Kenji', lname: 'Watanabe',   email: 'kenji.watanabe@example.com', pickup: '2026-09-23T08:30', dropoff: '2026-09-30T07:30', branch: 'MAS', card: 'mastercard',
-      items: [{ id: 'remote-bond', qty: 1, amount: 1500.00 }, { id: 'deposit-refund', qty: 1, amount: -1500.00 }, { id: 'interstate', qty: 1, amount: 99.00 }] },
+      items: [{ id: 'remote-bond', qty: 1, amount: 1200.00 }, { id: 'deposit-refund', qty: 1, amount: -1200.00 }, { id: 'interstate', qty: 1, amount: 89.00 }] },
     { id: 'old-6', ref: '488790', cat: 'mid-hatch',  idx: 3, fname: 'Aisha', lname: 'Bello',      email: 'aisha.bello@example.com',   pickup: '2026-09-27T09:15', dropoff: '2026-09-30T10:20', branch: 'PAR', card: 'visa',
-      // roda raspada no meio-fio: o reparo de $120 lançado na devolução sai do bond (refund de $380)
+      // roda raspada no meio-fio: o reparo de $120 lançado na devolução sai do bond (refund de $280)
       items: [...debit, { id: 'damage-ext', qty: 1, amount: 120.00, atReturn: true }] },
     { id: 'old-7', ref: '488855', cat: 'hilux-auto', idx: 3, fname: 'Declan', lname: 'Murphy',    email: 'declan.murphy@example.com', pickup: '2026-09-28T08:00', dropoff: '2026-10-01T16:00', branch: 'EGF', card: 'visa', company: 'Murphy Landscaping',
       items: debit },
-    // Cliente do Customer Portal (demo do Bond on Hold): devolveu a van, bond de $500 ainda a devolver.
+    // Cliente do Customer Portal (demo do Bond on Hold): devolveu a van, bond de $400 ainda a devolver.
     // Em Customers & Vehicles → Felipe aparece o botão "🔒 Hold bond" neste booking.
     { id: 'old-9', ref: '488905', cat: 'hiace-1t', idx: 8, fname: 'Felipe', lname: 'Grigolli', email: 'felipe@testgctech.com', pickup: '2026-10-01T09:00', dropoff: '2026-10-03T16:00', branch: 'MAS', card: 'visa',
       items: debit },

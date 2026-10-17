@@ -555,7 +555,7 @@ function ovRenderMyRcm() {
   const profile = ovReadJSON('gc_agent_profile', {});
   box.innerHTML = `
     <div class="ov-myrcm">
-      <img src="../assets/img/gc-logo.svg" alt="GC Tech Car & Truck Rental">
+      <img src="../assets/img/gc-logo.svg" alt="GC Tech Rentals">
       <div>
         <div class="ov-myrcm-name">${ovEsc(profile.name || 'Agent')}</div>
         <div class="ov-muted">${ovEsc(profile.role || '')}</div>

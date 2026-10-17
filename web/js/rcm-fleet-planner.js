@@ -747,7 +747,7 @@ function openBookingFromUrl() {
   if (plannerPopup) document.body.classList.add('planner-popup');
   const booking = plannerBookings.find(b => b.id === id) || (plannerPopup ? plannerArchivedBooking(id) : null);
   if (!booking) { gcToast('Booking not found in the planner.', 'warning'); return; }
-  if (plannerPopup) document.title = `Booking ${booking.ref} :: GC Tech Car & Truck Rental`;
+  if (plannerPopup) document.title = `Booking ${booking.ref} :: GC Tech Rentals`;
   viewStartMs = addDays(startOfDay(parseDateTime(booking.pickupStr)), -2);
   syncDateInputs();
   renderPlanner();

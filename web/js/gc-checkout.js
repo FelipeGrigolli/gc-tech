@@ -9,8 +9,8 @@
 // ⚠️ PREÇOS DE PROTÓTIPO (extras) — substituir pela tabela real da GC Tech.
 // O excess já usa os valores reais, definidos por categoria em gc-fleet-data.js (FLEET_EXCESS_TIERS).
 const CHECKOUT_EXTRAS = [
-  { id: 'childSeat', icon: '🧸', name: 'Child seat (6 months – 4 years)', perDay: 5.50, max: 3 },
-  { id: 'booster',   icon: '🪑', name: 'Booster seat (4 years +)',        perDay: 5.50, max: 3 }
+  { id: 'childSeat', icon: '🧸', name: 'Child seat (6 months – 4 years)', perDay: 6.00, max: 3 },
+  { id: 'booster',   icon: '🪑', name: 'Booster seat (4 years +)',        perDay: 6.00, max: 3 }
 ];
 
 const checkout = {
@@ -60,7 +60,7 @@ function checkoutQuote() {
   });
 
   // Caução cobrada junto com a reserva e devolvida depois da devolução do veículo (igual ao RCM / PowerBoard)
-  const bond = typeof feeGetItem === 'function' ? feeGetItem('debit-bond').amount : 505.50;
+  const bond = typeof feeGetItem === 'function' ? feeGetItem('debit-bond').amount : 404.00;
   lines.push({ label: 'Security bond (refunded after return)', amount: bond, bond: true });
 
   const total = lines.reduce((s, l) => s + l.amount, 0);

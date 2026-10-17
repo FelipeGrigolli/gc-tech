@@ -19,17 +19,17 @@ const WA_WINDOW_MS = 24 * 3600000;
 const WA_TEMPLATES = {
   pickup_reminder: {
     name: 'Pick-up reminder',
-    body: v => `Hi ${v.name}, this is GC Tech Car & Truck Rental. A reminder that your ${v.vehicle} is booked for pick-up ${v.when} at ${v.time}, at our ${v.branch} branch. Please bring your driver's licence and a credit or debit card in your name: payment and the bond are taken at pick-up (no cash or bank transfer). Reply to this message if anything changes. Ref ${v.ref}.`,
+    body: v => `Hi ${v.name}, this is GC Tech Rentals. A reminder that your ${v.vehicle} is booked for pick-up ${v.when} at ${v.time}, at our ${v.branch} branch. Please bring your driver's licence and a credit or debit card in your name: payment and the bond are taken at pick-up (no cash or bank transfer). Reply to this message if anything changes. Ref ${v.ref}.`,
     reply: v => `Confirmed, thanks! See you ${v.whenShort} 👍`
   },
   return_reminder: {
     name: 'Return reminder',
-    body: v => `Hi ${v.name}, a reminder from GC Tech Car & Truck Rental: your ${v.vehicle} is due back at our ${v.branch} branch on ${v.date} at ${v.endTime}. Need more time? Reply EXTEND and we'll check availability. Ref ${v.ref}.`,
+    body: v => `Hi ${v.name}, a reminder from GC Tech Rentals: your ${v.vehicle} is due back at our ${v.branch} branch on ${v.date} at ${v.endTime}. Need more time? Reply EXTEND and we'll check availability. Ref ${v.ref}.`,
     reply: () => 'EXTEND - could I keep it one more day?'
   },
   missed_call: {
     name: 'Missed call follow-up',
-    body: v => `Hi${v.name ? ' ' + v.name : ''}, we missed your call to GC Tech Car & Truck Rental at ${v.callTime}. Sorry about that! How can we help? Just reply here, or we'll call you back shortly.`,
+    body: v => `Hi${v.name ? ' ' + v.name : ''}, we missed your call to GC Tech Rentals at ${v.callTime}. Sorry about that! How can we help? Just reply here, or we'll call you back shortly.`,
     reply: () => 'Hi, I was calling to ask if you have a van available this Saturday for the day?'
   },
   no_show: {
@@ -45,12 +45,12 @@ const WA_TEMPLATES = {
   // Payment Plans → lembrete de parcela (antes do débito) e de parcela atrasada
   payment_plan_reminder: {
     name: 'Payment plan reminder',
-    body: v => `Hi ${v.name}, a reminder from GC Tech Car & Truck Rental: your payment plan instalment of ${v.amount || 'the next amount'} for booking ${v.ref} is due on ${v.due || 'the due date'}. No need to come in: reply PAY here, or call us, and our team will take it on your credit or debit card.`,
+    body: v => `Hi ${v.name}, a reminder from GC Tech Rentals: your payment plan instalment of ${v.amount || 'the next amount'} for booking ${v.ref} is due on ${v.due || 'the due date'}. No need to come in: reply PAY here, or call us, and our team will take it on your credit or debit card.`,
     reply: () => 'PAY - please charge my card on file, thanks!'
   },
   payment_plan_overdue: {
     name: 'Payment plan overdue',
-    body: v => `Hi ${v.name}, this is GC Tech Car & Truck Rental. Your payment plan instalment of ${v.amount || 'this week'} for booking ${v.ref} is overdue. Remaining balance: ${v.balance || 'see your plan'}. Reply PAY here, or call us, and our team will take it on your credit or debit card right away.`,
+    body: v => `Hi ${v.name}, this is GC Tech Rentals. Your payment plan instalment of ${v.amount || 'this week'} for booking ${v.ref} is overdue. Remaining balance: ${v.balance || 'see your plan'}. Reply PAY here, or call us, and our team will take it on your credit or debit card right away.`,
     reply: () => "Sorry about that! PAY - you can charge my card now."
   },
   // Agent Requests → "✦ Message options" (opções escolhidas pelo agente entram na variável {{options}})
@@ -504,7 +504,7 @@ function waReceive(opts) {
   const recentOut = (t ? t.messages : []).concat(list).some(x => x.dir === 'out' && now - x.at < 12 * 3600000);
   if (!recentOut) {
     list.push({ id: msg.id + '-auto', dir: 'out', at: now + 2500, by: 'Auto-reply', phone: opts.phone, bookingId: msg.bookingId, ref: msg.ref,
-      text: "Thanks for messaging GC Tech Car & Truck Rental! 👋 An agent will reply shortly. Our branches are open 8:00–17:15, 7 days." });
+      text: "Thanks for messaging GC Tech Rentals! 👋 An agent will reply shortly. Our branches are open 8:00–17:15, 7 days." });
   }
   localStorage.setItem(WA_MSGS_KEY, JSON.stringify(all));
   if (typeof fleetLog === 'function') {

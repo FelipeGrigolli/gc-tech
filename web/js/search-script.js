@@ -185,7 +185,7 @@ function srRenderResults() {
             <div class="result-price">
               <div class="per-day"><strong>$${c.rate.toFixed(2)}</strong> /day</div>
               <div class="total">${days} day${days > 1 ? 's' : ''} · <strong>$${(c.rate * days).toFixed(2)}</strong> total</div>
-              <div class="total" style="font-size:11px;opacity:.75">+ $505.50 bond, refunded after return · pay at pick-up, card only</div>
+              <div class="total" style="font-size:11px;opacity:.75">+ $404.00 bond, refunded after return · pay at pick-up, card only</div>
             </div>
           </div>
           <div class="result-specs"><span>👤 ${c.seats} seats</span><span>⚙️ Automatic</span><span>⛽ ${c.fuel}</span></div>

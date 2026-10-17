@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-label="Pantech truck with tail lift">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3f5f8"/><stop offset="1" stop-color="#e3e7ec"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7dce3"/><stop offset="1" stop-color="#eceff3"/></linearGradient>
+    <linearGradient id="paint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfcfd"/><stop offset="1" stop-color="#e6e9ee"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a4757"/><stop offset="1" stop-color="#26303c"/></linearGradient>
+    <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#000" stop-opacity=".28"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="640" height="440" fill="url(#wall)"/>
+  <rect y="300" width="640" height="140" fill="url(#floor)"/>
+  <ellipse cx="320" cy="362" rx="270" ry="16" fill="url(#shadow)"/>
+  <path d="M54,92 L430,92 Q436,92 436,98 L436,296 L54,296 Q48,296 48,290 L48,98 Q48,92 54,92 Z" fill="url(#paint)" stroke="#c9d0d9" stroke-width="2"/>
+  <path d="M48,286 L436,286" stroke="#c9d0d9" stroke-width="2"/>
+  <path d="M60,296 L452,296 L452,318 L60,318 Z" fill="#2f353d"/>
+  <path d="M440,316 L440,174 Q442,150 466,148 L522,148 C542,150 554,166 562,190 L574,230 C582,240 586,260 584,290 L584,316 Q584,324 576,324 L448,324 Q440,324 440,316 Z" fill="url(#paint)" stroke="#c9d0d9" stroke-width="2"/>
+  <path d="M468,160 L522,160 C536,162 546,176 552,196 L468,200 Z" fill="url(#glass)"/>
+  <path d="M566,240 L584,246 L584,262 L564,258 Z" fill="#fff6d6" stroke="#c9b98a" stroke-width="1.5"/>
+  <text x="242" y="196" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="64" fill="#FF5E00" letter-spacing="-1">GC Tech</text>
+    <text x="242" y="230.8" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="24" fill="#FF5E00" letter-spacing="4.32">RENTALS</text>
+  <circle cx="150" cy="322" r="45" fill="#2a2f36"/>
+    <circle cx="150" cy="322" r="38" fill="#1c2026"/>
+    <circle cx="150" cy="322" r="23.56" fill="#c8cdd4"/>
+    <circle cx="150" cy="322" r="23.56" fill="none" stroke="#9aa2ad" stroke-width="3"/>
+    <circle cx="150" cy="322" r="7.6000000000000005" fill="#7d8591"/>
+  <circle cx="214" cy="322" r="45" fill="#2a2f36"/>
+    <circle cx="214" cy="322" r="38" fill="#1c2026"/>
+    <circle cx="214" cy="322" r="23.56" fill="#c8cdd4"/>
+    <circle cx="214" cy="322" r="23.56" fill="none" stroke="#9aa2ad" stroke-width="3"/>
+    <circle cx="214" cy="322" r="7.6000000000000005" fill="#7d8591"/>
+  <circle cx="522" cy="322" r="45" fill="#2a2f36"/>
+    <circle cx="522" cy="322" r="38" fill="#1c2026"/>
+    <circle cx="522" cy="322" r="23.56" fill="#c8cdd4"/>
+    <circle cx="522" cy="322" r="23.56" fill="none" stroke="#9aa2ad" stroke-width="3"/>
+    <circle cx="522" cy="322" r="7.6000000000000005" fill="#7d8591"/>
+</svg>

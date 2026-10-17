@@ -19,10 +19,10 @@ const DC_SEED_INCIDENTS = [
     description: 'Stone chip on the windscreen from a truck on the M5, driver side, about 2 cm with a small crack starting. Quote from O\'Brien Glass: $380 to replace. No third party to claim from.',
     docs: ['windscreen-chip.jpg', 'obrien-glass-quote-380.pdf'] },
   { fault: 'Yes', quote: 'Yes', status: 'Quoted', booking: 'bk-truck-0', dayAfterStart: 1, amount: 1240, fee: 'damage-ext', charged: true,
-    description: 'Tail-lift platform bent after hitting a loading dock edge while reversing. Lift still works but does not sit flat. Repair quote $1,240 (parts + labour). $500 of the bond kept towards it; the customer pays the other $740 on a weekly payment plan. Repair booked.',
+    description: 'Tail-lift platform bent after hitting a loading dock edge while reversing. Lift still works but does not sit flat. Repair quote $1,240 (parts + labour). $400 of the bond kept towards it; the customer pays the other $840 on a weekly payment plan. Repair booked.',
     docs: ['tail-lift-damage-1.jpg', 'tail-lift-damage-2.jpg', 'truck-repairs-quote-1240.pdf'] },
   { fault: 'Yes', quote: 'Yes', status: 'Quoted', booking: 'bk-truck-1', dayAfterStart: 0, amount: 2800, fee: 'damage-ext', charged: true,
-    description: 'Roof of the box scraped on the height bar of a shopping centre car park (2.1 m). Long scratches and a dent above the rear roller door. Panel shop quote $2,800. $500 of the bond kept towards it; the other $2,300 on a weekly payment plan.',
+    description: 'Roof of the box scraped on the height bar of a shopping centre car park (2.1 m). Long scratches and a dent above the rear roller door. Panel shop quote $2,800. $400 of the bond kept towards it; the other $2,400 on a weekly payment plan.',
     docs: ['roof-scrape-photos.zip', 'panel-shop-quote-2800.pdf'] },
   { fault: 'Yes', quote: 'No', status: 'Closed', bond: 'old-6', dayAfterStart: 1, amount: 120, fee: 'damage-ext', charged: true,
     description: 'Front left alloy wheel scuffed on a kerb. Refurbished in-house for $120, taken from the bond at return. Customer agreed at the counter.',
@@ -35,27 +35,27 @@ const DC_SEED_INCIDENTS = [
     description: 'Passenger side mirror clipped by a passing truck on a narrow road. Mirror housing broken, glass intact. Other driver stopped and gave details. Quote $295.',
     thirdParty: { name: 'Westside Haulage Pty Ltd', phone: '02 9644 1180', insuranceCo: 'QBE', claimNo: 'QBE-55902741' },
     docs: ['mirror-damage.jpg', 'mirror-quote-295.pdf'] },
-  { fault: 'Yes', quote: 'No', status: 'Closed', bond: 'old-4', dayAfterStart: 1, amount: 330, fee: 'smoking', charged: true,
-    description: 'Cigarette burn on the rear seat and smell of smoke at return. Smoking fee $330 applied as per the rental terms and taken from the bond.',
+  { fault: 'Yes', quote: 'No', status: 'Closed', bond: 'old-4', dayAfterStart: 1, amount: 300, fee: 'smoking', charged: true,
+    description: 'Cigarette burn on the rear seat and smell of smoke at return. Smoking fee $300 applied as per the rental terms and taken from the bond.',
     docs: ['seat-burn.jpg'] },
   { fault: 'Undetermined', quote: 'No', status: 'Open', cat: 'any', dayAfterStart: 1,
     description: 'Dent in the rear passenger door found at return. Customer says it happened in a car park and nobody left a note. Waiting for the customer\'s written statement.',
     docs: [] },
   { fault: 'Yes', quote: 'Yes', status: 'Closed', booking: 'bk-or7716', dayAfterStart: 1, amount: 1650, fee: 'damage-ext', charged: true,
-    description: 'Front left bumper and headlight hit a pole while turning into a loading zone. Repaired by the panel shop for $1,650. $500 of the bond kept towards it; the other $1,150 on a weekly payment plan.',
+    description: 'Front left bumper and headlight hit a pole while turning into a loading zone. Repaired by the panel shop for $1,650. $400 of the bond kept towards it; the other $1,250 on a weekly payment plan.',
     docs: ['front-bumper-photos.zip', 'panel-shop-invoice-1650.pdf'] },
   { fault: 'Yes', quote: 'Yes', status: 'Closed', booking: 'bk2', dayAfterStart: 1, amount: 1400, fee: 'damage-ext', charged: true,
-    description: 'Reversed into a bollard in a shopping centre car park. Rear bumper and boot lid replaced for $1,400. $500 of the bond kept towards it; the other $900 on a weekly payment plan.',
+    description: 'Reversed into a bollard in a shopping centre car park. Rear bumper and boot lid replaced for $1,400. $400 of the bond kept towards it; the other $1,000 on a weekly payment plan.',
     docs: ['rear-bumper-bollard.jpg', 'repair-invoice-1400.pdf'] },
   { fault: 'Yes', quote: 'Yes', status: 'Closed', booking: 'bk6', dayAfterStart: 1, amount: 2500, fee: 'damage-ext', charged: true,
-    description: 'Ran into the back of a car in slow traffic on Parramatta Rd. Customer at fault: the $2,500 damage excess applies. Other driver\'s claim passed to GC Tech\'s fleet insurer. $500 of the bond kept; the other $2,000 on a weekly payment plan.',
+    description: 'Ran into the back of a car in slow traffic on Parramatta Rd. Customer at fault: the $2,500 damage excess applies. Other driver\'s claim passed to GC Tech\'s fleet insurer. $400 of the bond kept; the other $2,100 on a weekly payment plan.',
     thirdParty: { name: 'Grace Li', phone: '0422 310 774', insuranceCo: 'AAMI', claimNo: 'AAMI-4471920' },
     docs: ['front-damage-photos.zip', 'other-driver-details.jpg', 'police-event-E60117.pdf'] },
   { fault: 'Yes', quote: 'Yes', status: 'Closed', booking: 'bk7', dayAfterStart: 1, amount: 1100, fee: 'damage-ext', charged: true,
-    description: 'Side mirror and driver door scraped along a pole in a car park. Repaired for $1,100. $500 of the bond kept towards it; the other $600 on a weekly payment plan.',
+    description: 'Side mirror and driver door scraped along a pole in a car park. Repaired for $1,100. $400 of the bond kept towards it; the other $700 on a weekly payment plan.',
     docs: ['driver-door-scrape.jpg', 'repair-invoice-1100.pdf'] },
   { fault: 'Yes', quote: 'No', status: 'Closed', booking: 'bk1', dayAfterStart: 2, amount: 900, fee: 'tyre', charged: true,
-    description: 'Hit a kerb at speed: two tyres and the front left rim replaced for $900. $500 of the bond kept towards it; the other $400 on a weekly payment plan.',
+    description: 'Hit a kerb at speed: two tyres and the front left rim replaced for $900. $400 of the bond kept towards it; the other $500 on a weekly payment plan.',
     docs: ['tyre-rim-damage.jpg', 'tyre-invoice-900.pdf'] }
 ];
 const DC_SEED_AGENTS = ['Felipe Grigolli', 'Jessica Tran', 'Liam O\'Connor', 'Priya Sharma'];
@@ -269,7 +269,7 @@ function dcChargeStatusHtml(c) {
   const origin = c.atReturn ? `charged at return by ${dcEsc(c.by)}` : c.fromBooking ? `entered in the booking by ${dcEsc(c.by)}` : `added from this report by ${dcEsc(c.by)}`;
   return `<div class="dc-charge-done">✓ ${dcMoney(c.amount)} ${dcEsc(c.feeName)} on ${dcEsc(c.ref)}'s Booking Fees · ${origin} on ${when(c.at)}.` +
     (c.updatedAt ? `<br><span style="color:#fbbf24">Changed in the booking from ${dcMoney(c.prevAmount)} to ${dcMoney(c.amount)} by ${dcEsc(c.updatedBy)} on ${when(c.updatedAt)}.</span>` : '') +
-    `<br><span class="dc-muted">${c.atReturn ? "Taken from the bond (up to $500); anything above it is paid on the booking or on a payment plan." : "Charge it from the booking's Payments tab (or the bond)."}</span></div>`;
+    `<br><span class="dc-muted">${c.atReturn ? "Taken from the bond (up to $400); anything above it is paid on the booking or on a payment plan." : "Charge it from the booking's Payments tab (or the bond)."}</span></div>`;
 }
 
 function dcSearchHtml(report, all) {
