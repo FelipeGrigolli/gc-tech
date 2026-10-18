@@ -25,11 +25,11 @@ body { background: #0f172a; color: #e2e8f0; font-family: 'Inter', -apple-system,
 .nt-form label { display: flex; flex-direction: column; gap: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; color: #94a3b8; }
 .nt-form label.full { grid-column: 1 / -1; }
 .nt-form input, .nt-form select, .nt-form textarea { padding: 7px 9px; background: #0b1120; color: #e2e8f0; border: 1px solid #475569; border-radius: 4px; font: inherit; font-size: 13px; text-transform: none; letter-spacing: 0; font-weight: 400; resize: vertical; }
-.nt-form input:focus, .nt-form select:focus, .nt-form textarea:focus { outline: none; border-color: #FF5E00; }
+.nt-form input:focus, .nt-form select:focus, .nt-form textarea:focus { outline: none; border-color: #15803D; }
 .nt-form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
 .nt-btn { border-radius: 5px; padding: 8px 14px; font: 600 13px inherit; font-family: inherit; cursor: pointer; border: 1px solid transparent; }
-.nt-btn.primary { background: #FF5E00; color: #fff; }
-.nt-btn.primary:hover { background: #e65500; }
+.nt-btn.primary { background: #15803D; color: #fff; }
+.nt-btn.primary:hover { background: #166534; }
 .nt-btn.ghost { background: transparent; color: #e2e8f0; border-color: #475569; }
 
 .nt-table { width: 100%; border-collapse: collapse; }

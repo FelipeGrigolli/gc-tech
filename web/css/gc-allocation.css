@@ -6,7 +6,7 @@
 .al-title-row { position: relative; }
 .al-demo-btn { position: absolute; right: 0; top: 2px; display: inline-flex; align-items: center; gap: 8px; }
 .al-demo-btn span { background: rgba(245, 158, 11, .15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, .5); border-radius: 999px; padding: 0 7px; font-size: 10px; text-transform: uppercase; letter-spacing: .4px; }
-@keyframes alNewRow { 0% { background: rgba(255, 94, 0, .35); } 100% { background: transparent; } }
+@keyframes alNewRow { 0% { background: rgba(34, 197, 94, .35); } 100% { background: transparent; } }
 .al-table tr.al-row-new td { animation: alNewRow 3s ease-out; }
 @media (max-width: 1100px) { .al-demo-btn { position: static; margin: 0 auto 14px; display: flex; width: fit-content; } }
 .al-tab-count { background: #ef4444; color: #fff; border-radius: 10px; padding: 0 7px; font-size: 11px; margin-left: 4px; }
@@ -20,7 +20,7 @@
 }
 .al-filters select:focus, .al-filters input:focus, .al-engine-controls select:focus, .al-engine-controls input:focus { border-color: #3b82f6; }
 label.al-check { flex-direction: row; align-items: center; gap: 6px; text-transform: none; font-weight: 500; font-size: 13px; color: #cbd5e1; padding-bottom: 7px; }
-.al-check input { accent-color: var(--gc-orange); }
+.al-check input { accent-color: var(--gc-brand); }
 
 .al-table-wrap { background: var(--surface-dark); border: 1px solid #334155; border-radius: 10px; overflow-x: auto; }
 .al-table { width: 100%; border-collapse: collapse; font-size: 12px; }

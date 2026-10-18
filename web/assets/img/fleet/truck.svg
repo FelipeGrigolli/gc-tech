@@ -15,8 +15,8 @@
   <path d="M440,316 L440,174 Q442,150 466,148 L522,148 C542,150 554,166 562,190 L574,230 C582,240 586,260 584,290 L584,316 Q584,324 576,324 L448,324 Q440,324 440,316 Z" fill="url(#paint)" stroke="#c9d0d9" stroke-width="2"/>
   <path d="M468,160 L522,160 C536,162 546,176 552,196 L468,200 Z" fill="url(#glass)"/>
   <path d="M566,240 L584,246 L584,262 L564,258 Z" fill="#fff6d6" stroke="#c9b98a" stroke-width="1.5"/>
-  <text x="242" y="196" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="64" fill="#FF5E00" letter-spacing="-1">GC Tech</text>
-    <text x="242" y="230.8" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="24" fill="#FF5E00" letter-spacing="4.32">RENTALS</text>
+  <text x="242" y="196" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="64" fill="#15803D" letter-spacing="-1">GC Tech</text>
+    <text x="242" y="230.8" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="24" fill="#15803D" letter-spacing="4.32">RENTALS</text>
   <circle cx="150" cy="322" r="45" fill="#2a2f36"/>
     <circle cx="150" cy="322" r="38" fill="#1c2026"/>
     <circle cx="150" cy="322" r="23.56" fill="#c8cdd4"/>

@@ -49,22 +49,22 @@ const FLEET_CATEGORIES = [
 // Dados de vitrine para o site do cliente (Home / Search):
 // aba do widget, foto, combustível, lugares e descrição curta
 const FLEET_CATEGORY_WEB = {
-  'small-auto':   { tab: 'Cars',   img: 'fleet/car-small.svg', fuel: 'Petrol', seats: 5, desc: 'Our best value entry' },
-  'small-new':    { tab: 'Cars',   img: 'fleet/car-small.svg', fuel: 'Petrol', seats: 5, desc: 'Compact yet spacious' },
-  'small-hybrid': { tab: 'Cars',   img: 'fleet/car-small.svg', fuel: 'Hybrid', seats: 5, desc: 'Impressive 3.3L/100km fuel consumption' },
-  'mid-hatch':    { tab: 'Cars',   img: 'fleet/car-hatch.svg', fuel: 'Hybrid', seats: 5, desc: 'Saves 25–35% on fuel' },
-  'mid-sedan':    { tab: 'Cars',   img: 'fleet/car-sedan.svg', fuel: 'Hybrid', seats: 5, desc: 'Achieves approx 3.9L/100km' },
-  'full-car':     { tab: 'Cars',   img: 'fleet/car-full.svg',  fuel: 'Hybrid', seats: 5, desc: 'Unlimited kilometres included' },
-  'mid-suv':      { tab: 'SUVs',   img: 'fleet/suv-compact.svg', fuel: 'Petrol', seats: 5, desc: 'Comfortable with plenty of boot space' },
-  'cross-suv':    { tab: 'SUVs',   img: 'fleet/suv-cross.svg', fuel: 'Hybrid', seats: 5, desc: 'Big on space, low on fuel' },
-  'mid-7seat':    { tab: 'SUVs',   img: 'fleet/suv-7seat.svg', fuel: 'Petrol', seats: 7, desc: 'Ideal for family travel' },
-  'full-7seat':   { tab: 'SUVs',   img: 'fleet/suv-large.svg', fuel: 'Hybrid', seats: 7, desc: 'Spacious interior, high efficiency' },
-  'eight-seat':   { tab: 'Cars',   img: 'fleet/people-mover.svg', fuel: 'Diesel', seats: 8, desc: 'Perfect for group trips' },
-  'hiace-1t':     { tab: 'Vans',   img: 'fleet/van.svg', fuel: 'Diesel', seats: 3, desc: 'Practical and efficient for daily use' },
-  'hiace-15t':    { tab: 'Vans',   img: 'fleet/van.svg', fuel: 'Diesel', seats: 3, desc: 'Extra capacity for large cargo' },
-  'pantech':      { tab: 'Trucks', img: 'fleet/truck.svg', fuel: 'Diesel', seats: 3, desc: 'Hydraulic tail lift. Standard car licence' },
-  'hilux-auto':   { tab: 'Utes',   img: 'fleet/ute.svg', fuel: 'Diesel', seats: 5, desc: 'Open tray for easy loading' },
-  'hilux-diesel': { tab: 'Utes',   img: 'fleet/ute.svg', fuel: 'Diesel', seats: 5, desc: 'Rugged 4x4 for tough terrain' }
+  'small-auto':   { tab: 'Cars',   img: 'fleet-photos/yaris.jpg', fuel: 'Petrol', seats: 5, desc: 'Our best value entry' },
+  'small-new':    { tab: 'Cars',   img: 'fleet-photos/yaris.jpg', fuel: 'Petrol', seats: 5, desc: 'Compact yet spacious' },
+  'small-hybrid': { tab: 'Cars',   img: 'fleet-photos/yaris.jpg', fuel: 'Hybrid', seats: 5, desc: 'Impressive 3.3L/100km fuel consumption' },
+  'mid-hatch':    { tab: 'Cars',   img: 'fleet-photos/corolla-hatch.jpg', fuel: 'Hybrid', seats: 5, desc: 'Saves 25–35% on fuel' },
+  'mid-sedan':    { tab: 'Cars',   img: 'fleet-photos/corolla-sedan.jpg', fuel: 'Hybrid', seats: 5, desc: 'Achieves approx 3.9L/100km' },
+  'full-car':     { tab: 'Cars',   img: 'fleet-photos/camry.jpg',  fuel: 'Hybrid', seats: 5, desc: 'Unlimited kilometres included' },
+  'mid-suv':      { tab: 'SUVs',   img: 'fleet-photos/asx.jpg', fuel: 'Petrol', seats: 5, desc: 'Comfortable with plenty of boot space' },
+  'cross-suv':    { tab: 'SUVs',   img: 'fleet-photos/corolla-cross.jpg', fuel: 'Hybrid', seats: 5, desc: 'Big on space, low on fuel' },
+  'mid-7seat':    { tab: 'SUVs',   img: 'fleet-photos/outlander.jpg', fuel: 'Petrol', seats: 7, desc: 'Ideal for family travel' },
+  'full-7seat':   { tab: 'SUVs',   img: 'fleet-photos/kluger.jpg', fuel: 'Hybrid', seats: 7, desc: 'Spacious interior, high efficiency' },
+  'eight-seat':   { tab: 'Cars',   img: 'fleet-photos/staria.jpg', fuel: 'Diesel', seats: 8, desc: 'Perfect for group trips' },
+  'hiace-1t':     { tab: 'Vans',   img: 'fleet-photos/hiace.jpg', fuel: 'Diesel', seats: 3, desc: 'Practical and efficient for daily use' },
+  'hiace-15t':    { tab: 'Vans',   img: 'fleet-photos/hiace.jpg', fuel: 'Diesel', seats: 3, desc: 'Extra capacity for large cargo' },
+  'pantech':      { tab: 'Trucks', img: 'fleet-photos/pantech.jpg', fuel: 'Diesel', seats: 3, desc: 'Hydraulic tail lift. Standard car licence' },
+  'hilux-auto':   { tab: 'Utes',   img: 'fleet-photos/hilux.jpg', fuel: 'Diesel', seats: 5, desc: 'Spacious tub for easy loading' },
+  'hilux-diesel': { tab: 'Utes',   img: 'fleet-photos/hilux.jpg', fuel: 'Diesel', seats: 5, desc: 'Rugged 4x4 for tough terrain' }
 };
 FLEET_CATEGORIES.forEach(c => Object.assign(c, FLEET_CATEGORY_WEB[c.id]));
 

@@ -55,28 +55,28 @@
         <form id="signin-form" onsubmit="handleAuth(event, 'signin')">
           <div class="of-field"><label>Email</label><input type="email" id="login-email" required value="felipe@testgctech.com"></div>
           <div class="of-field"><label>Password</label><input type="password" id="login-password" required value="password123"></div>
-          <button type="submit" class="btn-orange btn-block">Sign in</button>
+          <button type="submit" class="btn-brand btn-block">Sign in</button>
         </form>
 
         <form id="register-form" hidden onsubmit="handleAuth(event, 'register')">
           <div class="of-field"><label>Full name</label><input type="text" id="reg-name" required></div>
           <div class="of-field"><label>Email</label><input type="email" id="reg-email" required></div>
           <div class="of-field"><label>Password</label><input type="password" id="reg-password" required></div>
-          <button type="submit" class="btn-orange btn-block">Create account</button>
+          <button type="submit" class="btn-brand btn-block">Create account</button>
         </form>
 
         <form id="guest-form" hidden onsubmit="handleAuth(event, 'guest')">
           <p class="form-note">No password needed — we'll show the bookings made with this email.</p>
           <div class="of-field"><label>Full name</label><input type="text" id="guest-name" required></div>
           <div class="of-field"><label>Email</label><input type="email" id="guest-email" required></div>
-          <button type="submit" class="btn-orange btn-block">Continue</button>
+          <button type="submit" class="btn-brand btn-block">Continue</button>
         </form>
 
         <form id="find-form" hidden onsubmit="handleAuth(event, 'find')">
           <p class="form-note">Enter your booking reference and the email used to book.</p>
           <div class="of-field"><label>Booking reference</label><input type="text" id="find-ref" placeholder="e.g. GC-8832" required></div>
           <div class="of-field"><label>Email</label><input type="email" id="find-email" required></div>
-          <button type="submit" class="btn-orange btn-block">Find my booking</button>
+          <button type="submit" class="btn-brand btn-block">Find my booking</button>
         </form>
 
         <p class="auth-help">Need help? <a href="#" onclick="event.preventDefault(); openCustomerChatWithPrompt();">Chat with our team</a></p>
@@ -90,7 +90,7 @@
       <div class="portal-header-inner">
         <a href="gc-home.html" class="brand"><img src="../assets/img/gc-logo.png" alt="GC Tech"></a>
         <div class="portal-header-actions">
-          <a href="gc-home.html" class="btn-orange btn-sm">Book a vehicle</a>
+          <a href="gc-home.html" class="btn-brand btn-sm">Book a vehicle</a>
           <div class="account-chip">
             <span class="avatar" id="account-avatar">F</span>
             <span id="display-user-name">Customer</span>
@@ -169,7 +169,7 @@
         <section id="tab-upcoming" class="tab-content">
           <div class="page-head">
             <div><h1>My bookings</h1><p class="page-sub">Upcoming and active hires.</p></div>
-            <a href="gc-home.html" class="btn-orange btn-sm">+ New booking</a>
+            <a href="gc-home.html" class="btn-brand btn-sm">+ New booking</a>
           </div>
           <!-- Bond que a GC Tech está segurando (js/gc-portal.js → portalRenderBondHeld) -->
           <div id="portal-bond-held"></div>
@@ -240,7 +240,7 @@
             <p class="contact-help">Your booking confirmation and invoices are always sent by email.</p>
           </div>
 
-          <button class="btn-orange" onclick="saveProfileChanges()">Save changes</button>
+          <button class="btn-brand" onclick="saveProfileChanges()">Save changes</button>
         </section>
       </main>
     </div>
@@ -256,7 +256,7 @@
       <div class="home-modal-actions">
         <button class="link-btn danger" id="btn-withdraw" hidden onclick="withdrawRequest()">Withdraw request</button>
         <button class="btn-ghost dark" onclick="closeModal('change-modal')">Cancel</button>
-        <button class="btn-orange" id="btn-submit-request" onclick="submitRequest()">Send request</button>
+        <button class="btn-brand" id="btn-submit-request" onclick="submitRequest()">Send request</button>
       </div>
     </div>
   </div>
@@ -269,7 +269,7 @@
       <div id="proposal-email-body" class="proposal-body"></div>
       <div class="home-modal-actions">
         <button class="btn-ghost dark" onclick="closeModal('proposal-modal')">Not now</button>
-        <button class="btn-orange" onclick="acceptProposal()">Accept offer</button>
+        <button class="btn-brand" onclick="acceptProposal()">Accept offer</button>
       </div>
     </div>
   </div>
@@ -292,7 +292,7 @@
       <div class="alt-error" id="alt-error"></div>
       <div class="home-modal-actions">
         <button class="btn-ghost dark" onclick="closeModal('alt-modal')">Cancel</button>
-        <button class="btn-orange" onclick="portalSaveAltPreference()">Save my choice</button>
+        <button class="btn-brand" onclick="portalSaveAltPreference()">Save my choice</button>
       </div>
     </div>
   </div>
@@ -304,7 +304,7 @@
       <p id="confirm-text"></p>
       <div class="home-modal-actions">
         <button class="btn-ghost dark" onclick="portalConfirmClose()">Keep booking</button>
-        <button class="btn-orange danger-btn" id="confirm-yes">Confirm</button>
+        <button class="btn-brand danger-btn" id="confirm-yes">Confirm</button>
       </div>
     </div>
   </div>

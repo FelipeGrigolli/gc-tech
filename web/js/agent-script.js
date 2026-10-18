@@ -536,7 +536,7 @@ function loadGlobalBookingStatus() {
           <div>
             <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Ref: ${b.ref}</div>
             <div style="font-weight: 600;">${b.vehicle}</div>
-            <div style="font-size: 11px; color: var(--gc-orange); margin-top: 6px; text-transform: uppercase;">Handled By: ${agentHandler}</div>
+            <div style="font-size: 11px; color: var(--gc-brand); margin-top: 6px; text-transform: uppercase;">Handled By: ${agentHandler}</div>
           </div>
           <div style="text-align: right;">
             <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 4px;">Schedule</div>

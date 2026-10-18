@@ -241,8 +241,8 @@ function repeatInjectStyles() {
     .rp-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 20px; border-top: 1px solid #334155; }
     .rp-btn { border-radius: 6px; padding: 9px 16px; font-size: 13px; font-weight: 600; cursor: pointer; border: 1px solid transparent; font-family: inherit; }
     .rp-btn.ghost { background: transparent; color: #e2e8f0; border-color: #475569; }
-    .rp-btn.primary { background: #FF5E00; color: #fff; }
-    .rp-btn.primary:hover { background: #e65500; }
+    .rp-btn.primary { background: #15803D; color: #fff; }
+    .rp-btn.primary:hover { background: #166534; }
     .rp-btn:disabled { opacity: .5; cursor: not-allowed; }
   `;
   document.head.appendChild(style);

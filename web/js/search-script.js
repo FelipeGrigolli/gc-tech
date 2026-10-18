@@ -191,7 +191,7 @@ function srRenderResults() {
           <div class="result-specs"><span>👤 ${c.seats} seats</span><span>⚙️ Automatic</span><span>⛽ ${c.fuel}</span></div>
           <div class="result-foot">
             ${availHtml}
-            <button class="btn-orange ${available ? '' : 'btn-request'}" onclick="selectVehicle('${c.model}')">${available ? 'Select' : 'Request'}</button>
+            <button class="btn-brand ${available ? '' : 'btn-request'}" onclick="selectVehicle('${c.model}')">${available ? 'Select' : 'Request'}</button>
           </div>
         </div>
       </article>

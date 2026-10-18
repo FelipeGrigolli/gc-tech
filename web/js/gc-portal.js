@@ -36,11 +36,11 @@ function getVehicleImage(vehicleName) {
   const cat = fleetFindCategoryByModel(vehicleName);
   if (cat) return '../assets/img/' + cat.img;
   const name = (vehicleName || '').toLowerCase();
-  const byKeyword = [['yaris', 'fleet/car-small.svg'], ['cross', 'fleet/suv-cross.svg'], ['sedan', 'fleet/car-sedan.svg'], ['corolla', 'fleet/car-hatch.svg'],
-    ['camry', 'fleet/car-full.svg'], ['asx', 'fleet/suv-compact.svg'], ['outlander', 'fleet/suv-7seat.svg'], ['kluger', 'fleet/suv-large.svg'],
-    ['staria', 'fleet/people-mover.svg'], ['hiace', 'fleet/van.svg'], ['van', 'fleet/van.svg'], ['hilux', 'fleet/ute.svg'], ['ute', 'fleet/ute.svg']];
+  const byKeyword = [['yaris', 'fleet-photos/yaris.jpg'], ['cross', 'fleet-photos/corolla-cross.jpg'], ['sedan', 'fleet-photos/corolla-sedan.jpg'], ['corolla', 'fleet-photos/corolla-hatch.jpg'],
+    ['camry', 'fleet-photos/camry.jpg'], ['asx', 'fleet-photos/asx.jpg'], ['outlander', 'fleet-photos/outlander.jpg'], ['kluger', 'fleet-photos/kluger.jpg'],
+    ['staria', 'fleet-photos/staria.jpg'], ['hiace', 'fleet-photos/hiace.jpg'], ['van', 'fleet-photos/hiace.jpg'], ['hilux', 'fleet-photos/hilux.jpg'], ['ute', 'fleet-photos/hilux.jpg']];
   const hit = byKeyword.find(([k]) => name.includes(k));
-  return '../assets/img/' + (hit ? hit[1] : 'fleet/truck.svg');
+  return '../assets/img/' + (hit ? hit[1] : 'fleet-photos/pantech.jpg');
 }
 
 function portalBranch(loc) {
@@ -220,7 +220,7 @@ function renderOverview() {
     <div class="alert-bar">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
       <div><strong>Booking ${b.ref}:</strong> our team has offered you an alternative vehicle.</div>
-      <button class="btn-orange btn-sm" onclick="openModal('${b.key}')">Review offer</button>
+      <button class="btn-brand btn-sm" onclick="openModal('${b.key}')">Review offer</button>
     </div>`));
   bookings.filter(b => b.status === 'fleet_pending').forEach(b => alerts.push(`
     <div class="alert-bar">
@@ -237,14 +237,14 @@ function renderOverview() {
       <div><strong>Payment plan ${p.bookingRef}:</strong> ${st.key === 'overdue'
         ? `a payment of ${ppMoney(next.amount)} is overdue. Pay it by live chat, WhatsApp or phone — our team takes it on your card.`
         : `${ppMoney(next.amount)} is due today. Pay it by live chat, WhatsApp or phone — our team takes it on your card.`}</div>
-      <button class="btn-orange btn-sm" onclick="switchDashboardTab('payments')">View plan</button>
+      <button class="btn-brand btn-sm" onclick="switchDashboardTab('payments')">View plan</button>
     </div>`);
   });
   portalHeldBonds().forEach(r => alerts.push(`
     <div class="alert-bar">
       <svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
       <div><strong>Bond on hold · Booking ${r.ref}:</strong> we're holding your ${ppMoney(bondHeldAmount(r))} bond. ${bondHoldCustomerText(r)}</div>
-      <button class="btn-orange btn-sm" onclick="switchDashboardTab('upcoming')">View</button>
+      <button class="btn-brand btn-sm" onclick="switchDashboardTab('upcoming')">View</button>
     </div>`));
   bookings.filter(b => b.status === 'pending').forEach(b => alerts.push(`
     <div class="alert-bar">
@@ -261,7 +261,7 @@ function renderOverview() {
       <div class="empty-trip">
         <h3>No upcoming trips</h3>
         <p>Ready for your next hire? Cars, SUVs, vans, trucks and utes across Sydney & Brisbane.</p>
-        <a href="gc-home.html" class="btn-orange">Book a vehicle</a>
+        <a href="gc-home.html" class="btn-brand">Book a vehicle</a>
       </div>`;
   } else {
     const dayDiff = Math.round((new Date(next.start).setHours(0, 0, 0, 0) - new Date(now).setHours(0, 0, 0, 0)) / FLEET_DAY_MS);
@@ -284,7 +284,7 @@ function renderOverview() {
             <div><small>Drop off</small>${portalBranch(dropoffLoc)}<br>${portalWhen(next.end)}</div>
           </div>
           <div class="next-trip-actions">
-            <button class="btn-orange btn-sm" onclick="switchDashboardTab('upcoming')">Manage booking</button>
+            <button class="btn-brand btn-sm" onclick="switchDashboardTab('upcoming')">Manage booking</button>
             <button class="btn-ghost" onclick="portalChatAboutBooking('${next.key}')">Chat about this trip</button>
             <button class="btn-wa light" onclick="portalWhatsApp('${next.key}')">${typeof waIcon === 'function' ? waIcon(15) : ''} WhatsApp us</button>
             <a class="btn-ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('GC Tech Car and Truck Rental ' + suburb)}">Directions</a>
@@ -330,9 +330,9 @@ function portalBookingCard(b) {
   }
 
   let primary = '';
-  if (b.status === 'confirmed' || b.status === 'updated') primary = `<button class="btn-orange" onclick="openModal('${b.key}')">Change pick-up time</button>`;
-  else if (b.status === 'pending') primary = `<button class="btn-orange" onclick="openModal('${b.key}')">Edit request</button>`;
-  else if (b.status === 'proposal_sent') primary = `<button class="btn-orange" onclick="openModal('${b.key}')">Review offer</button>`;
+  if (b.status === 'confirmed' || b.status === 'updated') primary = `<button class="btn-brand" onclick="openModal('${b.key}')">Change pick-up time</button>`;
+  else if (b.status === 'pending') primary = `<button class="btn-brand" onclick="openModal('${b.key}')">Edit request</button>`;
+  else if (b.status === 'proposal_sent') primary = `<button class="btn-brand" onclick="openModal('${b.key}')">Review offer</button>`;
 
   return `
     <article class="bk-card ${b.status === 'proposal_sent' ? 'attention' : ''}">
@@ -371,7 +371,7 @@ function portalAltPreferenceHtml(b) {
       <div class="alt-pref ask">
         <div><strong>If we can't find a ${esc(b.vehicle)}, what would suit you?</strong>
         <span>Tell us your back-up choice and our team will try it first.</span></div>
-        <button type="button" class="btn-orange btn-sm" onclick="portalOpenAltPreference('${b.key}')">Choose a back-up vehicle</button>
+        <button type="button" class="btn-brand btn-sm" onclick="portalOpenAltPreference('${b.key}')">Choose a back-up vehicle</button>
       </div>`;
   }
   const choices = fleetAltPreferenceChoices(pref);
@@ -465,7 +465,7 @@ function portalRenderBondHeld() {
         </div>
         <div class="bk-actions">
           ${req ? `<span class="bond-requested">✓ Refund requested by ${esc(req.channel)} on ${fleetFormatDate(req.at)} — our team will contact you.</span>` : '<span class="bond-hint">Prefer to have it back? Ask us and a team member will refund it to your card.</span>'}
-          <button class="btn-orange" onclick="portalBondRefundOpen('${esc(r.id)}')">${req ? 'Ask again' : 'Request a refund'}</button>
+          <button class="btn-brand" onclick="portalBondRefundOpen('${esc(r.id)}')">${req ? 'Ask again' : 'Request a refund'}</button>
         </div>
       </article>`;
   }).join('');
@@ -546,7 +546,7 @@ function renderAllNewBookings() {
   document.getElementById('nav-upcoming-count').textContent = bookings.length || '';
   container.innerHTML = bookings.length
     ? bookings.map(portalBookingCard).join('')
-    : `<div class="empty-state"><h3>No bookings yet</h3><p>When you book a vehicle it will appear here.</p><a href="gc-home.html" class="btn-orange">Book a vehicle</a></div>`;
+    : `<div class="empty-state"><h3>No bookings yet</h3><p>When you book a vehicle it will appear here.</p><a href="gc-home.html" class="btn-brand">Book a vehicle</a></div>`;
 }
 
 // Activity Log: ações feitas pelo próprio cliente no portal
@@ -771,7 +771,7 @@ function renderPastBookings() {
       </div>
       <div class="bk-actions">
         <button class="btn-ghost dark" onclick="portalToast('Invoice download is simulated in this prototype.')">Download invoice</button>
-        <button class="btn-orange" onclick="bookAgain('${b.vehicle}', '${b.loc}')">Book again</button>
+        <button class="btn-brand" onclick="bookAgain('${b.vehicle}', '${b.loc}')">Book again</button>
       </div>
     </article>`).join('');
 }
@@ -883,7 +883,7 @@ function renderPaymentPlans() {
         ${st.key !== 'completed' ? `
         <div class="bk-actions">
           <button class="btn-ghost dark" onclick="portalChatAboutPlan('${p.id}')">Chat about this plan</button>
-          ${(st.key === 'due' || st.key === 'overdue') && next ? `<button class="btn-orange" onclick="portalPayInstalment('${p.id}')">Pay ${ppMoney(next.amount)} now</button>` : ''}
+          ${(st.key === 'due' || st.key === 'overdue') && next ? `<button class="btn-brand" onclick="portalPayInstalment('${p.id}')">Pay ${ppMoney(next.amount)} now</button>` : ''}
         </div>` : ''}
       </article>`;
   }).join('');

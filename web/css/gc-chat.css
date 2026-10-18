@@ -16,7 +16,7 @@
 }
 
 .chat-header {
-  background: #ff5e00;
+  background: #16a34a;
   padding: 14px 18px;
   display: flex;
   flex-direction: column;
@@ -62,10 +62,10 @@
   line-height: 1.4;
   word-wrap: break-word;
 }
-.chat-bubble.mine { background: #ff5e00; color: #fff; border-bottom-right-radius: 3px; }
+.chat-bubble.mine { background: #16a34a; color: #fff; border-bottom-right-radius: 3px; }
 .chat-bubble.theirs { background: #1e293b; border: 1px solid #334155; color: #e2e8f0; border-bottom-left-radius: 3px; }
 
-.chat-sender-name { font-size: 11px; font-weight: 700; color: #ff5e00; margin-bottom: 3px; }
+.chat-sender-name { font-size: 11px; font-weight: 700; color: #22c55e; margin-bottom: 3px; }
 .chat-bubble.mine .chat-sender-name { color: rgba(255,255,255,0.85); }
 .chat-timestamp { font-size: 10px; color: rgba(255,255,255,0.65); margin-top: 4px; text-align: right; }
 .chat-bubble.theirs .chat-timestamp { color: #64748b; }
@@ -88,9 +88,9 @@
   font-size: 13px;
   outline: none;
 }
-.chat-input-bar input:focus { border-color: #ff5e00; }
+.chat-input-bar input:focus { border-color: #22c55e; }
 .chat-input-bar button {
-  background: #ff5e00;
+  background: #16a34a;
   border: none;
   color: #fff;
   width: 40px;
@@ -110,7 +110,7 @@
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: #ff5e00;
+  background: #16a34a;
   color: #fff;
   border: none;
   padding: 14px 20px;
@@ -169,11 +169,11 @@
 .bk-filter-row input { flex: 1; }
 .bk-filter-row button { background: transparent; border: 1px solid #475569; color: #cbd5e1; border-radius: 6px; padding: 0 12px; font-size: 12px; cursor: pointer; }
 .bk-filter-count { font-size: 11px; color: #94a3b8; }
-.bk-reply-count { color: #ff8a3d; font-weight: 700; }
+.bk-reply-count { color: #4ade80; font-weight: 700; }
 /* Conversa em que falta o cliente responder */
-.booking-select-card.needs-reply { border: 1px solid #ff5e00; border-left-width: 4px; background: rgba(255, 94, 0, .08); }
-.booking-select-card.needs-reply:hover { border-color: #ff5e00; background: rgba(255, 94, 0, .14); }
-.b-reply { font-size: 11px; font-weight: 700; color: #ff8a3d; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 8px; }
+.booking-select-card.needs-reply { border: 1px solid #16a34a; border-left-width: 4px; background: rgba(34, 197, 94, .08); }
+.booking-select-card.needs-reply:hover { border-color: #22c55e; background: rgba(34, 197, 94, .14); }
+.b-reply { font-size: 11px; font-weight: 700; color: #4ade80; text-transform: uppercase; letter-spacing: .3px; margin-bottom: 8px; }
 .b-reply-text { font-size: 12px; font-weight: 400; color: #e2e8f0; text-transform: none; letter-spacing: 0; margin-top: 3px; font-style: italic; overflow-wrap: anywhere; }
 .chat-back-btn { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35); color: #fff; border-radius: 4px; padding: 4px 8px; font-size: 11px; font-weight: 600; cursor: pointer; white-space: nowrap; }
 .chat-back-btn:hover { background: rgba(255,255,255,.22); }

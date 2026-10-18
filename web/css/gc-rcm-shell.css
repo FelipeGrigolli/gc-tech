@@ -34,7 +34,7 @@ body.has-rcm-shell { flex-direction: row; height: calc(100vh / var(--fit-zoom, 1
 .rcm-shell-sidebar .menu-label { font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: 700; margin: 15px 0 8px 10px; letter-spacing: .5px; }
 .rcm-shell-sidebar .menu-item { display: block; padding: 10px 12px; color: #cbd5e1; text-decoration: none; font-size: 14px; border-radius: 6px; margin-bottom: 4px; transition: background .2s, color .2s; }
 .rcm-shell-sidebar .menu-item:hover { background: #1e293b; color: #fff; }
-.rcm-shell-sidebar .menu-item.active { background: #FF5E00; color: #fff; font-weight: 600; }
+.rcm-shell-sidebar .menu-item.active { background: #16a34a; color: #fff; font-weight: 600; }
 .rcm-shell-sidebar .sidebar-footer { padding: 20px; border-top: 1px solid #1e293b; background: #0f172a; }
 .rcm-shell-sidebar .agent-profile { display: flex; align-items: center; gap: 10px; }
 /* .avatar também existe na Customer Database (65px azul): aqui vale o da sidebar */

@@ -58,8 +58,8 @@
     .oui-btn { border: none; border-radius: 6px; padding: 9px 16px; font: 600 13px 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; cursor: pointer; }
     .oui-btn.ghost { background: transparent; color: #e2e8f0; border: 1px solid #475569; }
     .oui-btn.ghost:hover { background: #0f172a; }
-    .oui-btn.primary { background: #FF5E00; color: #fff; }
-    .oui-btn.primary:hover { background: #e65500; }
+    .oui-btn.primary { background: #15803D; color: #fff; }
+    .oui-btn.primary:hover { background: #166534; }
     .oui-btn.danger { background: #dc2626; color: #fff; }
     .oui-btn.danger:hover { background: #b91c1c; }
   `;

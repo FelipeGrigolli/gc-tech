@@ -417,7 +417,7 @@ function checkoutRenderConfirmation(booking, confirmed) {
       </div>
       <div class="confirm-email">📧 A confirmation has been sent to <strong>${checkoutVal('co-email')}</strong> (simulated in this prototype).</div>
       <div class="confirm-actions">
-        <a href="customer-portal.html#upcoming" class="btn-orange">Manage my booking</a>
+        <a href="customer-portal.html#upcoming" class="btn-brand">Manage my booking</a>
         <button class="btn-ghost dark" onclick="checkoutChatAboutBooking('${booking.ref}', '${booking.plate || 'Pending allocation'}')">💬 Chat about this booking</button>
         <a href="gc-home.html" class="btn-ghost dark">Back to home</a>
       </div>

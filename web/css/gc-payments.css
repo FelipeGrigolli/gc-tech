@@ -11,8 +11,8 @@
 /* Botões */
 .pp-btn { background: #2563eb; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: background .15s; white-space: nowrap; }
 .pp-btn:hover { background: #1d4ed8; }
-.pp-btn.primary { background: var(--gc-orange); }
-.pp-btn.primary:hover { background: #e65500; }
+.pp-btn.primary { background: var(--gc-brand-strong, #16a34a); }
+.pp-btn.primary:hover { background: #15803d; }
 .pp-btn.ghost { background: transparent; border: 1px solid #475569; color: #e2e8f0; }
 .pp-btn.ghost:hover { background: #1e293b; border-color: #64748b; }
 .pp-btn.danger { color: #f87171; border-color: #7f1d1d; }
@@ -126,14 +126,14 @@
 .pp-form-grid label { display: flex; flex-direction: column; gap: 6px; font-size: 11px; text-transform: uppercase; font-weight: 700; color: #94a3b8; letter-spacing: .5px; }
 .pp-form-grid label.full { grid-column: 1 / -1; }
 .pp-form-grid input, .pp-form-grid select { padding: 9px 11px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #fff; font-size: 14px; outline: none; text-transform: none; font-weight: 400; letter-spacing: 0; color-scheme: dark; }
-.pp-form-grid input:focus, .pp-form-grid select:focus { border-color: var(--gc-orange); }
+.pp-form-grid input:focus, .pp-form-grid select:focus { border-color: var(--gc-brand); }
 .pp-preview { margin-top: 16px; background: rgba(59, 130, 246, .08); border: 1px solid rgba(59, 130, 246, .3); border-radius: 8px; padding: 12px 14px; font-size: 13px; line-height: 1.6; color: #cbd5e1; }
 .pp-error { color: #f87171; font-size: 13px; min-height: 18px; margin-top: 10px; }
 .pp-modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; }
 .pp-rem-channels { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 16px; font-size: 12px; color: #94a3b8; }
 .pp-rem-channels > span:first-child { font-weight: 700; text-transform: uppercase; letter-spacing: .5px; font-size: 11px; }
 .pp-rem-channels button { background: transparent; border: 1px solid #475569; color: #e2e8f0; border-radius: 999px; padding: 5px 13px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
-.pp-rem-channels button.on { background: var(--gc-orange, #ff5e00); border-color: var(--gc-orange, #ff5e00); color: #fff; }
+.pp-rem-channels button.on { background: var(--gc-brand-strong, #16a34a); border-color: var(--gc-brand-strong, #16a34a); color: #fff; }
 .pp-rem-channels button:disabled { opacity: .4; cursor: not-allowed; }
 .pp-rem-text { width: 100%; box-sizing: border-box; margin-top: 6px; background: #1e293b; color: #f1f5f9; border: 1px solid #334155; border-radius: 6px; padding: 10px 12px; font: 13px/1.5 inherit; resize: vertical; }
 .pp-rem-text[readonly] { opacity: .85; }

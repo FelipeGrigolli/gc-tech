@@ -1,5 +1,6 @@
 :root {
-  --gc-orange: #FF5E00;
+  --gc-brand: #22C55E;
+  --gc-brand-strong: #16A34A;
   --bg-dark: #0f172a;
   --surface-dark: #1e293b;
   --text-light: #f8fafc;
@@ -86,7 +87,7 @@ body {
 }
 
 .menu-item.active { 
-  background: var(--gc-orange); 
+  background: var(--gc-brand-strong); 
   color: #fff; 
   font-weight: 600; 
 }
@@ -212,7 +213,7 @@ body {
 }
 
 .input-group input:focus { 
-  border-color: var(--gc-orange); 
+  border-color: var(--gc-brand); 
   background: #fff; 
 }
 
@@ -242,8 +243,8 @@ body {
 }
 
 .agent-tab.active { 
-  color: var(--gc-orange); 
-  border-bottom-color: var(--gc-orange); 
+  color: var(--gc-brand); 
+  border-bottom-color: var(--gc-brand); 
 }
 
 .agent-view { 
@@ -294,7 +295,7 @@ body {
 }
 
 .btn-propose { 
-  background: var(--gc-orange); 
+  background: var(--gc-brand-strong); 
   color: #fff; 
   border: none; 
   padding: 10px 20px; 
@@ -305,7 +306,7 @@ body {
 }
 
 .btn-propose:hover { 
-  background: #e65500; 
+  background: #15803d; 
 }
 
 /* =========================================

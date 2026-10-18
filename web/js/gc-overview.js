@@ -161,7 +161,7 @@ function ovShell() {
       </div>
 
       <div class="ov-col">
-        ${ovPanel('myrcm', 'My RCM', '#FF5E00', '<div id="ov-myrcm"></div>')}
+        ${ovPanel('myrcm', 'My RCM', '#16a34a', '<div id="ov-myrcm"></div>')}
         ${ovPanel('fleet', 'Fleet Right Now', '#0ea5e9', '<div id="ov-fleet"></div>')}
       </div>
     </div>`;

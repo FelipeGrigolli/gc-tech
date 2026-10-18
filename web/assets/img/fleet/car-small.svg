@@ -13,7 +13,7 @@
   <path d="M206,208 C232,178 258,168 300,167 L322,167 L322,208 Z" fill="url(#glass)"/>
   <path d="M332,167 L374,167 C402,169 424,184 446,207 L332,208 Z" fill="url(#glass)"/>
   <path d="M327,212 L327,318" stroke="#2b4d82" stroke-width="2" opacity=".8"/>
-  <path d="M130,288 L520,288" stroke="#FF5E00" stroke-width="6" stroke-linecap="round"/>
+  <path d="M130,288 L520,288" stroke="#15803D" stroke-width="6" stroke-linecap="round"/>
   <path d="M118,248 L134,244 L134,262 L118,264 Z" fill="#d93a2b"/>
   <path d="M512,230 L529,238 L528,250 L508,246 Z" fill="#fff6d6" stroke="#c9b98a" stroke-width="1.5"/>
   

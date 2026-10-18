@@ -9,8 +9,8 @@
   background: var(--surface-dark); border: 1px solid #334155; border-radius: 8px; color: #e2e8f0;
   font-size: 13px; font-weight: 600; cursor: pointer; transition: border-color .15s, background .15s;
 }
-.ov-topnav-item svg { color: var(--gc-orange); }
-.ov-topnav-item:hover { border-color: var(--gc-orange); background: #243247; }
+.ov-topnav-item svg { color: var(--gc-brand); }
+.ov-topnav-item:hover { border-color: var(--gc-brand); background: #243247; }
 .ov-topnav-item[hidden] { display: none; }
 
 /* Reservas vencidas */
@@ -18,7 +18,7 @@
 .ov-stale-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin-bottom: 8px; }
 .ov-stale-head strong { color: #fca5a5; font-size: 14px; }
 .ov-stale-head span { color: #cbd5e1; font-size: 12px; }
-.ov-stale-head a { margin-left: auto; color: var(--gc-orange); font-size: 12px; font-weight: 600; text-decoration: none; }
+.ov-stale-head a { margin-left: auto; color: var(--gc-brand); font-size: 12px; font-weight: 600; text-decoration: none; }
 .ov-stale-head a:hover { text-decoration: underline; }
 .ov-stale-row { display: grid; grid-template-columns: 80px minmax(120px, 1fr) minmax(160px, 1fr) minmax(220px, 1.3fr) auto; gap: 12px; align-items: center; padding: 7px 0; border-top: 1px solid rgba(239, 68, 68, .2); font-size: 12px; color: #e2e8f0; }
 .ov-stale-ref { color: #f87171; font-weight: 700; }
@@ -66,7 +66,7 @@
   border-bottom: 1px solid #334155; color: #e2e8f0; text-align: left; cursor: pointer; font-size: 13px;
 }
 .ov-message:last-child { border-bottom: none; }
-.ov-message:hover strong { color: var(--gc-orange); }
+.ov-message:hover strong { color: var(--gc-brand); }
 .ov-message-top { display: flex; justify-content: space-between; gap: 8px; }
 .ov-message-top span, .ov-message-ref { font-size: 11px; color: #94a3b8; }
 .ov-message-text { font-size: 12px; color: #cbd5e1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -77,7 +77,7 @@
   flex: 1; min-width: 0; padding: 6px 8px; font-size: 12px; background: #0f172a; color: #fff;
   border: 1px solid #475569; border-radius: 4px; outline: none;
 }
-.ov-todo-form input:focus { border-color: var(--gc-orange); }
+.ov-todo-form input:focus { border-color: var(--gc-brand); }
 .ov-todo-toggle { display: flex; gap: 4px; margin-bottom: 8px; }
 .ov-todo-toggle button {
   padding: 4px 10px; font-size: 11px; font-weight: 600; border-radius: 4px; cursor: pointer;
@@ -88,7 +88,7 @@
 .ov-todo-list li { position: relative; padding: 7px 22px 7px 0; border-bottom: 1px solid #334155; }
 .ov-todo-list li:last-child { border-bottom: none; }
 .ov-todo-list label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; color: #e2e8f0; }
-.ov-todo-list input { margin-top: 2px; accent-color: var(--gc-orange); }
+.ov-todo-list input { margin-top: 2px; accent-color: var(--gc-brand); }
 .ov-todo-list small { display: block; margin-left: 21px; font-size: 11px; color: #64748b; }
 .ov-todo-list li.done label span { text-decoration: line-through; color: #64748b; }
 .ov-todo-del { position: absolute; right: 0; top: 6px; background: none; border: none; color: #64748b; font-size: 16px; cursor: pointer; }
@@ -139,7 +139,7 @@
 .ov-day-list li.done > span:nth-child(2) { color: #94a3b8; }
 .ov-day-list li > .ov-muted { grid-column: 2 / 4; font-size: 11px; }
 
-.ov-report-link { display: block; margin-top: 14px; padding-top: 10px; border-top: 1px solid #334155; font-size: 12px; font-weight: 600; color: var(--gc-orange); text-decoration: none; }
+.ov-report-link { display: block; margin-top: 14px; padding-top: 10px; border-top: 1px solid #334155; font-size: 12px; font-weight: 600; color: var(--gc-brand); text-decoration: none; }
 .ov-report-link:hover { text-decoration: underline; }
 
 /* My RCM */

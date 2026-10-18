@@ -14,10 +14,10 @@
   <path d="M318,150 L318,226 M318,150 L330,150" stroke="#b6bcc5" stroke-width="7" stroke-linecap="round" fill="none"/>
   <path d="M330,316 L330,172 Q332,150 356,148 L420,148 C446,150 466,170 484,200 L524,214 C540,220 546,238 544,266 L544,316 Q544,326 534,326 L340,326 Q330,326 330,316 Z" fill="url(#paint)" stroke="#c9d0d9" stroke-width="2"/>
   <path d="M346,160 L418,160 C440,162 456,176 470,200 L346,200 Z" fill="url(#glass)"/>
-  <path d="M338,290 L536,290" stroke="#FF5E00" stroke-width="6" stroke-linecap="round"/>
+  <path d="M338,290 L536,290" stroke="#15803D" stroke-width="6" stroke-linecap="round"/>
   <path d="M526,222 L544,230 L543,244 L522,240 Z" fill="#fff6d6" stroke="#c9b98a" stroke-width="1.5"/>
-  <text x="410" y="252" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="22" fill="#FF5E00" letter-spacing="-1">GC Tech</text>
-    <text x="410" y="265.05" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="9" fill="#FF5E00" letter-spacing="1.6199999999999999">RENTALS</text>
+  <text x="410" y="252" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="22" fill="#15803D" letter-spacing="-1">GC Tech</text>
+    <text x="410" y="265.05" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="9" fill="#15803D" letter-spacing="1.6199999999999999">RENTALS</text>
   <circle cx="166" cy="318" r="49" fill="#2a2f36"/>
     <circle cx="166" cy="318" r="42" fill="#1c2026"/>
     <circle cx="166" cy="318" r="26.04" fill="#c8cdd4"/>

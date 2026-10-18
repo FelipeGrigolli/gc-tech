@@ -46,7 +46,7 @@
     .od-overlay.show { opacity: 1; }
     .od-card { background: #fff; color: #1a1a1a; border-radius: 14px; max-width: 420px; width: 100%; padding: 26px 26px 22px; box-shadow: 0 24px 60px rgba(0,0,0,.35); font-family: 'Outfit', 'Inter', -apple-system, 'Segoe UI', Roboto, sans-serif; transform: translateY(8px); transition: transform .15s; }
     .od-overlay.show .od-card { transform: none; }
-    .od-icon { width: 42px; height: 42px; border-radius: 50%; background: #fff1e8; color: #FF5E00; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+    .od-icon { width: 42px; height: 42px; border-radius: 50%; background: #dcfce7; color: #15803D; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
     .od-card h3 { margin: 0 0 8px; font-size: 19px; font-weight: 600; }
     .od-card p { margin: 0 0 10px; font-size: 14px; line-height: 1.5; color: #4b5563; }
     .od-card ul { margin: 0 0 18px; padding-left: 18px; font-size: 13px; line-height: 1.6; color: #4b5563; }
@@ -54,8 +54,8 @@
     .od-btn { border: none; border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
     .od-btn.ghost { background: #f1f5f9; color: #334155; }
     .od-btn.ghost:hover { background: #e2e8f0; }
-    .od-btn.primary { background: #FF5E00; color: #fff; }
-    .od-btn.primary:hover { background: #e65500; }
+    .od-btn.primary { background: #15803D; color: #fff; }
+    .od-btn.primary:hover { background: #166534; }
     .od-toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); background: #0f172a; color: #fff; border: 1px solid #334155; padding: 12px 20px; border-radius: 10px; font: 500 14px 'Outfit', 'Inter', -apple-system, 'Segoe UI', sans-serif; box-shadow: 0 12px 30px rgba(0,0,0,.3); z-index: 100000; opacity: 0; transition: opacity .2s, transform .2s; }
     .od-toast.show { opacity: 1; transform: translate(-50%, 0); }
   `;

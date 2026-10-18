@@ -157,7 +157,7 @@ function homeScrollToWidget() {
 function homeRenderFleetFilters() {
   const filters = ['All', ...HOME_TABS.map(t => t.id), 'Hybrid'];
   document.getElementById('fleet-filters').innerHTML = filters.map(f =>
-    `<button class="chip ${f === homeFleetFilter ? 'active' : ''}" onclick="homeFilterFleet('${f}')">${f === 'Hybrid' ? '⚡ Hybrid' : f}</button>`
+    `<button class="chip ${f === homeFleetFilter ? 'active' : ''}" onclick="homeFilterFleet('${f}')">${f === 'Hybrid' ? '🌿 Hybrid' : f}</button>`
   ).join('');
 }
 
@@ -195,7 +195,7 @@ function homeRenderFleet() {
           <div class="fleet-meta"><span>👤 ${c.seats} seats</span><span>⚙️ Auto</span></div>
           <div class="fleet-foot">
             <span class="fleet-price">From <strong>$${c.rate.toFixed(2)}</strong>/day</span>
-            <button class="btn-orange" onclick="homeBookCategory('${c.tab}')">Book</button>
+            <button class="btn-brand" onclick="homeBookCategory('${c.tab}')">Book</button>
           </div>
         </div>
       </article>
@@ -235,7 +235,7 @@ function homeRenderNavMenus() {
   document.getElementById('nav-vehicles-menu').innerHTML = HOME_TABS.map(t => {
     const n = FLEET_CATEGORIES.filter(c => c.tab === t.id).length;
     return `<a href="#fleet" onclick="homeFilterFleet('${t.id}')">${t.id} <small>${n} model${n > 1 ? 's' : ''}</small></a>`;
-  }).join('') + `<a href="#fleet" onclick="homeFilterFleet('Hybrid')">⚡ Hybrid range</a>`;
+  }).join('') + `<a href="#fleet" onclick="homeFilterFleet('Hybrid')">🌿 Hybrid range</a>`;
 
   document.getElementById('nav-locations-menu').innerHTML = Object.values(FLEET_BRANCHES).map(name =>
     `<a href="#" onclick="event.preventDefault(); homePickBranch('${name}')">${fleetBranchLabel(name)}</a>`

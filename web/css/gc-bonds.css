@@ -74,7 +74,7 @@
 
 .bn-access-list { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
 .bn-access-row { display: flex; align-items: center; gap: 12px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px 14px; cursor: pointer; }
-.bn-access-row input { accent-color: var(--gc-orange); width: 16px; height: 16px; }
+.bn-access-row input { accent-color: var(--gc-brand); width: 16px; height: 16px; }
 .bn-access-row span { display: flex; flex-direction: column; }
 .bn-access-row small { color: #94a3b8; font-size: 12px; }
 .bn-access-row em { margin-left: auto; font-style: normal; font-size: 11px; font-weight: 700; color: #fbbf24; }

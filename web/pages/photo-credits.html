@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="../js/gc-fit.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo credits - GC Tech Rentals</title>
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="stylesheet" href="../vendor/fonts/fonts.css">
+  <link rel="stylesheet" href="../css/gc-home.css">
+  <style>
+    .credits { padding: 56px 0 72px; }
+    .credits h1 { font-size: 34px; font-weight: 500; margin-bottom: 10px; }
+    .credits p { color: var(--ink-soft); max-width: 760px; line-height: 1.6; margin-bottom: 10px; }
+    .credits p a, .credits td a { color: var(--brand); font-weight: 500; }
+    .credits-table { width: 100%; border-collapse: collapse; margin-top: 28px; font-size: 15px; }
+    .credits-table th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #64748b; font-weight: 600; padding: 0 12px 10px 0; border-bottom: 1px solid var(--line); }
+    .credits-table td { padding: 12px 12px 12px 0; border-bottom: 1px solid #eef2f6; vertical-align: middle; }
+    .credits-table img { width: 120px; aspect-ratio: 2 / 1; object-fit: cover; border-radius: 8px; display: block; }
+    .credits-back { display: inline-block; margin-top: 28px; color: var(--brand); font-weight: 600; }
+    @media (max-width: 720px) {
+      .credits-table thead { display: none; }
+      .credits-table tr { display: grid; grid-template-columns: 120px minmax(0, 1fr); column-gap: 14px; padding: 12px 0; border-bottom: 1px solid #eef2f6; }
+      .credits-table td { border: none; padding: 2px 0; }
+      .credits-table td:first-child { grid-row: span 4; }
+    }
+  </style>
+</head>
+<body>
+  <main class="container credits">
+    <h1>Photo credits</h1>
+    <p>All vehicle photos on this site come from <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> and are used under the
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-ShareAlike 4.0</a> licence (CC BY-SA 4.0).
+      We cropped and resized each one to 1200×600; the truck photo also had its sides extended with a blurred copy of itself. Our edited versions are shared under the same licence.</p>
+
+    <table class="credits-table">
+      <thead><tr><th>Photo</th><th>Used for</th><th>Shows</th><th>Author</th><th>Source</th></tr></thead>
+      <tbody id="credits-rows"></tbody>
+    </table>
+
+    <a class="credits-back" href="gc-home.html">← Back to home</a>
+  </main>
+
+  <script>
+    const COMMONS = 'https://commons.wikimedia.org/wiki/File:';
+    const credits = [
+      ['yaris', 'Small cars', 'Toyota Yaris Hybrid (XP210)', 'Alexander Migl', 'Toyota_Yaris_Hybrid_(XP210)_1X7A0353.jpg'],
+      ['corolla-hatch', 'Mid size hatch hybrid', '2018 Toyota Corolla Ascent Sport hatchback', 'EurovisionNim', '2018_Toyota_Corolla_(MZEA12R)_Ascent_Sport_hatchback_(2018-11-02)_01.jpg'],
+      ['corolla-sedan', 'Mid size sedan hybrid', 'Toyota Corolla Hybrid Sedan', 'Matti Blume', 'Toyota_Corolla_Hybrid_Sedan,_GIMS_2019,_Le_Grand-Saconnex_(GIMS1338).jpg'],
+      ['camry', 'Full size car hybrid', 'Toyota Camry (XV70)', 'Alexander-93', 'Toyota_Camry_(XV70)_IMG_9081.jpg'],
+      ['asx', 'Mid size SUV', '2020 Mitsubishi ASX', 'Hiflex480', '2020_Mitsubishi_ASX,_Front.jpg'],
+      ['corolla-cross', 'Mid size cross SUV', 'Toyota Corolla Cross Hybrid', 'Alexander Migl', 'Toyota_Corolla_Cross_Hybrid_1X7A6357.jpg'],
+      ['outlander', 'Mid size 7 seater SUV', '2022 Mitsubishi Outlander', 'MercurySable99', '2022_Mitsubishi_Outlander_SE_S-AWC,_07-29-2022.jpg'],
+      ['kluger', 'Full size 7 seater hybrid', '2020 Toyota Highlander (sold as Kluger in Australia)', 'Kevauto', '2020_Toyota_Highlander_XLE_AWD,_front.jpg'],
+      ['staria', 'Eight seater', 'Hyundai Staria', 'Alexander Migl', 'Hyundai_Staria_1X7A0321.jpg'],
+      ['hiace', 'Vans', '2025 Toyota HiAce van', 'LuvsMG481', '2025_Toyota_HiAce_front_(with_barn_doors).jpg'],
+      ['hilux', 'Utes', '2025 Toyota HiLux SR5', 'LuvsMG481', '2025_Toyota_HiLux_SR5_Bondi.jpg'],
+      ['pantech', 'Trucks', '2024 Isuzu NPR-HD box truck', 'Elise240SX', '2024_Isuzu_NPR-HD_Box_Truck_in_Mineral_White,_front_left,_2026-05-09.jpg'],
+    ];
+    document.getElementById('credits-rows').innerHTML = credits.map(([file, use, shows, author, src]) => `
+      <tr>
+        <td><img src="../assets/img/fleet-photos/${file}.jpg" alt="${shows}" loading="lazy"></td>
+        <td>${use}</td>
+        <td>${shows}</td>
+        <td>${author}</td>
+        <td><a href="${COMMONS}${encodeURI(src)}" target="_blank" rel="noopener">Wikimedia Commons</a> · CC BY-SA 4.0</td>
+      </tr>`).join('');
+  </script>
+</body>
+</html>

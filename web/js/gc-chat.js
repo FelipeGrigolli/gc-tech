@@ -720,7 +720,7 @@ function openCustomerChatWithPrompt() {
         <div class="widget-error" id="chat-start-error"></div>
         <div class="home-modal-actions">
           <button class="btn-ghost dark" onclick="closeChatStartModal()">Cancel</button>
-          <button class="btn-orange" onclick="startGuestChat()">Start chat</button>
+          <button class="btn-brand" onclick="startGuestChat()">Start chat</button>
         </div>
       </div>`;
     modal.addEventListener('click', e => { if (e.target === modal) closeChatStartModal(); });
