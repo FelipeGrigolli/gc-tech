@@ -29,3 +29,9 @@ desktop.ini
 # Config local do assistente (nunca publicada)
 /.claude/
 /CLAUDE.md
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+api-py/data/
