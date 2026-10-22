@@ -26,6 +26,8 @@ desktop.ini
 # Notas de estudo internas (so locais, nunca publicadas)
 /docs/learning/
 
-# Config local do assistente (nunca publicada)
-/.claude/
-/CLAUDE.md
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+api-py/data/
